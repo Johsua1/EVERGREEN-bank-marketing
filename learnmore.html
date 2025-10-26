@@ -34,11 +34,6 @@
             font-size: 24px;
         }
 
-        nav span a {
-            color: white;
-            text-decoration: none;
-        }
-
         .logo {
             display: flex;
             align-items: center;
@@ -49,10 +44,10 @@
         }
 
         .logo-icon {
-            width: 50%;
-            height: 50%;
+            width: 40px;
+            height: 40px;
             background: #F1B24A;
-            border-radius: 10px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,13 +64,12 @@
         .nav-links {
             display: flex;
             gap: 3rem;
-            align-items: center;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
-            margin: 0 1.1rem;
+            margin: 0 1rem;
             font-size: 1rem;
             transition: color 0.3s;
         }
@@ -87,43 +81,7 @@
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center                                                         ;
         }
-
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            background: rgba(255,255,255,0.1);
-            color: #F1B24A;
-        }
-
-        .profile-btn {
-            width: 50%;
-            height: 50;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .profile-btn img {
-            width: 200%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
 
         .btn {
             padding: 0.7rem 1.5rem;
@@ -680,7 +638,7 @@
             display: none;
             position: absolute;
             left: 0;
-            top: 150%;
+            top: 100%;
             width: 100vw;
             background-color: #D9D9D9;
             padding: 1.5rem 0;
@@ -688,8 +646,7 @@
             z-index: 99;
             text-align: center;
             transform: translateX(-50%);
-            left: 100%;
-            gap: 10rem;
+            left: 140%;
         }
 
         /* Links inside dropdown */
@@ -788,13 +745,11 @@
             <div class="logo-icon">
                 <img src="images/icon.png">
             </div>
-            <span>
-                <a href="/viewing.html">EVERGREEN</a>
-            </span>
+            <span>EVERGREEN</span>
         </div>
 
         <div class="nav-links">
-            <a href="/viewing.html">Home</a>
+            <a href="viewing.html">Home</a>
 
         <div class="dropdown">
             <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
@@ -806,17 +761,13 @@
                 </div>
         </div>
 
-                     <a href="#loans">Loans</a>
-                     <a href="#contact">About Us</a>
-        </div>
+  <a href="#loans">Loans</a>
+  <a href="#contact">About Us</a>
+</div>
 
         <div class="nav-buttons">
-            <a href="login.html" class="username-profile">Login</a>
-            <div class="logo-icon">
-                <a href="/cards/profile.html" class="profile-btn">
-                    Get Started
-                </a>
-            </div>
+            <a href="login.html" class="btn btn-login">Login</a>
+            <a href="getstarted.html" class="btn btn-primary">Get Started</a>
         </div>
     </nav>
 
