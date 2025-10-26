@@ -59,21 +59,25 @@
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: #F1B24A;
+            width: 50px;
+            height: 50px;
+            background: transparent; /* was #F1B24A */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            overflow: hidden;
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* change from cover -> contain */
+            object-position: center;
+            display: block;
             border-radius: 50%;
+            background: transparent;
         }
 
         .nav-links {
@@ -559,7 +563,7 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/icon.png" alt="Evergreen Logo">
+                <img src="images/Logo.png.png" alt="Evergreen Logo">
             </div>
             <span>
                 <a href="viewingpage.php">EVERGREEN</a>

@@ -1,15 +1,5 @@
 <?php
-    session_start([
-       'cookie_httponly' => true,
-       'cookie_secure' => isset($_SERVER['HTTPS']),
-       'use_strict_mode' => true
-    ]);
-
     session_start();
-        if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
-        exit;
-}
 ?>
 
 <!DOCTYPE html>
@@ -84,63 +74,10 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 6rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
-
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            background: rgba(255,255,255,0.1);
-            color: #F1B24A;
-        }
-
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
 
         .btn {
             padding: 0.7rem 1.5rem;
@@ -155,25 +92,25 @@
 
         .btn-login {
             background: transparent;
-            color: #FFFFFF;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .btn-login:hover {
             background: rgba(255,255,255,0.1);
-            color: #F1B24A;
         }
 
         .btn-primary {
-            background: #F1B24A;
-            color: #003631;
+            background: #f5a623;
+            color: #0d4d4d;
             font-weight: bold;
             display: flex;
             align-items: center;
-            font-size: 1rem;
         }
 
         .btn-primary:hover {
             background: #e69610;
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -184,9 +121,8 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
-            min-height: 80vh;
+            min-height: 84vh;
         }
-
 
         .hero-content h1 {
             color: white;
@@ -369,6 +305,18 @@
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
+        }
+
+        .btn-explore-all {
+            background: #003631;
+            color: white;
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .btn-explore-all:hover {
+            background: #003631;
         }
 
         /* Rewards Section */
@@ -794,35 +742,14 @@
             <div class="logo-icon">
                 <img src="images/Logo.png.png">
             </div>
-            <span>
-                <a href="viewingpage.php">EVERGREEN</a>
-            </span>
+                <span>EVERGREEN</span>
         </div>
-
-        <div class="nav-links">
-            <a href="viewingpage.php">Home</a>
-
-        <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
-                <div class="dropdown-content" id="cardsDropdown">
-                    <a href="cards/credit.php">Credit Cards</a>
-                    <a href="cards/debit.php">Debit Cards</a>
-                    <a href="cards/prepaid.php">Prepaid Cards</a>
-                    <a href="cards/rewards.php">Card Rewards</a>
-                </div>
-        </div>
-
-                     <a href="#loans">Loans</a>
-                     <a href="about.php">About Us</a>
-        </div>
-
         <div class="nav-buttons">
-            <a href="login.php" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="cards/profile.php" class="profile-btn">
-                    <img src="images/pfp.png" alt="Profile Icon">
-                </a>
-            </div>
+            <a href="login.php" class="btn btn-login">Login
+
+            </a>
+                
+            <button class="btn btn-primary">Get Started</button>
         </div>
     </nav>
 
@@ -832,7 +759,8 @@
             <h1>Banking that grows <br>with <span class="highlight">you</span></br></h1>
             <p>Secure financial solutions for every stage of your life journey.<br> Invest, save, and achieve your goals with Evergreen.</p>
             <div class="hero-buttons">
-                <a href="learnmore.php" class="btn btn-secondary">Learn More</a>
+                <a href="login.html" class="btn btn-primary">Open an Account</a>
+                <a href="learnmore.html" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
         <div class="hero-card">
@@ -874,7 +802,7 @@
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
             </div>
         </div>
-
+        
     </section>
 
     <!-- Rewards Section -->
@@ -885,7 +813,7 @@
       <p>
         Open an account with us today and enjoy exclusive rewards, special offers, and member-only perks designed to make your banking more rewarding.
       </p>
-      <a href="cardrewards.php" class="rewards-btn">Learn More</a>
+      <a href="#" class="rewards-btn">Learn More</a>
     </div>
 
     <div class="rewards-image">
