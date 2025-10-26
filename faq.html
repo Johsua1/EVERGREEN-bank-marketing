@@ -35,6 +35,9 @@
 
     .main-container {
       display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
 
     .heading, .sub-heading {
@@ -50,12 +53,39 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      align-self: center;
     }
 
     .right {
       background: linear-gradient(to bottom, #E8FDF8, #9CE7D8);
       border-radius: 15px;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
+
+    hr {
+      border-top: 1px solid #ccc;
+      width: 100%;
+    }
+
+    .faq-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; 
+    }
+
+    .faq-question {
+      color: #005a52;
+      font-weight: 500;
+      font-family: "Kulim Park", sans-serif;
+    }
+
+    .faq-answer {
+      color: black;
+    }
+
   </style>
 </head>
 <body>
@@ -74,8 +104,24 @@
         <h3 class="sub-heading">Find quick answers to common questions about our banking services, accounts, and digital tools.</h3>
       </div>
       <div class="right">
-        div.faq-
-      </div>
+        <div class="faq-wrap">
+          <h2 class="faq-question">How long does it take to get loan approval?</h2>
+          <p class="faq-answer">
+            Loan approval usually takes 1–3 business days after submitting all required documents. You’ll receive a notification once your application has been reviewed.
+          </p>
+        </div>
+        <hr>
+        <div class="faq-wrap">
+          <h2 class="faq-question">Is my personal information safe when applying online?</h2>
+        </div>
+        <hr>
+        <div class="faq-wrap">
+          <h2 class="faq-question">How do I contact customer support for loan inquiries?</h2>
+        </div>
+        <hr>
+        <div class="faq-wrap">
+          <h2 class="faq-question">Is my personal information safe when applying online?</h2>
+        </div>
     </div>
   </main>
 </body>

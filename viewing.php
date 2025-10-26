@@ -1,18 +1,5 @@
 <?php
-    session_start([
-       'cookie_httponly' => true,
-       'cookie_secure' => isset($_SERVER['HTTPS']),
-       'use_strict_mode' => true
-    ]);
-<<<<<<< HEAD
-=======
-
     session_start();
-        if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
-        exit;
-}
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
 ?>
 
 <!DOCTYPE html>
@@ -66,119 +53,31 @@
         }
 
         .logo-icon {
-<<<<<<< HEAD
-            width: 40px;
-            height: 40px;
-            background: #F1B24A;
-=======
             width: 50px;
             height: 50px;
             background: transparent; /* was #F1B24A */
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-<<<<<<< HEAD
-=======
             overflow: hidden;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-<<<<<<< HEAD
-            object-fit: cover;
-            border-radius: 50%;
-=======
             object-fit: contain; /* change from cover -> contain */
             object-position: center;
             display: block;
             border-radius: 50%;
             background: transparent;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-        }
-
-        .nav-links {
-            display: flex;
-<<<<<<< HEAD
-            gap: 3rem;
-=======
-            gap: 6rem;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
         }
 
         .nav-buttons {
             display: flex;
             gap: 1rem;
-<<<<<<< HEAD
-            align-items: center                                                         ;
-=======
-            align-items: center;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
         }
-
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            background: rgba(255,255,255,0.1);
-            color: #F1B24A;
-        }
-
-        .profile-btn {
-<<<<<<< HEAD
-            width: 50%;
-            height: 50;
-=======
-            width: 40px;
-            height: 40px;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-<<<<<<< HEAD
-            font-weight: bold;
-        }
-
-        .profile-btn img {
-            width: 200%;
-=======
-        }
-
-        .profile-btn img {
-            width: 100%;
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
 
         .btn {
             padding: 0.7rem 1.5rem;
@@ -193,25 +92,25 @@
 
         .btn-login {
             background: transparent;
-            color: #FFFFFF;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .btn-login:hover {
             background: rgba(255,255,255,0.1);
-            color: #F1B24A;
         }
 
         .btn-primary {
-            background: #F1B24A;
-            color: #003631;
+            background: #f5a623;
+            color: #0d4d4d;
             font-weight: bold;
             display: flex;
             align-items: center;
-            font-size: 1rem;
         }
 
         .btn-primary:hover {
             background: #e69610;
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -222,16 +121,9 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
-<<<<<<< HEAD
-            min-height: 100vh;
+            min-height: 84vh;
         }
 
-=======
-            min-height: 80vh;
-        }
-
-
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
         .hero-content h1 {
             color: white;
             font-size: 4rem;
@@ -415,7 +307,6 @@
             display: inline-block;
         }
 
-<<<<<<< HEAD
         .btn-explore-all {
             background: #003631;
             color: white;
@@ -428,8 +319,6 @@
             background: #003631;
         }
 
-=======
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
         /* Rewards Section */
         .rewards-section {
             position: relative;
@@ -851,65 +740,16 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-<<<<<<< HEAD
-                <img src="images/icon.png">
-            </div>
-            <span>
-                <a href="/viewing.html">EVERGREEN</a>
-=======
                 <img src="images/Logo.png.png">
             </div>
-            <span>
-                <a href="viewingpage.php">EVERGREEN</a>
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-            </span>
+                <span>EVERGREEN</span>
         </div>
-
-        <div class="nav-links">
-<<<<<<< HEAD
-            <a href="/viewing.html">Home</a>
-=======
-            <a href="viewingpage.php">Home</a>
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-
-        <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
-                <div class="dropdown-content" id="cardsDropdown">
-<<<<<<< HEAD
-                    <a href="/cards/credit.html">Credit Cards</a>
-                    <a href="/cards/debit.html">Debit Cards</a>
-                    <a href="/cards/prepaid.html">Prepaid Cards</a>
-                    <a href="/cards/rewards.html">Card Rewards</a>
-=======
-                    <a href="cards/credit.php">Credit Cards</a>
-                    <a href="cards/debit.php">Debit Cards</a>
-                    <a href="cards/prepaid.php">Prepaid Cards</a>
-                    <a href="cards/rewards.php">Card Rewards</a>
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-                </div>
-        </div>
-
-                     <a href="#loans">Loans</a>
-<<<<<<< HEAD
-                     <a href="#contact">About Us</a>
-        </div>
-
         <div class="nav-buttons">
-            <a href="login.html" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="/cards/profile.html" class="profile-btn">
-=======
-                     <a href="about.php">About Us</a>
-        </div>
+            <a href="login.php" class="btn btn-login">Login
 
-        <div class="nav-buttons">
-            <a href="login.php" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="cards/profile.php" class="profile-btn">
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
-                    <img src="images/pfp.png" alt="Profile Icon">
-                </a>
-            </div>
+            </a>
+                
+            <button class="btn btn-primary">Get Started</button>
         </div>
     </nav>
 
@@ -919,12 +759,8 @@
             <h1>Banking that grows <br>with <span class="highlight">you</span></br></h1>
             <p>Secure financial solutions for every stage of your life journey.<br> Invest, save, and achieve your goals with Evergreen.</p>
             <div class="hero-buttons">
-<<<<<<< HEAD
                 <a href="login.html" class="btn btn-primary">Open an Account</a>
                 <a href="learnmore.html" class="btn btn-secondary">Learn More</a>
-=======
-                <a href="learnmore.php" class="btn btn-secondary">Learn More</a>
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
             </div>
         </div>
         <div class="hero-card">
@@ -946,47 +782,27 @@
                 <div class="solution-icon">💳</div>
                 <h3>Everyday Banking</h3>
                 <p>Fee-free checking accounts with <br>premium benefits and rewards on<br> everyday spending.</p>
-<<<<<<< HEAD
-                <a href="#" class="learn-more">Learn more →</a>
-=======
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
             </div>
             
             <div class="solution-card">
                 <div class="solution-icon">🏦</div>
                 <h3>Savings & Deposits</h3>
                 <p>High-yield savings accounts and<br> CDs to help your money grow<br> faster.</p>
-<<<<<<< HEAD
-                <a href="#" class="learn-more">Learn more →</a>
-=======
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
             </div>
             
             <div class="solution-card">
                 <div class="solution-icon">📈</div>
                 <h3>Investments</h3>
                 <p>Personalized investment strategies aligned with your financial goals.</p>
-<<<<<<< HEAD
-                <a href="#" class="learn-more">Learn more →</a>
-=======
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
             </div>
             
             <div class="solution-card">
                 <div class="solution-icon">🏠</div>
                 <h3>Home Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
-<<<<<<< HEAD
-                <a href="#" class="learn-more">Learn more →</a>
             </div>
         </div>
         
-        <button class="btn btn-primary btn-explore-all">Explore All Services</button>
-=======
-            </div>
-        </div>
-
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
     </section>
 
     <!-- Rewards Section -->
@@ -997,19 +813,11 @@
       <p>
         Open an account with us today and enjoy exclusive rewards, special offers, and member-only perks designed to make your banking more rewarding.
       </p>
-<<<<<<< HEAD
       <a href="#" class="rewards-btn">Learn More</a>
     </div>
 
     <div class="rewards-image">
-      <img src="/images/card.png" alt="Reward Card">
-=======
-      <a href="cardrewards.php" class="rewards-btn">Learn More</a>
-    </div>
-
-    <div class="rewards-image">
       <img src="images/card.png" alt="Reward Card">
->>>>>>> db09f628a61622336d4463245b030477a53b0dc1
     </div>
   </div>
 </section
