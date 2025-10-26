@@ -4,6 +4,7 @@
        'cookie_secure' => isset($_SERVER['HTTPS']),
        'use_strict_mode' => true
     ]);
+
 ?>
 
 <!DOCTYPE html>
@@ -79,109 +80,43 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            background: rgba(255,255,255,0.1);
-            color: #F1B24A;
-        }
-
-        .profile-btn {
-            width: 50%;
-            height: 50;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .profile-btn img {
-            width: 200%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
-
-        .dropbtn {
-            background: none;
+        .btn {
+            padding: 0.7rem 1.5rem;
             border: none;
-            color: white;
-            font-size: 1rem;
+            border-radius: 5px;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
-
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 100vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 100%;
-            gap: 10rem;
-        }
-
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
         }
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #0d4d4d;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-primary:hover {
+            background: #e69610;
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -455,37 +390,22 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/Logo.png.png" alt="Evergreen Logo">
-            </div>
-            <span>
-                <a href="viewingpage.php">EVERGREEN</a>
-            </span>
-        </div>
-
-        <div class="nav-links">
-            <a href="viewingpage.php">Home</a>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
-                <div class="dropdown-content" id="cardsDropdown">
-                    <a href="cards/credit.php">Credit Cards</a>
-                    <a href="cards/debit.php">Debit Cards</a>
-                    <a href="cards/prepaid.php">Prepaid Cards</a>
-                    <a href="cards/rewards.php">Card Rewards</a>
-                </div>
-            </div>
-
-            <a href="#loans">Loans</a>
-            <a href="about.php">About Us</a>
-        </div>
-
-        <div class="nav-buttons">
-            <a href="login.html" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="/cards/profile.html" class="profile-btn">
-                    <img src="images/pfp.png" alt="Profile Icon">
+                <a href="viewing.php">
+                    <img src="images/Logo.png.png">
                 </a>
             </div>
+                <span>
+                    <a href="viewing.php">
+                    EVERGREEN
+                    </a>
+                </span>
+        </div>
+        <div class="nav-buttons">
+            <a href="login.php" class="btn btn-login">Login
+
+            </a>
+                
+            <button class="btn btn-primary">Get Started</button>
         </div>
     </nav>
 
@@ -606,6 +526,37 @@
                 }
             }
         }); 
+
+        // Profile dropdown toggle
+        function toggleProfileDropdown(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            const isOpen = dd.classList.toggle('show');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        // close profile dropdown when clicking outside or pressing Esc
+        window.addEventListener('click', function (e) {
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            if (!dd) return;
+            if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+                dd.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dd = document.getElementById('profileDropdown');
+                const btn = document.getElementById('profileBtn');
+                if (dd && dd.classList.contains('show')) {
+                    dd.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
     </script>
 </body>
 </html>

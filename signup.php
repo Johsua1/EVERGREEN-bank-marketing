@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Generate verification code and bank ID
             $verification_code = sprintf("%06d", rand(0, 999999));
-            $bank_id = sprintf("%04d", mt_rand(0, 999999999999));
+            $bank_id = sprintf("%04d", mt_rand(0, 9999));
             
             // Hash password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -72,8 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'nambio.johsua.agustin@gmail.com';
-                    $mail->Password = 'tgpf xpvm gdih dtux';
+                    $mail->Username = 'evrgrn.64@gmail.com';
+                    $mail->Password = 'dourhhbymvjejuct';
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587;
                     
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $mail->Timeout = 30;
                     
                     // Recipients
-                    $mail->setFrom('nambio.johsua.agustin@gmail.com', 'Evergreen Banking');
+                    $mail->setFrom('evrgrn.64@gmail.com', 'Evergreen Banking');
                     $mail->addAddress($email, $first_name . ' ' . $last_name);
                     
                     // Content
@@ -154,21 +154,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh; /* changed from height: 100vh */
+      overflow-x: hidden; /* only hide horizontal overflow */
+      overflow-y: auto; /* allow vertical scrolling */
     }
+
 
     .left {
       width: 39%;
       background: #ebe8df;
       display: flex;
       flex-direction: column;
-      padding: 0 60px;
+      padding: 0 80px;
       padding-top: 100px;
-      padding-bottom: 40px;
-      overflow-y: auto;
+      position: relative; /* ADD THIS - makes absolute children position relative to this container */
     }
 
+    /* Logo stays on the left */
     .logo {
       position: absolute;
       top: 30px;
@@ -176,6 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       display: flex;
       align-items: center;
       gap: 12px;
+      width: auto;
     }
 
     .logo img {
@@ -201,11 +204,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       letter-spacing: 0.2px;
     }
 
+    /* Back button - on the right side of LEFT panel */
+    .back-container {
+      position: absolute;
+      top: 30px;
+      right: 80px; /* Changed from 30px to align with left panel padding */
+      display: flex;
+      align-items: center;
+    }
+
+    .back-link {
+      font-size: 28px;
+      text-decoration: none;
+      color: #003631;
+      transition: all 0.2s ease;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-link:hover {
+      background: rgba(0, 54, 49, 0.1);
+      transform: translateX(-2px);
+    } 
+
+    /* ADD THIS - h2 styles were missing */
     h2 {
       color: #0d3d38;
-      font-size: 42px;
+      font-size: 48px;
       font-weight: 400;
-      margin-bottom: 35px;
+      margin-bottom: 50px;
       letter-spacing: -0.5px;
     }
 
@@ -344,7 +374,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       justify-content: center;
       align-items: flex-start;
       padding: 60px;
-      position: relative;
+      position: fixed; /* changed from relative */
+      right: 0;
+      top: 0;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -453,15 +486,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <div class="left">
-    <div class="logo">
-      <img src="images/loginlogo.png" alt="Logo">
-      <div class="logo-text">
-        <span class="name">EVERGREEN</span>
-        <span class="tagline">Secure. Invest. Achieve</span>
-      </div>
+  <!-- Logo on the left -->
+  <div class="logo">
+    <img src="images/loginlogo.png" alt="Logo">
+    <div class="logo-text">
+      <span class="name">EVERGREEN</span>
+      <span class="tagline">Secure. Invest. Achieve</span>
     </div>
+  </div>
 
-    <h2>Create an account</h2>
+  <!-- ADD THIS: Back button on the right -->
+  <div class="back-container">
+    <a href="viewing.php" class="back-link">←</a>
+  </div>
+
+  <h2>Create an Account</h2>
 
     <?php if (!empty($error)): ?>
       <div class="alert error"><?= htmlspecialchars($error) ?></div>

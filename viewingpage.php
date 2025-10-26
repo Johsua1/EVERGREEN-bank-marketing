@@ -5,11 +5,14 @@
        'use_strict_mode' => true
     ]);
 
-    session_start();
-        if (!isset($_SESSION['username'])) {
+    // Check if user is logged in
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
         header("Location: login.php");
         exit;
-}
+    }
+
+    // Get user info from session
+    $fullName = $_SESSION['full_name'] ?? (trim(($_SESSION['first_name'] ?? '') . ' ' . ($_SESSION['last_name'] ?? '')));
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +122,6 @@
         }
 
         .username-profile:hover {
-            background: rgba(255,255,255,0.1);
             color: #F1B24A;
         }
 
@@ -162,6 +164,65 @@
             background: rgba(255,255,255,0.1);
             color: #F1B24A;
         }
+        
+        .profile-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative; /* needed for dropdown positioning */
+        }
+
+        /* profile dropdown */
+        .profile-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;              /* now a button */
+            padding: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background-color: #003631;
+            display:block;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            background: #D9D9D9;
+            color: #003631;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            min-width: 160px;
+            z-index: 200;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: #003631;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .profile-dropdown a:hover {
+            background: rgba(0,0,0,0.04);
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
 
         .btn-primary {
             background: #F1B24A;
@@ -184,7 +245,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
-            min-height: 80vh;
+            min-height: 100vh;
         }
 
 
@@ -687,14 +748,14 @@
             position: absolute;
             left: 0;
             top: 150%;
-            width: 100vw;
+            width: 150vw;
             background-color: #D9D9D9;
             padding: 1.5rem 0;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             z-index: 99;
             text-align: center;
             transform: translateX(-50%);
-            left: 100%;
+            left: 150%;
             gap: 10rem;
         }
 
@@ -803,7 +864,7 @@
             <a href="viewingpage.php">Home</a>
 
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
+            <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
                 <div class="dropdown-content" id="cardsDropdown">
                     <a href="cards/credit.php">Credit Cards</a>
                     <a href="cards/debit.php">Debit Cards</a>
@@ -817,11 +878,19 @@
         </div>
 
         <div class="nav-buttons">
-            <a href="login.php" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="cards/profile.php" class="profile-btn">
-                    <img src="images/pfp.png" alt="Profile Icon">
-                </a>
+            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+
+            <div class="profile-actions">
+                <div class="logo-icon" style="width:40px;height:40px;">
+                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
+                        <img src="images/pfp.png" alt="Profile Icon">
+                    </button>
+                </div>
+
+                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
+                    <a href="cards/profile.php" role="menuitem">Profile</a>
+                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -990,10 +1059,10 @@
         <div class="footer-bottom">
             <p>© 2023 Evergreen Bank. All rights reserved.<br>Member FDIC. Equal Housing Lender. Evergreen Bank, N.A.</p>
             <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms and Agreements</a>
-                <a href="#">FAQS</a>
-                <a href="#">About Us</a>
+                <a href="policy.php">Privacy Policy</a>
+                <a href="terms.php">Terms and Agreements</a>
+                <a href="faq.php">FAQS</a>
+                <a href="about.php">About Us</a>
             </div>
         </div>
     </footer>
@@ -1077,6 +1146,202 @@
                 }
             }
         }); 
+
+        // Profile Toggle Dropdown
+        function toggleProfileDropdown(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            const isOpen = dd.classList.toggle('show');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        // close profile dropdown when clicking outside or pressing Esc
+        window.addEventListener('click', function (e) {
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            if (!dd) return;
+            if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+                dd.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dd = document.getElementById('profileDropdown');
+                const btn = document.getElementById('profileBtn');
+                if (dd && dd.classList.contains('show')) {
+                    dd.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        // Custom styled confirmation modal that matches Evergreen Bank design
+function showSignOutModal(event) {
+    event.preventDefault();
+    
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 54, 49, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.2s ease;
+    `;
+    
+    // Create modal content
+    modal.innerHTML = `
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+        <div style="
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-size: 2rem;
+            ">⚠️</div>
+            
+            <h3 style="
+                color: #003631;
+                margin-bottom: 0.75rem;
+                font-size: 1.75rem;
+                font-weight: 600;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Sign Out</h3>
+            
+            <p style="
+                color: #666;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Are you sure you want to sign out of your account?</p>
+            
+            <div style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+            ">
+                <button id="cancelBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: transparent;
+                    color: #003631;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Cancel</button>
+                
+                <button id="confirmBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: #003631;
+                    color: white;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Sign Out</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Get buttons
+    const cancelBtn = modal.querySelector('#cancelBtn');
+    const confirmBtn = modal.querySelector('#confirmBtn');
+    
+    // Add hover effects for Cancel button
+    cancelBtn.onmouseover = () => {
+        cancelBtn.style.background = '#f5f5f5';
+        cancelBtn.style.borderColor = '#003631';
+        cancelBtn.style.transform = 'translateY(-2px)';
+    };
+    cancelBtn.onmouseout = () => {
+        cancelBtn.style.background = 'transparent';
+        cancelBtn.style.transform = 'translateY(0)';
+    };
+    
+    // Add hover effects for Confirm button
+    confirmBtn.onmouseover = () => {
+        confirmBtn.style.background = '#F1B24A';
+        confirmBtn.style.borderColor = '#F1B24A';
+        confirmBtn.style.color = '#003631';
+        confirmBtn.style.transform = 'translateY(-2px)';
+        confirmBtn.style.boxShadow = '0 4px 12px rgba(241, 178, 74, 0.3)';
+    };
+    confirmBtn.onmouseout = () => {
+        confirmBtn.style.background = '#003631';
+        confirmBtn.style.borderColor = '#003631';
+        confirmBtn.style.color = 'white';
+        confirmBtn.style.transform = 'translateY(0)';
+        confirmBtn.style.boxShadow = 'none';
+    };
+    
+    // Handle button clicks
+    cancelBtn.onclick = () => document.body.removeChild(modal);
+    confirmBtn.onclick = () => window.location.href = 'logout.php';
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
+    
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape' && document.body.contains(modal)) {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
     </script>
 </body>
 </html>

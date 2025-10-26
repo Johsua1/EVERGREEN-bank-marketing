@@ -89,8 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'nambio.johsua.agustin@gmail.com';
-                $mail->Password = 'tgpfxpvmgdihdtux'; // Your Gmail app password
+                $mail->Username = 'evrgrn.64@gmail.com';
+                $mail->Password = 'dourhhbymvjejuct'; // Your Gmail app password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
                 
@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->Timeout = 30; // Longer timeout
                 
                 // Recipients
-                $mail->setFrom('nambio.johsua.agustin@gmail.com', 'Evergreen Banking');
+                $mail->setFrom('evrgrn.64@gmail.com', 'Evergreen Banking');
                 $mail->addAddress($user['email'], $user['first_name'] . ' ' . $user['last_name']);
                 
                 // Content

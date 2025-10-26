@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$user = "root"; // default for XAMPP
-$pass = ""; // leave blank unless you set a password
+$user = "root"; 
+$pass = ""; 
 $db = "evergreen_bank";
 
 $conn = new mysqli($host, $user, $pass, $db);

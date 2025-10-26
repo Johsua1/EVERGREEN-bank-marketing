@@ -20,12 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result && $result->num_rows === 1) {
             $row = $result->fetch_assoc();
-
+            
             if (password_verify($password, $row['password'])) {
+                // Set session variables
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['email'] = $row['email'];
                 $_SESSION['first_name'] = $row['first_name'];
                 $_SESSION['last_name'] = $row['last_name'];
+                $_SESSION['bank_id'] = $row['bank_id'];
+                $_SESSION['full_name'] = $row['first_name'] . ' ' . $row['last_name'];
+
                 header("Location: viewingpage.php");
                 exit;
             } else {
@@ -60,53 +64,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .left {
-      width: 39%;
-      background: #ebe8df;
-      display: flex;
-      flex-direction: column;
-      padding: 0 80px;
-      padding-top: 100px;
-    }
+  width: 39%;
+  background: #ebe8df;
+  display: flex;
+  flex-direction: column;
+  padding: 0 80px;
+  padding-top: 100px;
+  position: relative; /* ADD THIS - makes absolute children position relative to this container */
+}
 
-    .logo {
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* Logo stays on the left */
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: auto;
+}
 
-    .logo img {
-      width: 42px;
-      height: 42px;
-    }
+.logo img {
+  width: 42px;
+  height: 42px;
+}
 
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-    }
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
 
-    .logo-text .name {
-      font-size: 15px;
-      font-weight: 700;
-      color: #0d3d38;
-      letter-spacing: 0.3px;
-    }
+.logo-text .name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0d3d38;
+  letter-spacing: 0.3px;
+}
 
-    .logo-text .tagline {
-      font-size: 10px;
-      color: #666;
-      letter-spacing: 0.2px;
-    }
+.logo-text .tagline {
+  font-size: 10px;
+  color: #666;
+  letter-spacing: 0.2px;
+}
 
-    h2 {
-      color: #0d3d38;
-      font-size: 48px;
-      font-weight: 400;
-      margin-bottom: 50px;
-      letter-spacing: -0.5px;
-    }
+/* Back button - on the right side of LEFT panel */
+.back-container {
+  position: absolute;
+  top: 30px;
+  right: 80px; /* Changed from 30px to align with left panel padding */
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  font-size: 28px;
+  text-decoration: none;
+  color: #003631;
+  transition: all 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-link:hover {
+  background: rgba(0, 54, 49, 0.1);
+  transform: translateX(-2px);
+}
+
+/* ADD THIS - h2 styles were missing */
+h2 {
+  color: #0d3d38;
+  font-size: 48px;
+  font-weight: 400;
+  margin-bottom: 50px;
+  letter-spacing: -0.5px;
+}
+
 
     .input-wrapper {
       margin-bottom: 22px;
@@ -328,15 +363,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
   <div class="left">
-    <div class="logo">
-      <img src="images/loginlogo.png" alt="Logo">
-      <div class="logo-text">
-        <span class="name">EVERGREEN</span>
-        <span class="tagline">Secure. Invest. Achieve</span>
-      </div>
+  <!-- Logo on the left -->
+  <div class="logo">
+    <img src="images/loginlogo.png" alt="Logo">
+    <div class="logo-text">
+      <span class="name">EVERGREEN</span>
+      <span class="tagline">Secure. Invest. Achieve</span>
     </div>
+  </div>
 
-    <h2>Log In</h2>
+  <!-- ADD THIS: Back button on the right -->
+  <div class="back-container">
+    <a href="viewing.php" class="back-link">←</a>
+  </div>
+
+  <h2>Log In</h2>
 
     <form method="POST">
       <div class="input-wrapper">
