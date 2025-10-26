@@ -309,6 +309,18 @@
         color: #D43F3A;
         font-size: 13px;
         margin-top: 6px;
+        display: none; /* hidden until validation triggers */
+      }
+
+      .field-error {
+        color: #D43F3A;
+        font-size: 12px;
+        margin-top: 6px;
+        display: none;
+      }
+
+      .input-error {
+        border-color: #D43F3A;
       }
 
       /* Review Modal */
@@ -372,6 +384,36 @@
         border-radius: 15px;
         width: 80px;
         border: none;
+      }
+
+      /* Success modal */
+      .successful-modal {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        width: 40%;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .s-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: center;
+      }
+
+      #confirm-btn {
+        background-color: #003631;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
       }
 
     </style>
@@ -557,8 +599,10 @@
               <div>
                 <h3 class="section-title">Terms and Agreements</h3>
                 <div class="terms-box">
-                  <label style="display:flex; gap:8px; align-items:flex-start;"><input type="checkbox" value="I agree"> I agree to the <strong>Terms and Conditions</strong> of Evergreen Bank.</label>
-                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" value="I acknowledge"> I acknowledge that I have received and read the <strong>Privacy Policy</strong>.</label>
+                  <label style="display:flex; gap:8px; align-items:flex-start;"><input type="checkbox" value="I agree" id="term-tnc"> I agree to the <strong>Terms and Conditions</strong> of Evergreen Bank.</label>
+                  <p style="color: red;" id="error-tnc">agree to terms and condition</p>
+                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" id="term-privacy" value="I acknowledge"> I acknowledge that I have received and read the <strong>Privacy Policy</strong>.</label>
+                  <p style="color: red;" id="error-privacy">agree to privacy</p>
                   <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" value="consent"> I consent to receive marketing communications from Evergreen Bank about products and services that may interest me.</label>
                 </div>
               </div>
@@ -572,6 +616,7 @@
       </div>
     </main>
 
+    <!-- Review Modal -->
     <div class="modal-container" style="display: none;">
       <div class="details-review">
         <h2 class="confirm-title">Please confirm the details below</h2>
@@ -647,156 +692,250 @@
         </div>
       </div>
     </div>
-  </body>
-  <script>
 
-    // three panels
+    <!-- Successful Modal -->
+     <div class="modal-container" id="success-modal=container" style="display: none;">
+      <div class="successful-modal">
+        <img src="contents/circle-check-filled.png" alt="success" class="check">
+        <h2 class="head-text">Success!</h2>
+        <h3 class="sub-text">Your application has been successfully submitted.</h3>
+        <div class="s-wrap">
+          <p class="grey-text" id="ref-id">0000</p><!-- make this dynamic/random -->
+          <p class="grey-text" id="date-submitted">0/00/0000</p>
+        </div>
+        <button class="action-button" id="confirm-btn">CONFIRM</button>
+      </div>
+     </div>
+  </body>
+    <script>
+    // panels
     let personalInfoPanel = document.querySelector(".personal-info-panel");
     let verificationPanel = document.querySelector(".verification-part");
     let reviewPanel = document.querySelector(".review-part");
 
-    // button visibility
+    // buttons
     let prevBtn = document.getElementById("button-prev");
     let nextBtn = document.getElementById("button-next");
 
-    // Part progress
+    // progress elements
     let formPartI = document.getElementById("form-part-I");
     let formPartII = document.getElementById("form-part-II");
     let formPartIII = document.getElementById("form-part-III");
-
-    // line progress
     let lineI = document.getElementById("line-I");
     let lineII = document.getElementById("line-II");
 
-    // modal review 
+    // modal elements
     let modalContainer = document.querySelector(".modal-container");
     let okBtn = document.getElementById("ok");
     let cancelBtn = document.getElementById("cancel");
+    let successModal = document.getElementById("success-modal=container");
+    let confirmBtn = document.getElementById("confirm-btn");
 
-    // temporary data container
+    // state
     let infoData = [];
-
     let step = 1;
+    let acctType = null;
 
-    // button event listener
-    document.querySelector(".btn-container").addEventListener("click", function(event) {
-      const target = event.target;
-
-      if (target.id === "button-next") {
-        step++;
-      } else if (target.id === "button-prev") {
-        step--;
+    // helper: show/hide field errors
+    function showFieldError(inputEl, message) {
+      inputEl.classList.add('input-error');
+      let next = inputEl.nextElementSibling;
+      if (!next || !next.classList || !next.classList.contains('field-error')) {
+        let err = document.createElement('div');
+        err.className = 'field-error';
+        err.textContent = message;
+        inputEl.insertAdjacentElement('afterend', err);
+        err.style.display = 'block';
+      } else {
+        next.textContent = message;
+        next.style.display = 'block';
       }
+    }
 
-      if(step === 2 || step === 3) {
-        this.style.justifyContent = "space-between";
-      } 
-
-      counter();
-      formPartCount();
-    });
-
-    let acctType;
-
-    // account type selection
-    document.querySelector(".account-type-cards").addEventListener("click", function(event) {
-      const target = event.target.id;
-
-      if(target === "acct-checking") {
-        document.getElementById("acct-checking").classList.toggle("selected");
-        document.getElementById("acct-savings").classList.remove("selected");
-        document.getElementById("acct-both").classList.remove("selected");
-      } else if(target === "acct-savings") {
-        document.getElementById("acct-savings").classList.toggle("selected");
-        document.getElementById("acct-checking").classList.remove("selected");
-        document.getElementById("acct-both").classList.remove("selected");
-      } else if(target === "acct-both") {
-        document.getElementById("acct-both").classList.toggle("selected");
-        document.getElementById("acct-checking").classList.remove("selected");
-        document.getElementById("acct-savings").classList.remove("selected");
+    function clearFieldError(inputEl) {
+      inputEl.classList.remove('input-error');
+      let next = inputEl.nextElementSibling;
+      if (next && next.classList && next.classList.contains('field-error')) {
+        next.style.display = 'none';
       }
+    }
 
-      acctType = target;
+    // Basic validators
+    function isNotEmpty(val) { return val !== null && String(val).trim() !== ''; }
+    function isEmail(val) { return /^\S+@\S+\.\S+$/.test(val); }
+    function isNumeric(val) { return /^\d+(?:\.\d+)?$/.test(String(val).trim()); }
+    function isSSN(val) { return /^(\d{3}-?\d{2}-?\d{4})$/.test(String(val).trim()); }
 
-    });
-
-    // form submission
-    nextBtn.addEventListener("click", function() {
-      if(step === 3) {
-        let injector = {
-          firstName: document.getElementById("f-name").value,
-          lastName: document.getElementById("l-name").value,
-          email: document.getElementById("e-mail").value,
-          phoneNumber: document.getElementById("phone-number").value,
-          dateOfBirth: document.getElementById("date-of-birth").value,
-          streetAddress: document.getElementById("street-address").value,
-          city: document.getElementById("city").value,
-          state: document.getElementById("state").value,
-          zipCode: document.getElementById("zip-code").value,
-          socialSecurityNumber: document.getElementById("ssn").value,
-          idType: document.getElementById("id-type").value,
-          idNumber: document.getElementById("id-number").value,
-          employmentStatus: document.getElementById("employment-status").value,
-          employerName: document.getElementById("employer-name").value,
-          jobTitle: document.getElementById("job-title").value,
-          annualIncome: document.getElementById("annual-income").value,
-          accountType: acctType,
+    // Per-step validation
+    function validatePersonal() {
+      let valid = true;
+      const required = ['f-name','l-name','e-mail','phone-number','date-of-birth','street-address','city','state','zip-code'];
+      required.forEach(id => {
+        const el = document.getElementById(id);
+        if (!isNotEmpty(el.value)) {
+          showFieldError(el, 'This field is required');
+          valid = false;
+        } else {
+          clearFieldError(el);
         }
+      });
 
-        infoData.push(injector);
-        console.log(infoData);
+      const emailEl = document.getElementById('e-mail');
+      if (isNotEmpty(emailEl.value) && !isEmail(emailEl.value)) {
+        showFieldError(emailEl, 'Enter a valid email address');
+        valid = false;
+      }
 
-        modalContainer.style.display = "flex";
-        displayCred("rev-f-name", injector.firstName);
-        displayCred("rev-l-name", injector.lastName);
-        displayCred("rev-birth", injector.dateOfBirth);
-        displayCred("rev-street", injector.streetAddress);
-        displayCred("rev-city", injector.city);
-        displayCred("rev-state", injector.state);
-        displayCred("rev-zip", injector.zipCode);
-        displayCred("rev-ssn", injector.socialSecurityNumber);
-        displayCred("rev-id-type", injector.idType);
-        displayCred("rev-id-number", injector.idNumber);
-        displayCred("rev-employment-status", injector.employmentStatus);
-        displayCred("rev-employer-name", injector.employerName);
-        displayCred("rev-job-title", injector.jobTitle);
-        displayCred("rev-annual-income", "$" + injector.annualIncome);
+      return valid;
+    }
+
+    function validateVerification() {
+      let valid = true;
+      const ssnEl = document.getElementById('ssn');
+      if (!isNotEmpty(ssnEl.value) || !isSSN(ssnEl.value)) {
+        showFieldError(ssnEl, 'Enter a valid SSN (e.g. 123-45-6789)');
+        valid = false;
+      } else { clearFieldError(ssnEl); }
+
+      const idNum = document.getElementById('id-number');
+      if (!isNotEmpty(idNum.value)) { showFieldError(idNum, 'ID number required'); valid = false; } else { clearFieldError(idNum); }
+
+      const employer = document.getElementById('employer-name');
+      const job = document.getElementById('job-title');
+      const income = document.getElementById('annual-income');
+      const employment = document.getElementById('employment-status');
+
+      if (!isNotEmpty(employment.value)) { showFieldError(employment, 'Select employment status'); valid = false; } else { clearFieldError(employment); }
+      if (!isNotEmpty(employer.value)) { showFieldError(employer, 'Employer is required'); valid = false; } else { clearFieldError(employer); }
+      if (!isNotEmpty(job.value)) { showFieldError(job, 'Job title required'); valid = false; } else { clearFieldError(job); }
+      if (!isNotEmpty(income.value) || !isNumeric(income.value)) { showFieldError(income, 'Enter numeric income'); valid = false; } else { clearFieldError(income); }
+
+      return valid;
+    }
+
+    function validateReview() {
+      let valid = true;
+      const tnc = document.getElementById('term-tnc');
+      const privacy = document.getElementById('term-privacy');
+      const errTnc = document.getElementById('error-tnc');
+      const errPrivacy = document.getElementById('error-privacy');
+
+      if (!tnc.checked) { errTnc.style.display = 'block'; valid = false; } else { errTnc.style.display = 'none'; }
+      if (!privacy.checked) { errPrivacy.style.display = 'block'; valid = false; } else { errPrivacy.style.display = 'none'; }
+
+      return valid;
+    }
+
+    // account type selection (toggle single selection)
+    document.querySelector('.account-type-cards').addEventListener('click', function(e) {
+      let card = e.target.closest('.acct-card');
+      if (!card) return;
+      document.querySelectorAll('.acct-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      acctType = card.id; // store selected id
+    });
+
+    // Next/Prev handlers with validation
+    prevBtn.addEventListener('click', function() {
+      if (step > 1) step--;
+      updateStepUI();
+    });
+
+    nextBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (step === 1) {
+        if (!validatePersonal()) return;
+        step++;
+        updateStepUI();
+        return;
+      }
+      if (step === 2) {
+        if (!validateVerification()) return;
+        step++;
+        updateStepUI();
+        return;
+      }
+      if (step === 3) {
+        if (!validateReview()) return;
+        // All good — gather data and show review modal
+        let injector = {
+          firstName: document.getElementById('f-name').value,
+          lastName: document.getElementById('l-name').value,
+          email: document.getElementById('e-mail').value,
+          phoneNumber: document.getElementById('phone-number').value,
+          dateOfBirth: document.getElementById('date-of-birth').value,
+          streetAddress: document.getElementById('street-address').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          zipCode: document.getElementById('zip-code').value,
+          socialSecurityNumber: document.getElementById('ssn').value,
+          idType: document.getElementById('id-type').value,
+          idNumber: document.getElementById('id-number').value,
+          employmentStatus: document.getElementById('employment-status').value,
+          employerName: document.getElementById('employer-name').value,
+          jobTitle: document.getElementById('job-title').value,
+          annualIncome: document.getElementById('annual-income').value,
+          accountType: acctType,
+        };
+        infoData = [injector];
+        // populate review modal
+        displayCred('rev-f-name', injector.firstName);
+        displayCred('rev-l-name', injector.lastName);
+        displayCred('rev-birth', injector.dateOfBirth);
+        displayCred('rev-street', injector.streetAddress);
+        displayCred('rev-city', injector.city);
+        displayCred('rev-state', injector.state);
+        displayCred('rev-zip', injector.zipCode);
+        displayCred('rev-ssn', injector.socialSecurityNumber);
+        displayCred('rev-id-type', injector.idType);
+        displayCred('rev-id-number', injector.idNumber);
+        displayCred('rev-employment-status', injector.employmentStatus);
+        displayCred('rev-employer-name', injector.employerName);
+        displayCred('rev-job-title', injector.jobTitle);
+        displayCred('rev-annual-income', '$' + injector.annualIncome);
+
+        modalContainer.style.display = 'flex';
       }
     });
 
-    okBtn.addEventListener("click", function() {
-      modalContainer.style.display = "none";
-      alert("Form submitted successfully!");
-      location.reload();
+    okBtn.addEventListener('click', function() {
+      modalContainer.style.display = 'none';
+      successModal.style.display = 'flex';
     });
 
-    cancelBtn.addEventListener("click", function() {
-      modalContainer.style.display = "none";
-    });
+    cancelBtn.addEventListener('click', function() { modalContainer.style.display = 'none'; });
+
+    confirmBtn.addEventListener('click', function() { successModal.style.display = 'none'; location.reload(); });
+
+    // display a ref id and date submitted dynamically (Success modal)
+    let refId = Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('ref-id').textContent = 'Reference ID: ' + refId;
+    let currentDate = new Date();
+    let formattedDate = (currentDate.getMonth() + 1) + '/' + currentDate.getDate() + '/' + currentDate.getFullYear();
+    document.getElementById('date-submitted').textContent = 'Date Submitted: ' + formattedDate;
 
     // display credentials in review modal
     function displayCred(name, value) {
       let elements = document.getElementsByClassName(name);
-      for (let i = 0; i < elements.length; i++) {
-        elements[i].textContent = value;
-      }
+      for (let i = 0; i < elements.length; i++) { elements[i].textContent = value; }
     }
 
-    function counter() {
-      personalInfoPanel.style.display =  (step === 1 || step === 4) ? "flex" : "none";
-      verificationPanel.style.display =  (step === 2) ? "flex" : "none";
-      reviewPanel.style.display =  (step === 3) ? "flex" : "none";
-      prevBtn.style.display = (step === 2 || step === 3) ? "flex" : "none";
-      nextBtn.textContent = (step === 3) ? "Submit" : "next";
+    function updateStepUI() {
+      personalInfoPanel.style.display = (step === 1) ? 'flex' : 'none';
+      verificationPanel.style.display = (step === 2) ? 'flex' : 'none';
+      reviewPanel.style.display = (step === 3) ? 'flex' : 'none';
+      prevBtn.style.display = (step === 2 || step === 3) ? 'flex' : 'none';
+      nextBtn.textContent = (step === 3) ? 'Submit' : 'Next';
+      // progress
+      formPartI.style.backgroundColor = (step >= 1) ? '#003631' : 'white';
+      formPartII.style.backgroundColor = (step >= 2) ? '#003631' : 'white';
+      lineI.style.backgroundColor = (step >= 2) ? '#003631' : 'white';
+      lineII.style.backgroundColor = (step >= 3) ? '#003631' : 'white';
+      formPartIII.style.backgroundColor = (step >= 3) ? '#003631' : 'white';
     }
 
-    function formPartCount() {
-      formPartI.style.backgroundColor = (step === 1 || step === 2 || step === 3) ?"#003631" : "white";
-      formPartII.style.backgroundColor = (step === 2 || step === 3) ? "#003631" : "white";
-      lineI.style.backgroundColor = (step === 2 || step === 3) ? "#003631" : "white";
-      lineII.style.backgroundColor = (step === 3) ? "#003631" : "white";
-      formPartIII.style.backgroundColor = (step === 3) ?"#003631" : "white";
-    }
+    // initialize UI
+    updateStepUI();
 
   </script>
 </html>
