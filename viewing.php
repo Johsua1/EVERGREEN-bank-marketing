@@ -272,12 +272,13 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease-out, box-shadow 0.3s;
             cursor: pointer;
         }
 
-        .solution-card:hover {
-            transform: translateY(-5px);
+        .solution-card:hover, .loan-card:hover {
+            transform: scale(1.1);
+            transition: 0.3s ease-in;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
@@ -432,10 +433,6 @@
             transition: transform 0.3s;
         }
 
-        .loan-card:hover {
-            transform: translateY(-10px);
-        }
-
         .loan-image {
             width: 100%;
             height: 150px;
@@ -557,6 +554,192 @@
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+        }
+
+        /* Career Section */
+        .career-section {
+            background: #003631;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 60px 0px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            color: white;
+            padding-right: 40px;
+        }
+
+        .content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #F1B24A;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        .content .intro {
+            font-size: 1rem;
+            margin-bottom: 35px;
+            line-height: 1.7;
+            color: #ffffff;
+        }
+
+        .content h2 {
+            font-size: 1.1rem;
+            color: #F1B24A;
+            margin-bottom: 12px;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .location {
+            margin: 20px 0 25px 0;
+            font-size: 0.95rem;
+        }
+
+        .location strong {
+            color: #F1B24A;
+        }
+
+        .requirements {
+            margin-top: 25px;
+        }
+
+        .requirements h2 {
+            margin-bottom: 15px;
+        }
+
+        .requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .requirements li {
+            padding: 6px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .requirements li::before {
+            content: '•';
+            color: #F1B24A;
+            font-weight: bold;
+            font-size: 1.4rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .note {
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;
+        }
+
+        .note strong {
+            color: #F1B24A;
+        }
+
+        .image-container {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -40%;
+        }
+
+        .image-wrapper {
+            background-image: url("images/bg-image-1.jpg");
+            border-radius: 50%;
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .curved-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .curved-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 5px solid #F1B24A;
+            border-radius: 50%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .curved-image img {
+            width: 100%;
+            height: 100%;
+            height: auto;
+            display: block;
+            z-index: 1;
+        }
+
+        .decorative-curve img {
+            margin-right: -150%;
+            position: absolute;
+            margin-top: -100%;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        /* Decorative dots grid */
+        .decorative-dots {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: grid;
+            grid-template-columns: repeat(5, 6px);
+            grid-template-rows: repeat(3, 6px);
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .decorative-dots span {
+            width: 6px;
+            height: 6px;
+            background: rgba(241, 178, 74, 0.7);
+            border-radius: 50%;
         }
 
         .social-icon:hover {
@@ -755,11 +938,10 @@
                 </span>
         </div>
         <div class="nav-buttons">
-            <a href="login.php" class="btn btn-login">Login
-
-            </a>
+            <a href="login.php" class="btn btn-login">Login</a>
                 
-            <button class="btn btn-primary">Get Started</button>
+            <a href="login.php" class="btn btn-primary">Get Started</a>
+
         </div>
     </nav>
 
@@ -879,6 +1061,68 @@
         </div>
     </section>
 
+    <!-- Career Section -->
+    <section class="career-section">
+        <div class="container">
+            <div class="content">
+                <h1>Build a Meaningful Career in the World of Banking!</h1>
+                
+                <p class="intro">
+                    At Evergreen Bank, we believe that our employees are the heart of our success. We're looking 
+                    for dedicated, skilled, and passionate individuals who are ready to grow with us. Whether you're 
+                    an experienced banker or a fresh graduate eager to learn, we provide a supportive environment 
+                    where your talents can thrive and your career can flourish.
+                </p>
+
+                <div class="application-info">
+                    <h2>How to apply?</h2>
+                    <p>
+                        Interested applicants are encouraged to personally visit our branch to submit their application. 
+                        Please bring the following requirements and apply directly at Evergreen Bank's Human Resources 
+                        Department.
+                    </p>
+                </div>
+
+                <div class="location">
+                    <strong>Where to Apply:</strong><br>
+                    Evergreen Bank Main Branch<br>
+                    123 Evergreen Avenue, City Center
+                </div>
+
+                <div class="requirements">
+                    <h2>Requirements:</h2>
+                    <ul>
+                        <li>Updated Resume / Curriculum Vitae</li>
+                        <li>Application Letter</li>
+                        <li>Valid ID</li>
+                        <li>Photocopy of Transcript of Records (if applicable)</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <strong>Note:</strong> Walk-in applicants are welcome. Our HR team will be glad to assist you with the next steps in your 
+                    application process.
+                </div>
+            </div>
+
+            <div class="image-container">
+                <div class="image-wrapper">
+                    <div class="curved-image">
+                        <img src="images/recruit.png" alt="Professional woman in business suit shaking hands">
+                        <div class="decorative-dots">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="decorative-curve">
+                        <img src="images/recruitstyle.png" alt="Images Design">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -967,14 +1211,6 @@
             lastScroll = currentScroll;
         });
 
-        // Card hover effects
-        const cards = document.querySelectorAll('.solution-card, .loan-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transition = 'transform 0.3s ease';
-            });
-        });
-
         // Button click animations
 
 
@@ -992,14 +1228,6 @@
                 }
             });
         }, observerOptions);
-
-        // Observe cards and sections
-        document.querySelectorAll('.solution-card, .loan-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
 
         function toggleDropdown() {
             const dropdown = document.getElementById("cardsDropdown");
