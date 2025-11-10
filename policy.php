@@ -5,204 +5,259 @@
        'use_strict_mode' => true
     ]);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy Policy - Evergreen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Kulim+Park:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* General */
-    * {
-      font-family: "Inter", sans-serif;
-      color: white;
+    :root{
+      --bg-1:#003631;
+      --bg-2:#0b7f6f;
+      --card-bg: rgba(244,250,248,0.98);
+      --accent: #F1B24A;
+      --muted:#36524e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#083530}
+    body{
+      background: linear-gradient(180deg, var(--bg-1) 0%, #0a8d79 45%, #26b59f 100%);
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      height: 100vh;
+      width: 100%;
     }
 
-    body {
-        background: linear-gradient(to bottom, #005a52, #8be1d4);
-        height: 200%;
+    /* top-left logo small */
+    .site-top{
+      position:fixed;
+      left:28px;
+      top:20px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      color: #e6fff9;
+      font-family: "Kulim Park",sans-serif;
+      z-index:50;
     }
 
-    h1, h2, h3, h4, h5, h6, p {
-      margin: 0;
-      padding: 0;
+    .site-top img { 
+      width:52px;
+      height:48px;
+      border-radius:50%;
+      display:block; 
     }
 
-    /* Navigation Bar */
-    nav {
-      font-family: "Kulim Park", sans-serif; 
-      display: flex;
-      gap: 10px;
-      position: sticky;
-      top: 0;
+    .site-top .brand a { 
+      font-weight:bold;
+      font-size:20px;
+      line-height:1; 
+      color: #ffffff; 
+      text-decoration: none; 
+    }
+    
+    .site-top .motto a { 
+      font-size:12px; 
+      color:rgba(230,255,249,0.9); 
+      margin-top:4px; 
+      font-weight:400; 
+      text-decoration: none; 
     }
 
-    nav img {
-        width: 3.5%;
-        height: 50%;
-        border-radius: 50%;
+    .page-wrap{
+      width:100%;
+      max-width:1150px;
+      align-self: center;
     }
 
-    .main-container {
-      margin-top: 20px;
-      padding-right: 10px;
-      background: linear-gradient(to bottom, #E8FDF8, #9CE7D8);
-      border-radius: 15px;
-      padding: 20px;
-      width: 80%;
-      text-align: center;
+    .heading{
+      text-align:center;
+      color: #ffffff;
+      margin-bottom:18px;
+      font-size: 50px;
+    }
+    
+    .heading h1{
+      font-family:"Kulim Park",sans-serif;
+      font-weight:700;
+      margin:0 0 8px;
+      color:#f7fff8;
+    }
+    .heading p{
+      margin:0 auto;
+      max-width:820px;
+      color: rgba(230,255,249,0.9);
+      font-size:13px;
+      line-height:1.6;
     }
 
-    /* Main Contents */
-    main {
+    #policy-title {
+      font-size: 50px;
+    }
+
+    /* policy card */
+    .policy-card{
+      margin-top:26px;
+      background: var(--card-bg);
+      border-radius:14px;
+      padding:34px;
+      box-shadow: 0 18px 44px rgba(2,24,20,0.32);
+      border: 1px solid rgba(0,54,49,0.06);
+      position:relative;
+      overflow:visible;
+      width: 100%;
+    }
+
+    .policy-columns{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:40px;
+      position:relative;
+    }
+    /* center vertical divider */
+    .policy-columns::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:28px;
+      bottom:28px;
+      width:1px;
+      background: rgba(0,54,49,0.06);
+      transform:translateX(-50%);
+      pointer-events:none;
+    }
+
+    .col {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
       gap: 20px;
     }
 
-    .heading, .sub-heading {
-      font-family: "Kulim Park", sans-serif;
-    } 
+    .col h3{
+      font-family:"Kulim Park",sans-serif;
+      color:var(--bg-1);
+      font-size:14px;
+      margin:0 0 10px;
+      font-weight:700;
+    }
+    .col p{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .list-small{
+      font-size:13px;
+      color:var(--muted);
+      margin:0 0 12px 0;
+      padding-left:16px;
+    }
+    .list-small li{ margin:8px 0; }
 
-    .heading {
-      font-size: 36px;
-      font-weight: 700;
+    #gmail-link {
+      color: #003631;
     }
 
-    .sub-heading {
-      font-size: 10px;
-      font-weight: 400;
-      max-width: 600px;
+    /* social icons bottom-right inside card */
+    .card-footer{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      gap:12px;
+      margin-top:8px;
+    }
+    .social{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .social a{
+      display:inline-flex;
+      width:34px;height:34px;
+      border-radius:8px;
+      background:rgba(0,54,49,0.04);
+      color:var(--bg-1);
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
     }
 
-    /* Privacy Contents */
-    .main-container {
-      display: flex;
-      gap: 20px;
-      text-align: left;
-      color: #005a52;
-      padding: 40px;
-      flex-direction: column;
+    /* responsive */
+    @media (max-width:920px){
+      .policy-columns{ grid-template-columns:1fr; }
+      .policy-columns::before{ display:none; }
+      .policy-card{ padding:24px; }
+      .heading h1{ font-size:22px; }
     }
-
-    .main-wrap {
-      display: flex;
-      gap: 40px;
-    }
-
-    .left, .right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-
-    .prv-title, .prv-desc {
-      font-family: "Kulim Park", sans-serif;
-    }
-
-    .prv-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #005a52;
-    }
-
-    .prv-desc {
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #005a52;
-    }
-
-    /* Social Media */
-    .social-links {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            padding-right: 2rem;
-        }
-
-        .social-links a {
-            color: #003631;
-            font-size: 1.3rem;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: #F1B24A;
-        }
   </style>
 </head>
 <body>
-    <nav>
-      <img src="images/icon.png" alt="logo" class="logo">
-      <div class="nav-wrap">
-        <h2 class="web-title">EVERGREEN</h2>
-        <p class="motto">Secure, Invest, Achieve</p>
+  <div class="site-top" aria-hidden="false">
+    <a href="viewingpage.php">
+      <img src="images/icon.png" alt="Evergreen logo">
+    </a>
+    <div>
+      <div class="brand">
+        <a href="viewingpage.php">EVERGREEN</a>
       </div>
-  </nav>
-
-    <main>
-      <h1 class="heading">Privacy Policy</h1>
-      <p class="sub-heading">At Evergreen we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and services.</p>
-    <div class="main-container">
-      <div class="main-wrap">
-        <div class="left">
-          <div class="wrap">
-            <h2 class="prv-title">1. Information We Collect</h2>
-            <p class="prv-desc">At Evergreen we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and services.</p>
-          </div>
-
-          <div class="wrap">
-            <h2 class="prv-title">2. How We Use Your Information</h2>
-            <p class="prv-desc">Your information is used to:</p>
-            <p class="prv-desc">• Process and verify loan applications</p>
-            <p class="prv-desc">• Provide updates on marketing offers and promotions</p>
-            <p class="prv-desc">• Improve our website and services</p>
-            <p class="prv-desc">• Communicate important account information</p>
-          </div>
-
-          <div class="wrap">
-            <h2 class="prv-title">3. Data Protection</h2>
-            <p class="prv-desc">We use secure systems and encryption to protect your data from unauthorized access, loss, or misuse. Only authorized personnel have access to your information.</p>
-          </div>
-        </div>
-        <div class="right">
-            <div class="wrap">
-              <h2 class="prv-title">4. Information We Collect</h2>
-              <p class="prv-desc">We do not sell or share your personal data with third parties, except when required by law or to process your loan securely.</p>
-            </div>
-
-            <div class="wrap">
-              <h2 class="prv-title">5. Your Rights</h2>
-              <p class="prv-desc">You have the right to access, update, or request deletion of your personal information. You may also opt out of marketing communications at any time.</p>
-            </div>
-
-            <div class="wrap">
-              <h2 class="prv-title">6. Contact Us</h2>
-              <p class="prv-desc">If you have questions about this Privacy Policy, please contact us at <a href="mailto:example@gmail.com">example@gmail.com</a>.</p>
-            </div>
-        </div>
-      </div>
-      <div class="soc-icons-container">
-        <div class="social-links">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="Instagram">📷</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
-                </div>
-      </div>
+      <div class="motto">
+        <a href="viewingpage.php">Secure. Invest. Achieve</a></div>
     </div>
-  </main>
+  </div>
+
+  <div class="page-wrap" role="main">
+    <header class="heading" aria-labelledby="policy-title">
+      <h1 id="policy-title">Privacy Policy</h1>
+      <p>At Evergreen we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and services.</p>
+    </header>
+
+    <article class="policy-card" aria-labelledby="policy-title">
+      <div class="policy-columns">
+        <div class="col" aria-label="left column">
+          <h3>1. Information We Collect</h3>
+          <p>We collect information you provide when applying, registering, or communicating with us — name, contact details, identification, and financial data required to process services.</p>
+
+          <h3>2. How We Use Your Information</h3>
+          <ul class="list-small" aria-label="how we use info">
+            <li>Process and verify loan or account applications</li>
+            <li>Provide account notifications and support</li>
+            <li>Deliver marketing where opted-in and improve our services</li>
+          </ul>
+
+          <h3>3. Data Protection</h3>
+          <p>We use industry-standard encryption and strict access controls. Only authorized personnel access personal data and we continuously review security practices.</p>
+        </div>
+
+        <div class="col" aria-label="right column">
+          <h3>4. Sharing & Third Parties</h3>
+          <p>We do not sell personal data. We share information only with trusted service providers, regulators, or when required by law to deliver the requested services securely.</p>
+
+          <h3>5. Your Rights</h3>
+          <p>You can request access, correction, or deletion of your personal data. You may also opt out of promotional communications at any time.</p>
+
+          <h3>6. Contact Us</h3>
+          <p>If you have questions about this Privacy Policy, please contact us at <a href="#" id="gmail-link">evrgrn.64@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="card-footer" aria-hidden="true">
+        <div class="social" role="presentation">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+    </article>
+  </div>
 </body>
 </html>
