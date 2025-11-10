@@ -201,54 +201,55 @@
             background-color: #003631;
         }
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+        /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
+.dropdown {
+    position: relative;
+}   
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        /* Dropdown menu box */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
+/* Dropdown menu box - UPDATED FOR FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        /* Links inside dropdown */
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
 
         /* Hero Section */
         .hero {
@@ -396,7 +397,8 @@
         }
 
         .benefit-card:hover {
-            transform: translateY(-8px);
+            transform: scale(1.1);
+            transition: 0.2s ease-in;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
@@ -724,67 +726,125 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 6rem 5% 3rem;
-            }
+        /* Responsive - UPDATED */
+@media (max-width: 968px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 5% 3rem;
+    }
 
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
 
-            .credit-card-display {
-                width: 240px;
-                height: 150px;
-            }
+    .credit-card-display {
+        width: 240px;
+        height: 150px;
+        margin-left: 25%;
+    }
 
-            .nav-links {
-                gap: 1.5rem;
-            }
+    .nav-links {
+        gap: 1rem;
+    }
 
-            .dropdown-content {
-                min-width: 400px;
-            }
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
 
-        @media (max-width: 640px) {
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
 
-            .benefits-grid,
-            .cards-grid,
-            .discover-grid {
-                grid-template-columns: 1fr;
-            }
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
-            .card-buttons {
-                flex-direction: column;
-            }
+@media (max-width: 640px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-            .nav-links {
-                gap: 1rem;
-            }
+    .hero-content {
+        margin-top: 50px;
+    }
 
-            .nav-links a {
-                font-size: 0.9rem;
-            }
+    .logo {
+        font-size: 1rem;
+    }
 
-            .dropdown-content {
-                min-width: 300px;
-            }
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
 
-            .dropdown-content a {
-                margin: 0.5rem 0;
-                display: block;
-            }
-        }
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
+
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
+
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .benefits-grid,
+    .cards-grid,
+    .discover-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-buttons {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -828,7 +888,9 @@
 
                 <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
                     <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="logout.php" role="menuitem">Sign Out</a>
+                    <a href="../refer.php" role="menuitem">Refer to a friend</a>
+                    <a href="../cards/points.php" role="menuitem">Missions</a>
+                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
                 </div>
             </div>
         </div>
@@ -1099,7 +1161,7 @@
         }, observerOptions);
 
         // Observe cards for animation
-        document.querySelectorAll('.benefit-card, .card-item, .discover-card').forEach(el => {
+        document.querySelectorAll('.card-item, .discover-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -1145,6 +1207,171 @@
                 }
             }
         });
+
+        // Custom styled confirmation modal that matches Evergreen Bank design
+function showSignOutModal(event) {
+    event.preventDefault();
+    
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 54, 49, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.2s ease;
+    `;
+    
+    // Create modal content
+    modal.innerHTML = `
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+        <div style="
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-size: 2rem;
+            ">⚠️</div>
+            
+            <h3 style="
+                color: #003631;
+                margin-bottom: 0.75rem;
+                font-size: 1.75rem;
+                font-weight: 600;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Sign Out</h3>
+            
+            <p style="
+                color: #666;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Are you sure you want to sign out of your account?</p>
+            
+            <div style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+            ">
+                <button id="cancelBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: transparent;
+                    color: #003631;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Cancel</button>
+                
+                <button id="confirmBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: #003631;
+                    color: white;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Sign Out</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Get buttons
+    const cancelBtn = modal.querySelector('#cancelBtn');
+    const confirmBtn = modal.querySelector('#confirmBtn');
+    
+    // Add hover effects for Cancel button
+    cancelBtn.onmouseover = () => {
+        cancelBtn.style.background = '#f5f5f5';
+        cancelBtn.style.borderColor = '#003631';
+        cancelBtn.style.transform = 'translateY(-2px)';
+    };
+    cancelBtn.onmouseout = () => {
+        cancelBtn.style.background = 'transparent';
+        cancelBtn.style.transform = 'translateY(0)';
+    };
+    
+    // Add hover effects for Confirm button
+    confirmBtn.onmouseover = () => {
+        confirmBtn.style.background = '#F1B24A';
+        confirmBtn.style.borderColor = '#F1B24A';
+        confirmBtn.style.color = '#003631';
+        confirmBtn.style.transform = 'translateY(-2px)';
+        confirmBtn.style.boxShadow = '0 4px 12px rgba(241, 178, 74, 0.3)';
+    };
+    confirmBtn.onmouseout = () => {
+        confirmBtn.style.background = '#003631';
+        confirmBtn.style.borderColor = '#003631';
+        confirmBtn.style.color = 'white';
+        confirmBtn.style.transform = 'translateY(0)';
+        confirmBtn.style.boxShadow = 'none';
+    };
+    
+    // Handle button clicks
+    cancelBtn.onclick = () => document.body.removeChild(modal);
+    confirmBtn.onclick = () => window.location.href = '../logout.php';
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
+    
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape' && document.body.contains(modal)) {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
     </script>
 </body>
 </html>

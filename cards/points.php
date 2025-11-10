@@ -6,12 +6,12 @@
     ]);
     // Check if user is logged in
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
-        header("Location: viewing.php");
-    exit;
+        header("Location: ../login.php");
+        exit;
     }
 
     // Get user info from session
-        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
+    $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Points Details - Evergreen</title>
 
     <style>
         * {
@@ -69,7 +69,7 @@
         .logo-icon {
             width: 50px;
             height: 50px;
-            background: transparent; /* was #F1B24A */
+            background: transparent;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -81,7 +81,7 @@
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* change from cover -> contain */
+            object-fit: contain;
             object-position: center;
             display: block;
             border-radius: 50%;
@@ -129,15 +129,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
+            position: relative;
         }
 
-        /* profile dropdown */
         .profile-btn {
             width: 40px;
             height: 40px;
             background: transparent;
-            border: none;              /* now a button */
+            border: none;
             padding: 0;
             cursor: pointer;
             border-radius: 50%;
@@ -184,71 +183,55 @@
             display: block;
         }
 
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
+.dropdown {
+    position: relative;
+}   
 
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+/* Dropdown menu box - UPDATED FOR FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
-
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .dropdown-content a:hover {
-            color: #F1B24A;
-            text-decoration: underline;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
 
         /* Hero Section */
         .hero {
@@ -436,14 +419,16 @@
         .mission-card {
             background: linear-gradient(135deg, #fef8e8 0%, #fdf5dc 100%);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px 30px;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 120px 1px 1fr;
             gap: 25px;
+            align-items: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease;
             position: relative;
+            min-height: 140px;
         }
 
         .mission-card:hover {
@@ -451,91 +436,110 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
+        .mission-timestamp {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+        }
+
         .mission-points {
-            min-width: 100px;
-            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .mission-points-value {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 700;
             color: #0d4d3d;
             line-height: 1;
         }
 
         .mission-points-label {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
             margin-top: 5px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .mission-divider {
             width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, transparent, #ccc, transparent);
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, #d0d0d0, transparent);
+            align-self: center;
         }
 
         .mission-details {
-            flex: 1;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: row;
             gap: 20px;
+            justify-content: space-between;
         }
 
         .mission-description {
             font-size: 15px;
             color: #333;
-            line-height: 1.5;
-            margin-bottom: 0;
-            flex: 1;
+            line-height: 1.6;
+            font-weight: 500;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mission-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .collect-btn {
             background: linear-gradient(135deg, #0d4d3d 0%, #1a6b56 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 8px 32px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(13, 77, 61, 0.3);
+            box-shadow: 0 2px 8px rgba(13, 77, 61, 0.3);
             white-space: nowrap;
+            margin-top: 5%;
         }
 
         .collect-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(13, 77, 61, 0.4);
+            box-shadow: 0 4px 12px rgba(13, 77, 61, 0.4);
         }
 
         .collect-btn:active {
             transform: scale(0.98);
         }
 
+        .collect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .completed-badge {
             background: linear-gradient(135deg, #0d4d3d 0%, #1a6b56 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
             white-space: nowrap;
-        }
-
-        .mission-timestamp {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 12px;
-            color: #999;
+            cursor: default;
+            display: inline-block;
+            width: auto;
+            margin-top: 5%;
         }
 
         /* Scrollbar */
@@ -571,13 +575,6 @@
 
         .empty-state-text {
             font-size: 16px;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
         }
 
         /* Footer */
@@ -672,6 +669,761 @@
             text-decoration: none;
             font-size: 0.9rem;
         }
+
+/* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
+.dropdown {
+    position: relative;
+}   
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
+
+.dropbtn:hover {
+    color: #F1B24A;
+}
+
+/* Dropdown menu box - UPDATED FOR FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
+
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
+
+/* ------------------------------ */
+/* 📱 RESPONSIVE MEDIA QUERIES */
+/* ------------------------------ */
+
+/* Large Desktops (1200px - 1399px) */
+@media (max-width: 1399px) {
+    .hero-content h1 {
+        font-size: 4.5rem;
+    }
+}
+
+/* Small Desktops & Large Tablets (992px - 1199px) */
+@media (max-width: 1199px) {
+    nav {
+        padding: 1rem 3%;
+    }
+
+    .nav-links {
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        margin: 0 0.5rem;
+    }
+
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
+
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 6rem 5% 4rem;
+        gap: 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+    }
+
+    .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 600px;
+    }
+
+    .hero-apply {
+        justify-content: center;
+    }
+
+    .hero-image {
+        margin-top: 1rem;
+    }
+
+    .credit-card-display {
+        width: 480px;
+        height: 300px;
+    }
+
+    .points-card {
+        max-width: 85%;
+    }
+
+    .tabs, .tab-content {
+        max-width: 85%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 2.5rem;
+    }
+}
+
+/* Tablets (768px - 991px) */
+@media (max-width: 991px) {
+    nav {
+        padding: 1rem 2rem;
+    }
+
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
+
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
+
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .username-profile {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .hero {
+        padding: 6rem 3% 3rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .btn-apply {
+        padding: 0.8rem 1.75rem;
+        font-size: 0.95rem;
+    }
+
+    .credit-card-display {
+        width: 420px;
+        height: 260px;
+    }
+
+    .points-card {
+        max-width: 90%;
+        padding: 35px;
+    }
+
+    .points-value {
+        font-size: 60px;
+    }
+
+    .tabs, .tab-content {
+        max-width: 90%;
+    }
+
+    .tab {
+        font-size: 14px;
+        padding: 13px;
+    }
+
+    .mission-card {
+        grid-template-columns: 100px 1px 1fr;
+        gap: 20px;
+        padding: 20px 25px;
+    }
+
+    .mission-points-value {
+        font-size: 42px;
+    }
+
+    .mission-timestamp {
+        font-size: 10px;
+        top: 12px;
+        right: 20px;
+    }
+
+    .mission-description {
+        font-size: 14px;
+    }
+
+    .collect-btn, .completed-badge {
+        padding: 7px 28px;
+        font-size: 12px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-section:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Small Tablets & Large Phones (640px - 767px) */
+@media (max-width: 767px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
+
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
+
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .hero {
+        padding: 5.5rem 4% 3rem;
+    }
+
+    .hero-content {
+        margin-top: 50px;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .hero-apply {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .credit-card-display {
+        width: 350px;
+        height: 220px;
+    }
+
+    .card-chip {
+        width: 40px;
+        height: 30px;
+        left: 20px;
+        top: 50px;
+    }
+
+    .card-number {
+        font-size: 0.9rem;
+        bottom: 40px;
+        left: 20px;
+    }
+
+    .card-holder {
+        font-size: 0.75rem;
+        bottom: 18px;
+        left: 20px;
+    }
+
+    .points-card {
+        max-width: 92%;
+        padding: 30px 25px;
+    }
+
+    .points-label {
+        font-size: 10px;
+    }
+
+    .points-value {
+        font-size: 56px;
+    }
+
+    .points-subtitle {
+        font-size: 12px;
+    }
+
+    .tabs, .tab-content {
+        max-width: 92%;
+    }
+
+    .mission-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+        min-height: auto;
+    }
+
+    .mission-divider {
+        display: none;
+    }
+
+    .mission-timestamp {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .mission-points {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .mission-details {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .mission-description {
+        text-align: center;
+    }
+
+    .mission-actions {
+        justify-content: center;
+    }
+
+    .collect-btn, .completed-badge {
+        margin-top: 0;
+    }
+
+    footer {
+        padding: 2.5rem 1.5rem 1rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: left;
+    }
+
+    .footer-brand {
+        text-align: left;
+    }
+
+    .social-icons {
+        justify-content: flex-start;
+    }
+}
+
+/* Mobile Phones (480px - 639px) */
+@media (max-width: 639px) {
+    nav {
+        padding: 0.8rem 1rem;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .hero {
+        padding: 5rem 3% 2.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .btn-apply {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .credit-card-display {
+        width: 90%;
+        max-width: 320px;
+        height: 200px;
+        transform: rotate(0deg);
+    }
+
+    .points-card {
+        max-width: 95%;
+        padding: 25px 20px;
+    }
+
+    .points-value {
+        font-size: 48px;
+    }
+
+    .tabs {
+        max-width: 95%;
+    }
+
+    .tab {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .tab-content {
+        max-width: 95%;
+        padding: 15px 10px;
+        max-height: 500px;
+    }
+
+    .mission-card {
+        padding: 18px 15px;
+    }
+
+    .mission-points-value {
+        font-size: 36px;
+    }
+
+    .mission-points-label {
+        font-size: 11px;
+    }
+
+    .mission-description {
+        font-size: 13px;
+    }
+
+    .collect-btn, .completed-badge {
+        padding: 6px 24px;
+        font-size: 12px;
+    }
+
+    .empty-state {
+        padding: 50px 15px;
+    }
+
+    .empty-state-icon {
+        font-size: 42px;
+    }
+
+    .empty-state-text {
+        font-size: 15px;
+    }
+
+    footer {
+        padding: 2rem 1rem 1rem;
+    }
+
+    .footer-content {
+        gap: 2rem;
+    }
+
+    .footer-brand p {
+        font-size: 0.9rem;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .footer-section ul li {
+        font-size: 0.9rem;
+    }
+
+    .contact-item {
+        font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-links a {
+        font-size: 0.85rem;
+    }
+}
+
+/* Extra Small Phones (320px - 479px) */
+@media (max-width: 479px) {
+    nav span {
+        font-size: 20px;
+    }
+
+    .logo {
+        font-size: 0.9rem;
+    }
+
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .profile-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .hero {
+        padding: 4.5rem 2% 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .hero-apply p {
+        font-size: 0.9rem;
+    }
+
+    .btn-apply {
+        padding: 0.7rem 1.3rem;
+        font-size: 0.85rem;
+    }
+
+    .credit-card-display {
+        width: 95%;
+        max-width: 280px;
+        height: 175px;
+    }
+
+    .card-chip {
+        width: 35px;
+        height: 28px;
+        left: 15px;
+        top: 40px;
+    }
+
+    .card-logo {
+        font-size: 1rem;
+        right: 15px;
+        top: 15px;
+    }
+
+    .card-number {
+        font-size: 0.8rem;
+        bottom: 35px;
+        left: 15px;
+        letter-spacing: 2px;
+    }
+
+    .card-holder {
+        font-size: 0.65rem;
+        bottom: 15px;
+        left: 15px;
+    }
+
+    .points-card {
+        padding: 20px 15px;
+    }
+
+    .points-label {
+        font-size: 9px;
+        margin-bottom: 12px;
+    }
+
+    .points-value {
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+
+    .points-subtitle {
+        font-size: 11px;
+    }
+
+    .tab {
+        padding: 10px 6px;
+        font-size: 12px;
+    }
+
+    .tab-content {
+        padding: 12px 8px;
+    }
+
+    .mission-card {
+        padding: 15px 12px;
+    }
+
+    .mission-points-value {
+        font-size: 32px;
+    }
+
+    .mission-description {
+        font-size: 12px;
+    }
+
+    .collect-btn, .completed-badge {
+        padding: 6px 20px;
+        font-size: 11px;
+    }
+
+    .empty-state {
+        padding: 40px 10px;
+    }
+
+    .empty-state-icon {
+        font-size: 36px;
+    }
+
+    .empty-state-text {
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 1.5rem 0.75rem 0.75rem;
+    }
+
+    .footer-brand p {
+        font-size: 0.85rem;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .footer-section h4 {
+        font-size: 0.95rem;
+    }
+
+    .footer-section ul li,
+    .contact-item {
+        font-size: 0.85rem;
+    }
+
+    .footer-bottom p {
+        font-size: 0.8rem;
+    }
+
+    .footer-links a {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape Orientation Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero {
+        padding: 4rem 5% 2rem;
+        min-height: auto;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .credit-card-display {
+        width: 300px;
+        height: 190px;
+    }
+
+    .points-card {
+        padding: 25px;
+    }
+
+    .points-value {
+        font-size: 48px;
+    }
+
+    .tab-content {
+        max-height: 400px;
+    }
+}
     </style>
 </head>
 <body>
@@ -682,12 +1434,12 @@
                 <img src="../images/Logo.png.png" alt="Evergreen Logo">
             </div>
             <span>
-                <a href="../viewing.php">EVERGREEN</a>
+                <a href="../viewingpage.php">EVERGREEN</a>
             </span>
         </div>
 
         <div class="nav-links">
-            <a href="../viewing.php">Home</a>
+            <a href="../viewingpage.php">Home</a>
 
             <div class="dropdown">
                 <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
@@ -715,7 +1467,9 @@
 
                 <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
                     <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="logout.php" role="menuitem">Sign Out</a>
+                    <a href="../refer.php" role="menuitem">Refer to a friend</a>
+                    <a href="../cards/points.php" role="menuitem">Missions</a>
+                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
                 </div>
             </div>
         </div>
@@ -724,7 +1478,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Points Details</h1>
+            <h1>Rewards</h1>
             <p>Earn points, cashback, and exclusive perks every time you<br>
                use your EVERGREEN Card — making every purchase more<br>
                rewarding.</p>
@@ -760,124 +1514,9 @@
 
     <!-- Mission Tab -->
     <div id="mission" class="tab-content active">
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">10</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Spend ₱200 with your EVERGREEN Card and earn 10 reward points.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 10)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">1.60</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Use your card five times this week and get 50 bonus points.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 1.60)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">25</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Make a purchase of ₱500 or more in a single transaction.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 25)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">15</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Refer a friend and earn points when they make their first purchase.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 15)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">30</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Complete your profile information and verify your email address.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 30)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">20</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Shop at any partner store this weekend for bonus rewards.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 20)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">50</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Reach ₱1,000 in total spending this month for a special bonus.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 50)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">12</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Download and use the EVERGREEN mobile app for the first time.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 12)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">18</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Leave a review for any product you've purchased this month.</div>
-                <button class="collect-btn" onclick="collectPoints(this, 18)">Collect</button>
-            </div>
-        </div>
-
-        <div class="mission-card">
-            <div class="mission-points">
-                <div class="mission-points-value">40</div>
-                <div class="mission-points-label">points</div>
-            </div>
-            <div class="mission-divider"></div>
-            <div class="mission-details">
-                <div class="mission-description">Celebrate your membership anniversary - special loyalty bonus!</div>
-                <button class="collect-btn" onclick="collectPoints(this, 40)">Collect</button>
-            </div>
+        <div class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <div class="empty-state-text">Loading missions...</div>
         </div>
     </div>
 
@@ -953,17 +1592,18 @@
             </div>
         </div>
     </footer>
-</body>
 
-<script>
+    <script src="../js/points_system.js"></script>
+    <script>
 
+        pointsSystem.apiUrl = '../points_api.php';
+        
         // Dropdown functionality
         function toggleDropdown() {
             const dropdown = document.getElementById("cardsDropdown");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         }
 
-        // Close dropdown when clicking outside
         window.addEventListener("click", function(e) {
             if (!e.target.matches('.dropbtn')) {
                 const dropdown = document.getElementById("cardsDropdown");
@@ -971,11 +1611,9 @@
                     dropdown.style.display = "none";
                 }
             }
-        });        
+        });
 
-        let totalPoints = 0.00;
-        let completedMissions = [];
-
+        // Tab switching with data loading
         function switchTab(tabName) {
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
@@ -986,141 +1624,14 @@
             event.target.classList.add('active');
             document.getElementById(tabName).classList.add('active');
 
-            if (tabName === 'completed') {
-                updateCompletedTab();
+            // Load data based on tab
+            if (tabName === 'mission') {
+                pointsSystem.renderMissions('mission');
+            } else if (tabName === 'history') {
+                pointsSystem.renderPointHistory('history');
+            } else if (tabName === 'completed') {
+                pointsSystem.renderCompletedMissions('completed');
             }
-        }
-
-        function formatDateTime() {
-            const now = new Date();
-            const options = { 
-                month: 'long', 
-                day: 'numeric', 
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            };
-            return now.toLocaleString('en-US', options).replace(',', '');
-        }
-
-        function collectPoints(button, points) {
-            totalPoints += points;
-            document.getElementById('totalPoints').textContent = totalPoints.toFixed(2);
-
-            const missionCard = button.closest('.mission-card');
-            const missionDescription = missionCard.querySelector('.mission-description').textContent;
-            const missionPoints = missionCard.querySelector('.mission-points-value').textContent;
-            
-            const completedMission = {
-                points: missionPoints,
-                description: missionDescription,
-                timestamp: formatDateTime()
-            };
-            completedMissions.push(completedMission);
-
-            addToPointHistory(completedMission);
-
-            missionCard.style.transition = 'all 0.5s ease';
-            missionCard.style.opacity = '0';
-            missionCard.style.transform = 'scale(0.9)';
-
-            setTimeout(() => {
-                missionCard.remove();
-
-                const missionTab = document.getElementById('mission');
-                if (missionTab.children.length === 0) {
-                    missionTab.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">🎉</div>
-                            <div class="empty-state-text">All missions completed!</div>
-                        </div>
-                    `;
-                }
-            }, 500);
-
-            const successMsg = document.createElement('div');
-            successMsg.textContent = `+${points} points collected!`;
-            successMsg.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #0d4d3d 0%, #1a6b56 100%);
-                color: white;
-                padding: 20px 40px;
-                border-radius: 15px;
-                font-size: 20px;
-                font-weight: 700;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                z-index: 1000;
-                animation: fadeInOut 2s ease;
-            `;
-            document.body.appendChild(successMsg);
-
-            setTimeout(() => {
-                successMsg.remove();
-            }, 2000);
-        }
-
-        function addToPointHistory(mission) {
-            const historyTab = document.getElementById('history');
-            
-            const emptyState = historyTab.querySelector('.empty-state');
-            if (emptyState) {
-                emptyState.remove();
-            }
-
-            const historyCard = document.createElement('div');
-            historyCard.className = 'mission-card';
-            historyCard.innerHTML = `
-                <div class="mission-timestamp">${mission.timestamp}</div>
-                <div class="mission-points">
-                    <div class="mission-points-value">${mission.points}</div>
-                    <div class="mission-points-label">points</div>
-                </div>
-                <div class="mission-divider"></div>
-                <div class="mission-details">
-                    <div class="mission-description">${mission.description}</div>
-                    <div class="completed-badge">Completed</div>
-                </div>
-            `;
-            
-            historyTab.insertBefore(historyCard, historyTab.firstChild);
-        }
-
-        function updateCompletedTab() {
-            const completedTab = document.getElementById('completed');
-            
-            if (completedMissions.length === 0) {
-                completedTab.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">✓</div>
-                        <div class="empty-state-text">No completed missions yet</div>
-                    </div>
-                `;
-                return;
-            }
-
-            completedTab.innerHTML = '';
-            
-            completedMissions.forEach(mission => {
-                const completedCard = document.createElement('div');
-                completedCard.className = 'mission-card';
-                completedCard.innerHTML = `
-                    <div class="mission-timestamp">${mission.timestamp}</div>
-                    <div class="mission-points">
-                        <div class="mission-points-value">${mission.points}</div>
-                        <div class="mission-points-label">points</div>
-                    </div>
-                    <div class="mission-divider"></div>
-                    <div class="mission-details">
-                        <div class="mission-description">${mission.description}</div>
-                        <div class="completed-badge">Completed</div>
-                    </div>
-                `;
-                completedTab.appendChild(completedCard);
-            });
         }
 
         // Profile dropdown toggle
@@ -1132,7 +1643,6 @@
             btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
 
-        // close profile dropdown when clicking outside or pressing Esc
         window.addEventListener('click', function (e) {
             const dd = document.getElementById('profileDropdown');
             const btn = document.getElementById('profileBtn');
@@ -1153,5 +1663,171 @@
                 }
             }
         });
-</script>
+
+        // Custom styled confirmation modal that matches Evergreen Bank design
+function showSignOutModal(event) {
+    event.preventDefault();
+    
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 54, 49, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.2s ease;
+    `;
+    
+    // Create modal content
+    modal.innerHTML = `
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+        <div style="
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-size: 2rem;
+            ">⚠️</div>
+            
+            <h3 style="
+                color: #003631;
+                margin-bottom: 0.75rem;
+                font-size: 1.75rem;
+                font-weight: 600;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Sign Out</h3>
+            
+            <p style="
+                color: #666;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Are you sure you want to sign out of your account?</p>
+            
+            <div style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+            ">
+                <button id="cancelBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: transparent;
+                    color: #003631;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Cancel</button>
+                
+                <button id="confirmBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: #003631;
+                    color: white;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Sign Out</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Get buttons
+    const cancelBtn = modal.querySelector('#cancelBtn');
+    const confirmBtn = modal.querySelector('#confirmBtn');
+    
+    // Add hover effects for Cancel button
+    cancelBtn.onmouseover = () => {
+        cancelBtn.style.background = '#f5f5f5';
+        cancelBtn.style.borderColor = '#003631';
+        cancelBtn.style.transform = 'translateY(-2px)';
+    };
+    cancelBtn.onmouseout = () => {
+        cancelBtn.style.background = 'transparent';
+        cancelBtn.style.transform = 'translateY(0)';
+    };
+    
+    // Add hover effects for Confirm button
+    confirmBtn.onmouseover = () => {
+        confirmBtn.style.background = '#F1B24A';
+        confirmBtn.style.borderColor = '#F1B24A';
+        confirmBtn.style.color = '#003631';
+        confirmBtn.style.transform = 'translateY(-2px)';
+        confirmBtn.style.boxShadow = '0 4px 12px rgba(241, 178, 74, 0.3)';
+    };
+    confirmBtn.onmouseout = () => {
+        confirmBtn.style.background = '#003631';
+        confirmBtn.style.borderColor = '#003631';
+        confirmBtn.style.color = 'white';
+        confirmBtn.style.transform = 'translateY(0)';
+        confirmBtn.style.boxShadow = 'none';
+    };
+    
+    // Handle button clicks
+    cancelBtn.onclick = () => document.body.removeChild(modal);
+    confirmBtn.onclick = () => window.location.href = '../logout.php';
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
+    
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape' && document.body.contains(modal)) {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
+    </script>
+</body>
 </html>

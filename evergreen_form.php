@@ -74,7 +74,7 @@
         background-color: white;
         border-radius: 15px;
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-        padding: 60 40;
+        padding: 50 40;
         width: 70%;
         display: flex;
         flex-direction: column;
@@ -89,11 +89,19 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
       }
 
       .form-sub-text {
         color: #3A3A3A;
         font-size: 15px;
+      }
+
+      .form-title {
+        font-size: 50px;
       }
 
       /* FORM - progress line */
@@ -158,6 +166,9 @@
 
       .input-wrap {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
       .upper-input-wrap {
@@ -330,8 +341,8 @@
       .field-error {
         color: #D43F3A;
         font-size: 12px;
-        margin-top: 6px;
         display: none;
+        margin-top: 3px;
       }
 
       .input-error {
@@ -435,12 +446,25 @@
       .back-container {
         display: flex;
         justify-content: flex-start;
+        margin-bottom: 5%;
+        z-index: 9999;
       }
 
       .back-link {
         font-size: 20px;
         text-decoration: none;
         color: #003631;
+      }
+
+      /* Extras */
+      .progress {
+        color: black;
+        background-color: white;
+      }
+
+      .text-progress {
+        color: white;
+        background-color: #003631;
       }
 
     </style>
@@ -956,12 +980,31 @@
       reviewPanel.style.display = (step === 3) ? 'flex' : 'none';
       prevBtn.style.display = (step === 2 || step === 3) ? 'flex' : 'none';
       nextBtn.textContent = (step === 3) ? 'Submit' : 'Next';
+
       // progress
-      formPartI.style.backgroundColor = (step >= 1) ? '#003631' : 'white';
-      formPartII.style.backgroundColor = (step >= 2) ? '#003631' : 'white';
-      lineI.style.backgroundColor = (step >= 2) ? '#003631' : 'white';
-      lineII.style.backgroundColor = (step >= 3) ? '#003631' : 'white';
-      formPartIII.style.backgroundColor = (step >= 3) ? '#003631' : 'white';
+      setCircle(formPartI, step >= 1);
+      setCircle(formPartII, step >= 2);
+      setCircle(formPartIII, step >= 3);
+
+      // Progress lines
+      lineI.style.backgroundColor = (step >= 2) ? '#003631' : '#E6E6E6';
+      lineII.style.backgroundColor = (step >= 3) ? '#003631' : '#E6E6E6';
+    }
+
+    // Progress circles: add/remove classes instead of assigning return values
+    function setCircle(el, active) {
+      if (!el) return;
+      if (active) {
+        el.classList.add('text-progress');
+        el.classList.remove('progress');
+        el.style.backgroundColor = '#003631';
+        el.style.color = '#ffffff';
+      } else {
+        el.classList.remove('text-progress');
+        el.classList.add('progress');
+        el.style.backgroundColor = 'white';
+        el.style.color = '#003631';
+      }
     }
 
     // initialize UI

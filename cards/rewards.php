@@ -7,12 +7,12 @@
     
     // Check if user is logged in
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
-        header("Location: viewing.php");
-    exit;
+        header("Location: ../login.php");
+        exit;
     }
 
     // Get user info from session
-        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
+    $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +69,7 @@
         .logo-icon {
             width: 50px;
             height: 50px;
-            background: transparent; /* was #F1B24A */
+            background: transparent;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -81,7 +81,7 @@
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* change from cover -> contain */
+            object-fit: contain;
             object-position: center;
             display: block;
             border-radius: 50%;
@@ -130,15 +130,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
+            position: relative;
         }
 
-        /* profile dropdown */
         .profile-btn {
             width: 40px;
             height: 40px;
             background: transparent;
-            border: none;              /* now a button */
+            border: none;
             padding: 0;
             cursor: pointer;
             border-radius: 50%;
@@ -185,69 +184,55 @@
             display: block;
         }
 
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
         /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+.dropdown {
+    position: relative;
+}   
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
+/* Dropdown menu box - UPDATED FOR FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
 
         /* Hero Section */
         .hero {
@@ -307,7 +292,7 @@
         }
 
         .credit-card-display {
-            width: 530px;
+            width: 580px;
             height: 330px;
             background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             border-radius: 15px;
@@ -315,6 +300,7 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             transform: rotate(-5deg);
             animation: float 3s ease-in-out infinite;
+            margin-left: 14%;
         }
 
         @keyframes float {
@@ -366,7 +352,7 @@
         }
 
         .points-section {
-            background: linear-gradient(135deg, #0d4d4d 0%, #1a5f5f 100%);
+            background: linear-gradient(135deg, #003631 0%, #1a5f5f 100%);
             border-radius: 16px;
             padding: 40px;
             display: flex;
@@ -433,19 +419,85 @@
         }
 
         .tab.active {
-            color: #0d4d4d;
-            border-bottom: 3px solid #0d4d4d;
+            color: #003631;
+            border-bottom: 3px solid #003631;
             margin-bottom: -12px;
         }
 
-        .view-all {
-            float: right;
+        .view-all a{
             color: #d4af37;
             font-size: 18px;
-            text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
+            display: flex;
+            justify-content: end;
+            align-items: end;
+            margin-bottom: 10px;
         }
+
+        /* Tab preview styles */
+.tab-preview {
+    display: none;
+}
+
+.tab-preview.active {
+    display: block;
+}
+
+/* Mission card without collect button */
+.mission-card-preview {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mission-card-preview .mission-points {
+    font-size: 28px;
+    font-weight: 700;
+    color: #003631;
+    min-width: 60px;
+}
+
+.mission-card-preview .mission-points-label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+.mission-card-preview .mission-details {
+    flex: 1;
+}
+
+.mission-card-preview .mission-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.history-card, .completed-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.history-timestamp, .completed-timestamp {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 11px;
+    color: #999;
+}
 
         .view-all:hover {
             transform: translateY(-2px);
@@ -465,7 +517,7 @@
         .mission-points {
             font-size: 28px;
             font-weight: 700;
-            color: #0d4d4d;
+            color: #003631;
             min-width: 60px;
         }
 
@@ -493,7 +545,7 @@
         .section-title {
             font-size: 24px;
             font-weight: 700;
-            color: #0d4d4d;
+            color: #003631;
             margin-bottom: 30px;
         }
 
@@ -538,7 +590,7 @@
         .reward-title {
             font-size: 18px;
             font-weight: 700;
-            color: #0d4d4d;
+            color: #003631;
             margin-bottom: 15px;
         }
 
@@ -550,8 +602,8 @@
         }
 
         .redeem-button {
-            background: #0d4d4d;
-            color: white;
+            background: #003631;
+            color: #F1B24A;
             border: none;
             padding: 12px 32px;
             border-radius: 25px;
@@ -569,7 +621,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: #0d4d4d;
+            background: #003631;
             color: white;
             border: none;
             width: 40px;
@@ -613,14 +665,14 @@
         }
 
         .dot.active {
-            background: #0d4d4d;
+            background: #003631;
             width: 24px;
             border-radius: 4px;
         }
 
         /* Discount Section */
         .discounts-section {
-            background: linear-gradient(135deg, #0d4d4d 0%, #1a5f5f 100%);
+            background: linear-gradient(135deg, #003631 0%, #1a5f5f 100%);
             border-radius: 16px;
             padding: 60px 40px;
             margin-top: 60px;
@@ -674,16 +726,19 @@
                         linear-gradient(225deg, #f5a623 25%, transparent 25%) -10px 0,
                         linear-gradient(315deg, #f5a623 25%, transparent 25%),
                         linear-gradient(45deg, #f5a623 25%, transparent 25%);
-            background-size: 20px 20px;
+            background-size: 40px 40px;
             background-color: white;
         }
 
         .discount-percentage {
             font-size: 56px;
             font-weight: 700;
-            color: #0d4d4d;
+            color: #003631;
             text-align: center;
             line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .discount-body {
@@ -694,7 +749,7 @@
         .discount-label {
             font-size: 14px;
             font-weight: 700;
-            color: #0d4d4d;
+            color: #003631;
             letter-spacing: 1px;
             margin-bottom: 20px;
             padding-bottom: 15px;
@@ -710,8 +765,8 @@
         }
 
         .discount-redeem-button {
-            background: #0d4d4d;
-            color: white;
+            background: #003631;
+            color: #F1B24A;
             border: none;
             padding: 12px 40px;
             border-radius: 25px;
@@ -826,163 +881,245 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 6rem 5% 3rem;
-            }
+        /* Responsive - UPDATED */
+@media (max-width: 968px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 5% 3rem;
+    }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
 
-            .credit-card-display {
-                width: 400px;
-                height: 250px;
-            }
+    .credit-card-display {
+        width: 240px;
+        height: 150px;
+        margin-left: 25%;
+    }
 
-            .points-section {
-                flex-direction: column;
-                padding: 30px;
-            }
+    .nav-links {
+        gap: 1rem;
+    }
 
-            .carousel-button {
-                display: none;
-            }
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
 
-            .carousel {
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-            }
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
 
-            .reward-card {
-                scroll-snap-align: start;
-            }
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
 
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+    .points-section {
+        flex-direction: column;
+        padding: 30px;
+    }
 
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 3%;
-                flex-wrap: wrap;
-            }
+    .carousel-button {
+        display: none;
+    }
 
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
+    .carousel {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+    }
 
-            .nav-links a {
-                margin: 0 0.5rem;
-                font-size: 0.9rem;
-            }
+    .reward-card {
+        scroll-snap-align: start;
+    }
 
-            .hero-content h1 {
-                font-size: 2rem;
-            }
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
-            .hero-content p {
-                font-size: 0.95rem;
-            }
+@media (max-width: 640px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-            .credit-card-display {
-                width: 100%;
-                max-width: 350px;
-                height: 220px;
-            }
+    .hero-content {
+        margin-top: 50px;
+    }
 
-            .points-number {
-                font-size: 56px;
-            }
+    .logo {
+        font-size: 1rem;
+    }
 
-            .tabs {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
 
-            .view-all {
-                float: none;
-                display: block;
-                margin-top: 10px;
-            }
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
 
-            .mission-card {
-                flex-direction: column;
-                text-align: center;
-            }
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
 
-            .discounts-section {
-                padding: 40px 20px;
-            }
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
 
-            .discounts-title {
-                font-size: 24px;
-            }
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
 
-            .discounts-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+    .hero-content p {
+        font-size: 0.95rem;
+    }
 
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
+    .credit-card-display {
+        width: 100%;
+        max-width: 350px;
+        height: 220px;
+        margin-left: 0;
+    }
 
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
+    .points-number {
+        font-size: 56px;
+    }
 
-        @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 1.75rem;
-            }
+    .tabs {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
 
-            .btn-apply {
-                padding: 0.7rem 1.5rem;
-                font-size: 0.9rem;
-            }
+    .tab {
+        font-size: 0.9rem;
+    }
 
-            .points-section {
-                padding: 20px;
-            }
+    .view-all {
+        float: none;
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
 
-            .points-number {
-                font-size: 48px;
-            }
+    .view-all a {
+        justify-content: center;
+    }
 
-            .missions-panel {
-                padding: 20px;
-            }
+    .mission-card,
+    .mission-card-preview,
+    .history-card,
+    .completed-card {
+        flex-direction: column;
+        text-align: center;
+    }
 
-            .section-title {
-                font-size: 20px;
-            }
+    .discounts-section {
+        padding: 40px 20px;
+    }
 
-            .reward-card {
-                min-width: 250px;
-                padding: 20px;
-            }
+    .discounts-title {
+        font-size: 24px;
+    }
 
-            .discount-percentage {
-                font-size: 48px;
-            }
+    .discounts-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
 
-            .discount-body {
-                padding: 30px 20px 20px;
-            }
-        }
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.75rem;
+    }
+
+    .btn-apply {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .hero-apply {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .points-section {
+        padding: 20px;
+    }
+
+    .points-number {
+        font-size: 48px;
+    }
+
+    .missions-panel {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .reward-card {
+        min-width: 250px;
+        padding: 20px;
+    }
+
+    .discount-percentage {
+        font-size: 48px;
+    }
+
+    .discount-body {
+        padding: 30px 20px 20px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1027,7 +1164,9 @@
 
                 <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
                     <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="logout.php" role="menuitem">Sign Out</a>
+                    <a href="../refer.php" role="menuitem">Refer to a friend</a>
+                    <a href="../cards/points.php" role="menuitem">Missions</a>
+                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
                 </div>
             </div>
         </div>
@@ -1060,35 +1199,30 @@
         <div class="points-section">
             <div class="points-display">
                 <div class="points-label">EVERGREEN POINTS</div>
-                <div class="points-number">0.00</div>
+                <div class="points-number" id="totalPoints">0.00</div>
                 <div class="points-description">Collect more points to<br>enjoy exciting rewards!</div>
             </div>
             <div class="missions-panel">
-                <div class="tabs">
-                    <button class="tab active">Mission</button>
-                    <button class="tab">Point History</button>
-                    <button class="tab">Completed</button>
-                    <a href="../cards/points.php" class="view-all">View All →</a>
-                </div>
-                <div class="mission-card">
-                    <div>
-                        <div class="mission-points">10</div>
-                        <div class="mission-points-label">points</div>
-                    </div>
-                    <div class="mission-details">
-                        <div class="mission-text">Spend ₱200 with your EVERGREEN Card and earn 10 reward points.</div>
-                    </div>
-                </div>
-                <div class="mission-card">
-                    <div>
-                        <div class="mission-points">1.60</div>
-                        <div class="mission-points-label">points</div>
-                    </div>
-                    <div class="mission-details">
-                        <div class="mission-text">Use your card five times this week and get 50 bonus points.</div>
-                    </div>
-                </div>
-            </div>
+    <div class="tabs">
+        <button class="tab active" onclick="switchPreviewTab('mission-preview')">Mission</button>
+        <button class="tab" onclick="switchPreviewTab('history-preview')">Point History</button>
+        <button class="tab" onclick="switchPreviewTab('completed-preview')">Completed</button>
+    </div>
+    <div class="view-all">
+        <a href="../cards/points.php">View All →</a>
+    </div>
+
+
+    <div id="mission-preview" class="tab-preview active">
+        <p style="text-align:center;padding:20px;color:#666;">Loading missions...</p>
+    </div>
+    <div id="history-preview" class="tab-preview">
+        <p style="text-align:center;padding:20px;color:#666;">Loading history...</p>
+    </div>
+    <div id="completed-preview" class="tab-preview">
+        <p style="text-align:center;padding:20px;color:#666;">Loading completed...</p>
+    </div>
+</div>
         </div>
 
         <div class="redeem-section">
@@ -1097,30 +1231,7 @@
                 <button class="carousel-button prev" onclick="moveCarousel(-1)">‹</button>
                 <div class="carousel">
                     <div class="carousel-track" id="carouselTrack">
-                        <div class="reward-card">
-                            <div class="reward-icon">🏠</div>
-                            <div class="reward-title">Home Loans</div>
-                            <div class="reward-description">Competitive mortgage rates and flexible repayment options for your dream home.</div>
-                            <button class="redeem-button">Redeem</button>
-                        </div>
-                        <div class="reward-card">
-                            <div class="reward-icon">🏠</div>
-                            <div class="reward-title">Personal Loans</div>
-                            <div class="reward-description">Competitive mortgage rates and flexible repayment options for your dream home.</div>
-                            <button class="redeem-button">Redeem</button>
-                        </div>
-                        <div class="reward-card">
-                            <div class="reward-icon">🏠</div>
-                            <div class="reward-title">Multi-personal Loans</div>
-                            <div class="reward-description">Competitive mortgage rates and flexible repayment options for your dream home.</div>
-                            <button class="redeem-button">Redeem</button>
-                        </div>
-                        <div class="reward-card">
-                            <div class="reward-icon">🏠</div>
-                            <div class="reward-title">Auto Loans</div>
-                            <div class="reward-description">Competitive mortgage rates and flexible repayment options for your dream home.</div>
-                            <button class="redeem-button">Redeem</button>
-                        </div>
+                        <!-- Display the rewards here dynamically -->
                     </div>
                 </div>
                 <button class="carousel-button next" onclick="moveCarousel(1)">›</button>
@@ -1134,7 +1245,9 @@
             <div class="discounts-grid">
                 <div class="discount-card">
                     <div class="discount-header">
-                        <div class="discount-percentage">50%</div>
+                        <div class="discount-percentage">
+                            <h4>50%</h4>
+                        </div>
                         <div class="zigzag"></div>
                     </div>
                     <div class="discount-body">
@@ -1146,7 +1259,9 @@
 
                 <div class="discount-card">
                     <div class="discount-header">
-                        <div class="discount-percentage">20%</div>
+                        <div class="discount-percentage">
+                            <h4>50%</h4>
+                        </div>
                         <div class="zigzag"></div>
                     </div>
                     <div class="discount-body">
@@ -1168,7 +1283,7 @@
             <div class="footer-brand">
                 <div class="logo">
                     <div class="logo-icon">
-                        <img src="/images/icon.png" alt="Evergreen Logo">
+                        <img src="../images/icon.png" alt="Evergreen Logo">
                     </div>
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
@@ -1183,9 +1298,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="cards/credit.php">Credit Cards</a></li>
-                    <li><a href="cards/debit.php">Debit Cards</a></li>
-                    <li><a href="cards/prepaid.php">Prepaid Cards</a></li>
+                    <li><a href="../cards/credit.php">Credit Cards</a></li>
+                    <li><a href="../cards/debit.php">Debit Cards</a></li>
+                    <li><a href="../cards/prepaid.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1218,99 +1333,513 @@
             </div>
         </div>
     </footer>
-    <script>
-        // Dropdown Toggle
-        function toggleDropdown() {
-            const dropdown = document.getElementById('cardsDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
 
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                const dropdown = document.getElementById('cardsDropdown');
-                if (dropdown.style.display === 'block') {
-                    dropdown.style.display = 'none';
-                }
+<!-- Modal redeem notif -->
+ <div class="modal-container" style="display: none">
+    <div class="success-notif">
+        <h1 class="check-symbol">✔</h1>
+        <h2 class="success-txt">Claimed</h2>
+        <h2 class="txtrewards">Rewards</h2>
+        <button class="ok">Okay</button>
+    </div>
+ </div>
+
+ <style>
+    /* Modal Container */
+    .modal-container {
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        left: 0;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+
+    .success-notif {
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: 30%;
+    }
+
+    .check-symbol {
+        font-size: 50px;
+        background-color: #003631;
+        color:white;
+        border-radius: 60px;
+        padding: 15px;
+        width: 100px;
+    }
+
+    .ok {
+        background-color: #003631;
+        color: #d4af37;
+        border: none;
+        padding: 10px;
+        border-radius: 15px;
+        width: 30%;
+        font-weight: 600;
+    }
+ </style>
+
+    <script src="../js/points_system.js"></script>
+<script>
+    // Set correct API path
+    pointsSystem.apiUrl = '../points_api.php';
+
+    // Dropdown Toggle
+    function toggleDropdown() {
+        const dropdown = document.getElementById('cardsDropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            const dropdown = document.getElementById('cardsDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
             }
         }
+    }
 
-        let currentSlide = 0;
-        const track = document.getElementById('carouselTrack');
-        const cards = document.querySelectorAll('.reward-card');
-        const totalSlides = cards.length - 2;
-        const dotsContainer = document.getElementById('dots');
+    // Carousel functionality
+    let currentSlide = 0;
+    let totalSlides = 0;
+    let track; // defined later
+    let dotsContainer;
 
-        // Create dots
-        for (let i = 0; i <= totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (i === 0) dot.classList.add('active');
-            dot.onclick = () => goToSlide(i);
-            dotsContainer.appendChild(dot);
-        }
+    // Wait until the DOM is ready before building the carousel
+    document.addEventListener('DOMContentLoaded', async function() {
+        track = document.getElementById('carouselTrack');
+        dotsContainer = document.getElementById('dots');
 
-        function moveCarousel(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = 0;
-            if (currentSlide > totalSlides) currentSlide = totalSlides;
-            updateCarousel();
-        }
+        redeemDisplay();
+        updateCarousel(); // make sure initial state shows correctly
 
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
+        await pointsSystem.loadUserPoints();
+        await loadPreviewMissions();
+    });
 
-        function updateCarousel() {
-            const offset = currentSlide * -320;
-            track.style.transform = `translateX(${offset}px)`;
-            
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
+    function moveCarousel(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide > totalSlides) currentSlide = totalSlides;
+        updateCarousel();
+    }
 
-        // Tab switching
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                tabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+    }
+
+    function updateCarousel() {
+        const offset = currentSlide * -320;
+        track.style.transform = `translateX(${offset}px)`;
+        
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
         });
+    }
 
-        // Profile dropdown toggle
-        function toggleProfileDropdown(e) {
-            e.stopPropagation();
-            const dd = document.getElementById('profileDropdown');
-            const btn = document.getElementById('profileBtn');
-            const isOpen = dd.classList.toggle('show');
-            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    // Tab switching for preview
+    function switchPreviewTab(tabName) {
+        const tabs = document.querySelectorAll('.missions-panel .tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const previews = document.querySelectorAll('.tab-preview');
+        previews.forEach(p => p.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+
+        // Load data based on tab
+        if (tabName === 'mission-preview') {
+            loadPreviewMissions();
+        } else if (tabName === 'history-preview') {
+            loadPreviewHistory();
+        } else if (tabName === 'completed-preview') {
+            loadPreviewCompleted();
         }
+    }
 
-        // close profile dropdown when clicking outside or pressing Esc
-        window.addEventListener('click', function (e) {
+    // Load preview missions (read-only, no collect button)
+    async function loadPreviewMissions() {
+        const missions = await pointsSystem.loadMissions();
+        const container = document.getElementById('mission-preview');
+        
+        container.innerHTML = '';
+        
+        if (missions.length === 0) {
+            container.innerHTML = '<p style="text-align:center;padding:20px;color:#666;">All missions completed! 🎉</p>';
+        } else {
+            missions.slice(0, 2).forEach(mission => {
+                const card = document.createElement('div');
+                card.className = 'mission-card-preview';
+                card.innerHTML = `
+                    <div>
+                        <div class="mission-points">${parseFloat(mission.points_value).toFixed(2)}</div>
+                        <div class="mission-points-label">points</div>
+                    </div>
+                    <div class="mission-details">
+                        <div class="mission-text">${mission.mission_text}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    }
+
+    // Load preview history
+    async function loadPreviewHistory() {
+        const history = await pointsSystem.loadPointHistory();
+        const container = document.getElementById('history-preview');
+        
+        container.innerHTML = '';
+        
+        if (history.length === 0) {
+            container.innerHTML = '<p style="text-align:center;padding:20px;color:#666;">No history yet</p>';
+        } else {
+            history.slice(0, 2).forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'history-card';
+                card.innerHTML = `
+                    <div class="history-timestamp">${item.timestamp}</div>
+                    <div>
+                        <div class="mission-points">${item.points}</div>
+                        <div class="mission-points-label">points</div>
+                    </div>
+                    <div class="mission-details">
+                        <div class="mission-text">${item.description}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    }
+
+    // Load preview completed
+    async function loadPreviewCompleted() {
+        const completed = await pointsSystem.loadCompletedMissions();
+        const container = document.getElementById('completed-preview');
+        
+        container.innerHTML = '';
+        
+        if (completed.length === 0) {
+            container.innerHTML = '<p style="text-align:center;padding:20px;color:#666;">No completed missions yet</p>';
+        } else {
+            completed.slice(0, 2).forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'completed-card';
+                card.innerHTML = `
+                    <div class="completed-timestamp">${item.timestamp}</div>
+                    <div>
+                        <div class="mission-points">${item.points}</div>
+                        <div class="mission-points-label">points</div>
+                    </div>
+                    <div class="mission-details">
+                        <div class="mission-text">${item.description}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+        await pointsSystem.loadUserPoints();
+        await loadPreviewMissions();
+    });
+
+    // Profile dropdown toggle
+    function toggleProfileDropdown(e) {
+        e.stopPropagation();
+        const dd = document.getElementById('profileDropdown');
+        const btn = document.getElementById('profileBtn');
+        const isOpen = dd.classList.toggle('show');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    window.addEventListener('click', function (e) {
+        const dd = document.getElementById('profileDropdown');
+        const btn = document.getElementById('profileBtn');
+        if (!dd) return;
+        if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+            dd.classList.remove('show');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
             const dd = document.getElementById('profileDropdown');
             const btn = document.getElementById('profileBtn');
-            if (!dd) return;
-            if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+            if (dd && dd.classList.contains('show')) {
                 dd.classList.remove('show');
                 btn.setAttribute('aria-expanded', 'false');
             }
-        });
+        }
+    });
 
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const dd = document.getElementById('profileDropdown');
-                const btn = document.getElementById('profileBtn');
-                if (dd && dd.classList.contains('show')) {
-                    dd.classList.remove('show');
-                    btn.setAttribute('aria-expanded', 'false');
+    // redeem reward function
+    function redeemDisplay() {
+
+        const track = document.getElementById('carouselTrack');
+        const dotsContainer = document.getElementById('dots');
+        track.innerHTML = ''; // clear old content
+        dotsContainer.innerHTML = '';
+
+        // Mock Rewards
+        let redeemRewards = [
+            {icon: "🏠", title: "Home-credit discount", desc: "Get 50% off, through home-credit"},
+            {icon: "🎁", title: "Gift Voucher", desc: "Redeem ₱500 worth of gift vouchers at selected stores"},
+            {icon: "🍔", title: "Food Treat", desc: "Enjoy a free meal at Jollibee or McDonald's"},
+            {icon: "🚗", title: "Fuel Discount", desc: "Save ₱5 per liter at participating gas stations"},
+            {icon: "📱", title: "Mobile Load Bonus", desc: "Receive ₱100 free load for any network"},
+            {icon: "🎬", title: "Movie Pass", desc: "Get two free cinema tickets for any movie"},
+            {icon: "🛍️", title: "Shopping Cashback", desc: "Earn 10% cashback on your next online purchase"},
+            {icon: "💳", title: "Card Upgrade", desc: "Upgrade your membership card for premium perks"},
+            {icon: "🎡", title: "Theme Park Access", desc: "Free entry to Enchanted Kingdom for one day"},
+            {icon: "🧃", title: "Drink Reward", desc: "Free Starbucks or Coffee Bean drink of your choice"}
+        ];
+
+    // redeem rewards display 
+    for(let i = 0; i < redeemRewards.length; i++) {
+        // main container
+        let rewardCard = document.createElement("div");
+        rewardCard.className = "reward-card";
+
+        let rewardIcon = document.createElement("div");
+        rewardIcon.className = "reward-icon";
+        rewardIcon.textContent = redeemRewards[i].icon;
+
+        let rewardTitle = document.createElement("div");
+        rewardTitle.className = "reward-title";
+        rewardTitle.textContent = redeemRewards[i].title;
+
+        let rewardDesc = document.createElement("div");
+        rewardDesc.className = "reward-description";
+        rewardDesc.textContent = redeemRewards[i].desc;
+
+        let redeemBtn = document.createElement("button");
+        redeemBtn.className = "redeem-button";
+        redeemBtn.textContent = "Redeem";
+
+        // appending
+        rewardCard.appendChild(rewardIcon);
+        rewardCard.appendChild(rewardTitle);
+        rewardCard.appendChild(rewardDesc);
+        rewardCard.appendChild(redeemBtn);
+
+        track.appendChild(rewardCard);
+
+        // modal Claimed
+        redeemBtn.addEventListener("click", function() {
+            let modalCont = document.querySelector(".modal-container");
+            let successTxt = document.querySelector(".success-txt");
+            let txt = document.querySelector(".txtrewards");
+            modalCont.style.display = "flex";
+
+            successTxt.textContent = `Redeemed`;
+            txt.textContent = redeemRewards[i].title;
+
+            document.querySelector(".ok").addEventListener("click", function() {
+                modalCont.style.display = "none";
+                rewardCard.remove();
+            }, {once : true});
+
+        })
+    }
+
+    const cards = document.querySelectorAll('.reward-card');
+    totalSlides = cards.length - 1;
+
+    // Create dots
+    for (let i = 0; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
+
+    }
+
+    // Custom styled confirmation modal that matches Evergreen Bank design
+function showSignOutModal(event) {
+    event.preventDefault();
+    
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 54, 49, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.2s ease;
+    `;
+    
+    // Create modal content
+    modal.innerHTML = `
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
-        });
-    </script>
+        </style>
+        <div style="
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-size: 2rem;
+            ">⚠️</div>
+            
+            <h3 style="
+                color: #003631;
+                margin-bottom: 0.75rem;
+                font-size: 1.75rem;
+                font-weight: 600;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Sign Out</h3>
+            
+            <p style="
+                color: #666;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                line-height: 1.6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            ">Are you sure you want to sign out of your account?</p>
+            
+            <div style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+            ">
+                <button id="cancelBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: transparent;
+                    color: #003631;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Cancel</button>
+                
+                <button id="confirmBtn" style="
+                    padding: 0.85rem 2rem;
+                    background: #003631;
+                    color: white;
+                    border: 2px solid #003631;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    transition: all 0.3s ease;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                ">Sign Out</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Get buttons
+    const cancelBtn = modal.querySelector('#cancelBtn');
+    const confirmBtn = modal.querySelector('#confirmBtn');
+    
+    // Add hover effects for Cancel button
+    cancelBtn.onmouseover = () => {
+        cancelBtn.style.background = '#f5f5f5';
+        cancelBtn.style.borderColor = '#003631';
+        cancelBtn.style.transform = 'translateY(-2px)';
+    };
+    cancelBtn.onmouseout = () => {
+        cancelBtn.style.background = 'transparent';
+        cancelBtn.style.transform = 'translateY(0)';
+    };
+    
+    // Add hover effects for Confirm button
+    confirmBtn.onmouseover = () => {
+        confirmBtn.style.background = '#F1B24A';
+        confirmBtn.style.borderColor = '#F1B24A';
+        confirmBtn.style.color = '#003631';
+        confirmBtn.style.transform = 'translateY(-2px)';
+        confirmBtn.style.boxShadow = '0 4px 12px rgba(241, 178, 74, 0.3)';
+    };
+    confirmBtn.onmouseout = () => {
+        confirmBtn.style.background = '#003631';
+        confirmBtn.style.borderColor = '#003631';
+        confirmBtn.style.color = 'white';
+        confirmBtn.style.transform = 'translateY(0)';
+        confirmBtn.style.boxShadow = 'none';
+    };
+    
+    // Handle button clicks
+    cancelBtn.onclick = () => document.body.removeChild(modal);
+    confirmBtn.onclick = () => window.location.href = '../logout.php';
+    
+    // Close on outside click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
+    
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape' && document.body.contains(modal)) {
+            document.body.removeChild(modal);
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
+</script>
 </body>
 </html>
