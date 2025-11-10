@@ -15,130 +15,197 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kulim+Park:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
-  <style>
-    /* General */
+<style>
+    :root {
+        --bg-1: #003631;
+        --bg-2: #0b7f6f;
+        --card-bg: rgba(244,250,248,0.98);
+        --text-dark: #083530;
+        --text-muted: #36524e;
+    }
+
     * {
-      font-family: "Inter", sans-serif;
-      color: white;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
     body {
-        background: linear-gradient(to bottom, #005a52, #8be1d4);
+        background: linear-gradient(180deg, var(--bg-1) 0%, #0a8d79 45%, #26b59f 100%);
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
         min-height: 100vh;
+        padding: 28px;
+        -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3, h4, h5, h6, p {
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Navigation Bar */
+    /* Top Logo Bar */
     nav {
-      font-family: "Kulim Park", sans-serif; 
-      display: flex;
-      gap: 10px;
+        position: fixed;
+        left: 28px;
+        top: 20px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        z-index: 50;
     }
 
     nav img {
-        width: 3.5%;
-        height: 50%;
+        width: 52px;
+        height: 48px;
         border-radius: 50%;
     }
 
-    /* Main Container for Terms and Condition */
+    .nav-wrap {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .web-title a {
+        color: #FFFFFF;
+        font-family: "Kulim Park", sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    .motto a {
+        color: rgba(230,255,249,0.9);
+        font-size: 12px;
+        margin-top: 2px;
+        text-decoration: none;
+    }
+
+    /* Main Content */
     main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        display: flex;
+        justify-content: center;
+        padding-top: 72px;
+        max-width: 1150px;
+        margin: 0 auto;
     }
 
     .main-container {
-      margin-top: 20px;
-      height: 400px;
-      overflow-y: scroll;
-      padding-right: 10px;
-      background: linear-gradient(to bottom, #E8FDF8, #9CE7D8);
-      border-radius: 15px;
-      padding: 20px;
-      width: 80%;
-      text-align: center;
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 34px;
+        width: 100%;
+        box-shadow: 0 18px 44px rgba(2,24,20,0.32);
+        border: 1px solid rgba(0,54,49,0.06);
+        color: var(--text-dark);
     }
 
     .heading {
-      font-size: 28px;
-      color: #005a52;
-      margin-bottom: 10px;
+        color: var(--text-dark);
+        font-family: "Kulim Park", sans-serif;
+        font-size: 28px;
+        margin-bottom: 8px;
+        text-align: center;
     }
 
     .sub-heading {
-      font-size: 16px;
-      color: #007965;
-      margin-bottom: 20px;
-      font-size: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        font-size: 13px;
+        margin-bottom: 30px;
     }
 
-    /* Terms content styles */
+    /* Scrollable Terms Content */
     .body-container {
-      text-align: left;
-      color: #003631;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-    }
-
-    .wrap-tnc {
-      margin-bottom: 14px;
+        max-height: 60vh;
+        overflow-y: auto;
+        padding-right: 20px;
+        margin-bottom: 30px;
     }
 
     .conditions-head {
-      color: #005a52;
-      font-size: 16px;
-      margin-bottom: 6px;
-      font-weight: 600;
+        color: var(--text-dark);
+        font-family: "Kulim Park", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 20px 0 8px;
     }
 
     .conditions-para {
-      color: #034b40;
-      font-size: 13px;
-      line-height: 1.4;
-      margin-bottom: 8px;
+        color: var(--text-muted);
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 12px;
     }
 
-    /* submit and agree */
+    /* Checkbox and Submit */
     .check-container {
-      margin-top: 15px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0,54,49,0.1);
+    }
+
+    .wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     label {
-      color: #003631;
-    }
-
-    #agree {
-      transform: scale(1.2);
+        color: var(--text-dark);
+        font-size: 13px;
     }
 
     .submit {
-      background-color: #005a52;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 14px;
-      cursor: pointer;
+        background: var(--bg-1);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
 
-  </style>
+    .submit:hover {
+        background: #004d45;
+        transform: translateY(-1px);
+    }
+
+    /* Scrollbar Styling */
+    .body-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .body-container::-webkit-scrollbar-track {
+        background: rgba(0,54,49,0.04);
+        border-radius: 4px;
+    }
+
+    .body-container::-webkit-scrollbar-thumb {
+        background: rgba(0,54,49,0.12);
+        border-radius: 4px;
+    }
+
+    .body-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(0,54,49,0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        body { padding: 20px; }
+        .main-container { padding: 24px; }
+        .heading { font-size: 24px; }
+    }
+</style>
 </head>
 <body>
   <nav>
-    <img src="images/icon.png" alt="logo" class="logo">
+    <a href="viewingpage">
+          <img src="images/icon.png" alt="logo" class="logo">
+    </a>
     <div class="nav-wrap">
-      <h2 class="web-title">EVERGREEN</h2>
-      <p class="motto">Secure, Invest, Achieve</p>
+      <h2 class="web-title">
+        <a href="viewingpage.php">EVERGREEN</a></h2>
+      <p class="motto">
+        <a href="viewingpage.php">Secure, Invest, Achieve</a></p>
     </div>
   </nav>
 
