@@ -364,6 +364,9 @@
         .solutions {
             padding: 5rem 5%;
             background: #f5f5f5;
+            height: 100vh;
+            align-content: center;
+            justify-content: center;
         }
 
         .solutions h2 {
@@ -393,12 +396,13 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease-in, box-shadow 0.3s;
             cursor: pointer;
         }
 
-        .solution-card:hover {
-            transform: translateY(-5px);
+        .solution-card:hover, .loan-card:hover {
+            transform: scale(1.1);
+            transition: 0.2s ease-in;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
@@ -450,6 +454,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 3rem;
+            height: 90vh;
         }
 
         /* Left Side Text */
@@ -504,21 +509,24 @@
             justify-content: flex-end;
             align-items: center;
             position: relative;
-            margin-right: -80px;
+            margin-right: -105px;
         }
 
         .rewards-image img {
             width: 100%;
-            max-width: 680px;
-            height: 100%;
+            max-width: 150%;
+            height: 120%;
             object-fit: contain;
             animation: float 3s ease-in-out infinite;
         }
 
         /* Loan Services Section */
         .loans {
-            background: linear-gradient(to right, #F1B24A 50%, #fef3e2 50%);
+            background: linear-gradient(to right, #fef3e2 50%, #fef3e2 50%);
             padding: 5rem 5%;
+            height: 100vh;
+            justify-content: center;
+            align-content: center;
         }
 
         .loans h2 {
@@ -539,10 +547,6 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s;
-        }
-
-        .loan-card:hover {
-            transform: translateY(-10px);
         }
 
         .loan-image {
@@ -672,6 +676,202 @@
             background: #F1B24A;
         }
 
+        /* Career Section */
+        .career-section {
+            background: #003631;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 60px 0px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            color: white;
+            padding-right: 40px;
+        }
+
+        .content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #F1B24A;
+            margin-bottom: 30px;
+            line-height: 1.1;
+        }
+
+        .content .intro {
+            font-size: 1rem;
+            margin-bottom: 35px;
+            line-height: 1.7;
+            color: #ffffff;
+        }
+
+        .content h2 {
+            font-size: 1.1rem;
+            color: #F1B24A;
+            margin-bottom: 12px;
+            margin-top: 25px;
+            font-weight: 600;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .location {
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;
+        }
+
+        .location strong {
+            color: #F1B24A;
+        }
+
+        .requirements {
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;        }
+
+        .requirements h2 {
+            margin-top: 15px;
+        }
+
+        .requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .requirements li {
+            padding: 6px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .requirements li::before {
+            content: '•';
+            color: #F1B24A;
+            font-weight: bold;
+            font-size: 1.4rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .note {
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;
+        }
+
+        .note strong {
+            color: #F1B24A;
+        }
+
+        .image-container {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -20%;
+            margin-top: 70px;
+        }
+
+        .image-wrapper {
+            background-image: url("images/bg-image-1.jpg");
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 50%;
+        }
+
+        .curved-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .curved-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 5px solid #F1B24A;
+            border-radius: 50%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .curved-image img {
+            width: 110%;
+            height: 120%;
+            height: auto;
+            display: block;
+            z-index: 1;      
+        }
+
+        .decorative-curve img {
+            margin-right: -150%;
+            position: absolute;
+            margin-top: -100%;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        /* Decorative dots grid */
+        .decorative-dots {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: grid;
+            grid-template-columns: repeat(5, 6px);
+            grid-template-rows: repeat(3, 6px);
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .decorative-dots span {
+            width: 6px;
+            height: 6px;
+            background: rgba(241, 178, 74, 0.7);
+            border-radius: 50%;
+        }
+
+
         .footer-section h4 {
             margin-bottom: 1rem;
         }
@@ -723,127 +923,448 @@
             font-size: 0.9rem;
         }
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+        /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
+.dropdown {
+    position: relative;
+}   
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        /* Dropdown menu box */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
+/* Dropdown menu box - UPDATED FOR FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        /* Links inside dropdown */
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
 
-        /* Make dropdown align properly inside nav */
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-        .hero {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 3rem;
-        }
-  
-        .hero-card {
-            margin-top: 2rem;
-        }
-
-        .rewards-container {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .rewards-image {
-            justify-content: center;
-        }
-     }
+/* Make dropdown align properly inside nav */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
 
 
-        @media (max-width: 768px) {
-         nav {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .nav-buttons {
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        .solutions-grid,
-        .loans-grid {
-            grid-template-columns: 1fr 1fr;
-        }
+        /* Responsive - UPDATED */
+@media (max-width: 1199px) {
+    .nav-links {
+        gap: 2rem;
+    }
 
-        .footer-content {
+    .nav-links a {
+        margin: 0 0.5rem;
+    }
+
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
+
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .content h1 {
+        font-size: 3rem;
+    }
+
+    .rewards-text h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 968px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 6rem 5% 3rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    .hero-card {
+        margin-top: 2rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
+
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
+
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
+
+    .rewards-container {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding: 4rem 0;
+    }
+
+    .rewards-image {
+        justify-content: center;
+        margin-right: 0;
+    }
+
+    .rewards-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .image-container {
+        margin-right: 0;
+        margin-top: 0;
+    }
+
+    .footer-content {
         grid-template-columns: 1fr 1fr;
-        }
-        }
+    }
+}
 
-        @media (max-width: 480px) {
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-        .hero-content h1 {
-            font-size: 2rem;
-        }
+    .logo {
+        font-size: 1.1rem;
+    }
 
-        .solutions-grid,
-        .loans-grid {
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
+
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
+
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 5.5rem 4% 3rem;
+    }
+
+    .hero-content {
+        margin-top: 50px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .solutions-grid,
+    .loans-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .solutions {
+        height: auto;
+        padding: 4rem 5%;
+    }
+
+    .loans {
+        height: auto;
+        padding: 4rem 5%;
+    }
+
+    .rewards-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .rewards-text p {
+        font-size: 1rem;
+        margin-top: 2rem;
+    }
+
+    .content h1 {
+        font-size: 2.5rem;
+    }
+
+    .content {
+        padding-right: 20px;
+    }
+
+    .footer-content {
         grid-template-columns: 1fr;
-        }
+    }
+}
 
-        .footer-content {
-        grid-template-columns: 1fr;
-        }
-
-        .rewards-text h1 {
+@media (max-width: 640px) {
+    .hero-content h1 {
         font-size: 2rem;
-        }
-        }
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .solutions-grid,
+    .loans-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rewards-text h1 {
+        font-size: 2rem;
+    }
+
+    .content h1 {
+        font-size: 2rem;
+    }
+
+    .content .intro,
+    .content p {
+        font-size: 0.9rem;
+    }
+
+    .career-section {
+        padding: 40px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav span {
+        font-size: 20px;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .hero {
+        padding: 4.5rem 3% 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .hero-image {
+        height: 200px;
+    }
+
+    .hero-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .hero-card p {
+        font-size: 0.9rem;
+    }
+
+    .solutions h2,
+    .loans h2 {
+        font-size: 2rem;
+    }
+
+    .rewards-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .rewards-text p {
+        font-size: 0.9rem;
+        margin-top: 1.5rem;
+    }
+
+    .rewards-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .content h1 {
+        font-size: 1.8rem;
+    }
+
+    .content .intro {
+        font-size: 0.85rem;
+    }
+
+    .content h2 {
+        font-size: 1rem;
+    }
+
+    .content p {
+        font-size: 0.85rem;
+    }
+
+    .location,
+    .requirements,
+    .note {
+        padding: 15px;
+        font-size: 0.85rem;
+    }
+
+    .requirements li {
+        font-size: 0.85rem;
+    }
+
+    .curved-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .footer-brand p {
+        font-size: 0.9rem;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+    }
+
+    .footer-section ul li,
+    .contact-item {
+        font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-links a {
+        font-size: 0.85rem;
+    }
+}
+
+/* Landscape Orientation Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 4rem 5% 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+        margin-bottom: 1rem;
+    }
+
+    .solutions,
+    .loans,
+    .career-section {
+        min-height: auto;
+        height: auto;
+    }
+}
 
     </style>
     <html>
@@ -889,6 +1410,8 @@
 
                 <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
                     <a href="cards/profile.php" role="menuitem">Profile</a>
+                    <a href="refer.php" role="menuitem">Refer to a friend</a>
+                    <a href="cards/points.php" role="menuitem">Missions</a>
                     <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
                 </div>
             </div>
@@ -1010,6 +1533,68 @@
         </div>
     </section>
 
+        <!-- Career Section -->
+    <section class="career-section">
+        <div class="container">
+            <div class="content">
+                <h1>Build a Meaningful Career in the World of Banking!</h1>
+                
+                <p class="intro">
+                    At Evergreen Bank, we believe that our employees are the heart of our success. We're looking 
+                    for dedicated, skilled, and passionate individuals who are ready to grow with us. Whether you're 
+                    an experienced banker or a fresh graduate eager to learn, we provide a supportive environment 
+                    where your talents can thrive and your career can flourish.
+                </p>
+
+                <div class="application-info">
+                    <h2>How to apply?</h2>
+                    <p>
+                        Interested applicants are encouraged to personally visit our branch to submit their application. 
+                        Please bring the following requirements and apply directly at Evergreen Bank's Human Resources 
+                        Department.
+                    </p>
+                </div>
+
+                <div class="location">
+                    <strong>Where to Apply:</strong><br>
+                    Evergreen Bank Main Branch<br>
+                    123 Evergreen Avenue, City Center
+                </div>
+
+                <div class="requirements">
+                    <h2>Requirements:</h2>
+                    <ul>
+                        <li>Updated Resume / Curriculum Vitae</li>
+                        <li>Application Letter</li>
+                        <li>Valid ID</li>
+                        <li>Photocopy of Transcript of Records (if applicable)</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <strong>Note:</strong> Walk-in applicants are welcome. Our HR team will be glad to assist you with the next steps in your 
+                    application process.
+                </div>
+            </div>
+
+            <div class="image-container">
+                <div class="image-wrapper">
+                    <div class="curved-image">
+                        <img src="images/recruit.png" alt="Professional woman in business suit shaking hands">
+                        <div class="decorative-dots">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="decorative-curve">
+                        <img src="images/recruitstyle.png" alt="Images Design">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -1031,9 +1616,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Credit Cards</a></li>
-                    <li><a href="#">Debit Cards</a></li>
-                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="./cards/credit.php">Credit Cards</a></li>
+                    <li><a href="./cards/debit.php">Debit Cards</a></li>
+                    <li><a href="./cards/prepaid.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1098,14 +1683,6 @@
             lastScroll = currentScroll;
         });
 
-        // Card hover effects
-        const cards = document.querySelectorAll('.solution-card, .loan-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transition = 'transform 0.3s ease';
-            });
-        });
-
         // Button click animations
 
 
@@ -1123,14 +1700,6 @@
                 }
             });
         }, observerOptions);
-
-        // Observe cards and sections
-        document.querySelectorAll('.solution-card, .loan-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
 
         function toggleDropdown() {
             const dropdown = document.getElementById("cardsDropdown");
@@ -1216,6 +1785,12 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+            width: 55px;
+            height: 50px;
+            }
         </style>
         <div style="
             background: white;
@@ -1228,16 +1803,17 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 auto 1.5rem;
+                flex-direction: start;
+                margin: 0 auto 2.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="images/warning.png"></div>
             
             <h3 style="
                 color: #003631;
@@ -1249,7 +1825,7 @@ function showSignOutModal(event) {
             
             <p style="
                 color: #666;
-                margin-bottom: 2rem;
+                margin-bottom: 20px;
                 font-size: 1rem;
                 line-height: 1.6;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
