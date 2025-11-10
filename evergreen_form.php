@@ -1,3 +1,11 @@
+<?php
+    session_start([
+       'cookie_httponly' => true,
+       'cookie_secure' => isset($_SERVER['HTTPS']),
+       'use_strict_mode' => true
+    ]);
+?>
+
 <html>
   <head>
     <meta charset="UTF-8">
@@ -14,7 +22,7 @@
 
       body {
         margin: 40px;
-        background-image: url(contents/bg-image.png);
+        background-image: url(images/bg-image.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -29,6 +37,12 @@
         display: flex;
         gap: 5px;
         margin: 20px;
+      }
+
+      nav img {
+        width: 50%;
+        height: 50%;
+        border-radius: 50%;
       }
 
       .logo {
@@ -46,7 +60,7 @@
       }
 
       .motto {
-        font-size: 15px;
+        font-size: 12px;
       }
 
       /* FORM - General */
@@ -65,6 +79,7 @@
         display: flex;
         flex-direction: column;
         gap: 25px;
+        position: relative;
       }
 
       /* FORM - Uppermost */
@@ -416,13 +431,25 @@
         cursor: pointer;
       }
 
+      /* Back button */
+      .back-container {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .back-link {
+        font-size: 20px;
+        text-decoration: none;
+        color: #003631;
+      }
+
     </style>
   </head>
   <body>
     <nav>
-      <img src="contents/evrgrn-logo.png" alt="logo" class="logo">
+      <img src="images/loginlogo.png" alt="logo" class="logo">
       <div class="wrap-nav">
-        <h1 id="title-page">Evergreen</h1>
+        <h1 id="title-page">EVERGREEN</h1>
         <P class="motto">Secure, Invest, Achieve</P>
       </div>
     </nav>
@@ -430,6 +457,9 @@
     <!-- main body -->
     <main>
       <div class="main-form-body">
+        <div class="back-container">
+            <a href="viewingpage.php" class="back-link"><-</a>
+        </div>
         <!-- form title -->
         <div class="uppermost-form">
           <h2 class="form-title">Account Application</h2>

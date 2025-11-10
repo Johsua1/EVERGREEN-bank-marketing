@@ -4,6 +4,14 @@
        'cookie_secure' => isset($_SERVER['HTTPS']),
        'use_strict_mode' => true
     ]);
+    // Check if user is logged in
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
+    header("Location: viewing.php");
+    exit;
+}
+
+// Get user info from session
+$fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -79,115 +87,48 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            background: rgba(255,255,255,0.1);
-            color: #F1B24A;
-        }
-
-        .profile-btn {
-            width: 50%;
-            height: 50;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .profile-btn img {
-            width: 200%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
-
-        .dropbtn {
-            background: none;
+        .btn {
+            padding: 0.7rem 1.5rem;
             border: none;
-            color: white;
-            font-size: 1rem;
+            border-radius: 5px;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
-
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 100vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 100%;
-            gap: 10rem;
-        }
-
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
         }
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #0d4d4d;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-primary:hover {
+            background: #e69610;
+            transform: translateY(-2px);
+        }
         /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, #003631 0%, #004d45 100%);
-            padding: 120px 5% 80px;
+            padding: 80px 5% 80px;
             margin-top: 70px;
         }
 
@@ -726,7 +667,7 @@
             <a href="viewingpage.php">Home</a>
 
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
+                <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
                 <div class="dropdown-content" id="cardsDropdown">
                     <a href="cards/credit.php">Credit Cards</a>
                     <a href="cards/debit.php">Debit Cards</a>
@@ -740,11 +681,19 @@
         </div>
 
         <div class="nav-buttons">
-            <a href="login.html" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="/cards/profile.html" class="profile-btn">
-                    <img src="images/pfp.png" alt="Profile Icon">
-                </a>
+            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+
+            <div class="profile-actions">
+                <div class="logo-icon" style="width:40px;height:40px;">
+                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
+                        <img src="images/pfp.png" alt="Profile Icon">
+                    </button>
+                </div>
+
+                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
+                    <a href="cards/profile.php" role="menuitem">Profile</a>
+                    <a href="logout.php" role="menuitem">Sign Out</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -753,7 +702,7 @@
     <section class="hero-section">
         <div class="hero-container">
             <!-- Left Content -->
-            <div>
+            <div class="content-hero">
                 <div class="trust-badge">
                     ⭐ Trusted by 100,000+ clients
                 </div>
@@ -1013,6 +962,37 @@
                 }
             }
         }); 
+
+        // Profile dropdown toggle
+        function toggleProfileDropdown(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            const isOpen = dd.classList.toggle('show');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        // close profile dropdown when clicking outside or pressing Esc
+        window.addEventListener('click', function (e) {
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            if (!dd) return;
+            if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+                dd.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dd = document.getElementById('profileDropdown');
+                const btn = document.getElementById('profileBtn');
+                if (dd && dd.classList.contains('show')) {
+                    dd.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
     </script>
 </body>
 </html>

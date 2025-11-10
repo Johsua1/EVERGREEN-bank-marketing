@@ -4,6 +4,14 @@
        'cookie_secure' => isset($_SERVER['HTTPS']),
        'use_strict_mode' => true
     ]);
+    // Check if user is logged in
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
+        header("Location: viewing.php");
+    exit;
+    }
+
+    // Get user info from session
+        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -57,21 +65,25 @@
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: #F1B24A;
+            width: 50px;
+            height: 50px;
+            background: transparent; /* was #F1B24A */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            overflow: hidden;
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* change from cover -> contain */
+            object-position: center;
+            display: block;
             border-radius: 50%;
+            background: transparent;
         }
 
         .nav-links {
@@ -109,8 +121,66 @@
         }
 
         .username-profile:hover {
-            background: rgba(255,255,255,0.1);
             color: #F1B24A;
+        }
+
+        .profile-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative; /* needed for dropdown positioning */
+        }
+
+        /* profile dropdown */
+        .profile-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;              /* now a button */
+            padding: 0;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background-color: #003631;
+            display:block;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            background: #D9D9D9;
+            color: #003631;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            min-width: 160px;
+            z-index: 200;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            padding: 0.65rem 1rem;
+            color: #003631;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .profile-dropdown a:hover {
+            background: rgba(0,0,0,0.04);
+        }
+
+        .profile-dropdown.show {
+            display: block;
         }
 
         .profile-btn {
@@ -156,14 +226,14 @@
             position: absolute;
             left: 0;
             top: 150%;
-            width: 100vw;
+            width: 150vw;
             background-color: #D9D9D9;
             padding: 1.5rem 0;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             z-index: 99;
             text-align: center;
             transform: translateX(-50%);
-            left: 100%;
+            left: 150%;
             gap: 10rem;
         }
 
@@ -225,6 +295,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn-apply:hover {
@@ -729,7 +800,7 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="../images/icon.png" alt="Evergreen Logo">
+                <img src="../images/Logo.png.png" alt="Evergreen Logo">
             </div>
             <span>
                 <a href="../viewingpage.php">EVERGREEN</a>
@@ -740,7 +811,7 @@
             <a href="../viewingpage.php">Home</a>
 
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ▼</button>
+                <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
                 <div class="dropdown-content" id="cardsDropdown">
                     <a href="../cards/credit.php">Credit Cards</a>
                     <a href="../cards/debit.php">Debit Cards</a>
@@ -754,11 +825,19 @@
         </div>
 
         <div class="nav-buttons">
-            <a href="login.html" class="username-profile">Username</a>
-            <div class="logo-icon">
-                <a href="/cards/profile.html" class="profile-btn">
-                    <img src="../images/pfp.png" alt="Profile Icon">
-                </a>
+            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+
+            <div class="profile-actions">
+                <div class="logo-icon" style="width:40px;height:40px;">
+                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
+                        <img src="../images/pfp.png" alt="Profile Icon">
+                    </button>
+                </div>
+
+                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
+                    <a href="cards/profile.php" role="menuitem">Profile</a>
+                    <a href="logout.php" role="menuitem">Sign Out</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -768,7 +847,7 @@
         <div class="hero-content">
             <h1>Prepaid Cards</h1>
             <p>Load, spend, and control your money with ease. The EVERGREEN Prepaid Card gives you flexibility and security without the need for a bank account.</p>
-            <button class="btn-apply">Apply Now</button>
+            <a href="../evergreen_form.php" class="btn-apply">Apply Now</a>
         </div>
         <div class="hero-image">
             <div class="card-hand">
@@ -1041,6 +1120,37 @@
             const heroCard = document.querySelector('.credit-card-display');
             if (heroCard && scrolled < 600) {
                 heroCard.style.transform = `rotate(-5deg) translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Profile dropdown toggle
+        function toggleProfileDropdown(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            const isOpen = dd.classList.toggle('show');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        // close profile dropdown when clicking outside or pressing Esc
+        window.addEventListener('click', function (e) {
+            const dd = document.getElementById('profileDropdown');
+            const btn = document.getElementById('profileBtn');
+            if (!dd) return;
+            if (dd.classList.contains('show') && !e.composedPath().includes(dd) && e.target !== btn) {
+                dd.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dd = document.getElementById('profileDropdown');
+                const btn = document.getElementById('profileBtn');
+                if (dd && dd.classList.contains('show')) {
+                    dd.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
             }
         });
     </script>

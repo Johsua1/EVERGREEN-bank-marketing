@@ -1,5 +1,9 @@
 <?php
-    session_start();
+   session_start([
+       'cookie_httponly' => true,
+       'cookie_secure' => isset($_SERVER['HTTPS']),
+       'use_strict_mode' => true
+    ]);
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +125,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
-            min-height: 84vh;
+            min-height: 90vh;
         }
 
         .hero-content h1 {
@@ -635,14 +639,14 @@
             position: absolute;
             left: 0;
             top: 150%;
-            width: 100vw;
+            width: 150vw;
             background-color: #D9D9D9;
             padding: 1.5rem 0;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             z-index: 99;
             text-align: center;
             transform: translateX(-50%);
-            left: 100%;
+            left: 150%;
             gap: 10rem;
         }
 
@@ -740,9 +744,15 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/Logo.png.png">
+                <a href="viewing.php">
+                    <img src="images/Logo.png.png">
+                </a>
             </div>
-                <span>EVERGREEN</span>
+                <span>
+                    <a href="viewing.php">
+                    EVERGREEN
+                    </a>
+                </span>
         </div>
         <div class="nav-buttons">
             <a href="login.php" class="btn btn-login">Login
@@ -759,8 +769,8 @@
             <h1>Banking that grows <br>with <span class="highlight">you</span></br></h1>
             <p>Secure financial solutions for every stage of your life journey.<br> Invest, save, and achieve your goals with Evergreen.</p>
             <div class="hero-buttons">
-                <a href="login.html" class="btn btn-primary">Open an Account</a>
-                <a href="learnmore.html" class="btn btn-secondary">Learn More</a>
+                <a href="login.php" class="btn btn-primary">Open an Account</a>
+                <a href="learnmoreno.php" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
         <div class="hero-card">
@@ -918,10 +928,10 @@
         <div class="footer-bottom">
             <p>© 2023 Evergreen Bank. All rights reserved.<br>Member FDIC. Equal Housing Lender. Evergreen Bank, N.A.</p>
             <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms and Agreements</a>
-                <a href="#">FAQS</a>
-                <a href="#">About Us</a>
+                <a href="policy.php">Privacy Policy</a>
+                <a href="terms.php">Terms and Agreements</a>
+                <a href="faq.php">FAQS</a>
+                <a href="about.php">About Us</a>
             </div>
         </div>
     </footer>
