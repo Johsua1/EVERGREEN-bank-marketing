@@ -152,6 +152,10 @@
         font-size: 13px;
     }
 
+    #agree {
+          accent-color: #003631;
+        }
+
     .submit {
         background: var(--bg-1);
         color: white;
@@ -188,24 +192,218 @@
         background: rgba(0,54,49,0.2);
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-        body { padding: 20px; }
-        .main-container { padding: 24px; }
-        .heading { font-size: 24px; }
+    /* Responsive Design */
+    @media (max-width: 968px) {
+        body {
+            padding: 20px;
+        }
+
+        nav {
+            left: 20px;
+            top: 15px;
+            gap: 10px;
+        }
+
+        nav img {
+            width: 44px;
+            height: 40px;
+        }
+
+        .web-title a {
+            font-size: 18px;
+        }
+
+        .motto a {
+            font-size: 11px;
+        }
+
+        main {
+            padding-top: 60px;
+        }
+
+        .main-container {
+            padding: 28px;
+        }
+
+        .heading {
+            font-size: 24px;
+        }
+
+        .sub-heading {
+            font-size: 12px;
+        }
+
+        .body-container {
+            max-height: 55vh;
+            padding-right: 15px;
+        }
+
+        .conditions-head {
+            font-size: 14px;
+        }
+
+        .check-container {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 640px) {
+        body {
+            padding: 15px;
+        }
+
+        nav {
+            left: 15px;
+            top: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        nav img {
+            width: 38px;
+            height: 35px;
+        }
+
+        .web-title a {
+            font-size: 16px;
+        }
+
+        .motto {
+            display: none;
+        }
+
+        main {
+            padding-top: 50px;
+        }
+
+        .main-container {
+            padding: 22px;
+            border-radius: 12px;
+        }
+
+        .heading {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .sub-heading {
+            font-size: 11px;
+            margin-bottom: 20px;
+        }
+
+        .body-container {
+            max-height: 50vh;
+            padding-right: 12px;
+            margin-bottom: 20px;
+        }
+
+        .conditions-head {
+            font-size: 13px;
+            margin: 15px 0 6px;
+        }
+
+        .conditions-para {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .check-container {
+            flex-direction: column;
+            gap: 0.8rem;
+            padding-top: 15px;
+        }
+
+        .wrap {
+            width: 100%;
+            justify-content: center;
+        }
+
+        label {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 12px 24px;
+        }
+
+        .body-container::-webkit-scrollbar {
+            width: 6px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 12px;
+        }
+
+        nav {
+            left: 12px;
+            top: 10px;
+        }
+
+        nav img {
+            width: 34px;
+            height: 32px;
+        }
+
+        .web-title a {
+            font-size: 14px;
+        }
+
+        main {
+            padding-top: 45px;
+        }
+
+        .main-container {
+            padding: 18px;
+        }
+
+        .heading {
+            font-size: 18px;
+        }
+
+        .sub-heading {
+            font-size: 10px;
+        }
+
+        .body-container {
+            max-height: 45vh;
+            padding-right: 10px;
+        }
+
+        .conditions-head {
+            font-size: 12px;
+        }
+
+        .conditions-para {
+            font-size: 11px;
+        }
+    }
+
+    /* Landscape Orientation */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .body-container {
+            max-height: 35vh;
+        }
+
+        main {
+            padding-top: 60px;
+        }
     }
 </style>
 </head>
 <body>
   <nav>
-    <a href="viewingpage">
+    <a href="viewing.php">
           <img src="images/icon.png" alt="logo" class="logo">
     </a>
     <div class="nav-wrap">
       <h2 class="web-title">
-        <a href="viewingpage.php">EVERGREEN</a></h2>
+        <a href="viewing.php">EVERGREEN</a></h2>
       <p class="motto">
-        <a href="viewingpage.php">Secure, Invest, Achieve</a></p>
+        <a href="viewing.php">Secure, Invest, Achieve</a></p>
     </div>
   </nav>
 
@@ -295,9 +493,9 @@
       <div class="check-container">
         <div class="wrap">
           <label for="agree">I agree to the terms and condition</label>
-          <input type="checkbox" name="agree" id="agree" value="agree">
+          <input type="checkbox" name="agree" id="agree" value="agree" accent-color="#003631">
         </div>
-        <button class="submit">submit</button>
+        <button class="submit">Submit</button>
       </div>
     </div>
   </main>

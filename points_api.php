@@ -39,7 +39,7 @@ switch ($action) {
 }
 
 function getUserPoints($conn, $user_id) {
-    $sql = "SELECT total_points FROM users WHERE id = ?";
+    $sql = "SELECT total_points FROM bank_users WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -57,26 +57,64 @@ function getUserPoints($conn, $user_id) {
 }
 
 function getMissions($conn, $user_id) {
-    // Get all missions that user hasn't completed yet
-    $sql = "SELECT m.id, m.mission_text, m.points_value 
+    // Get user's current referral count
+    $referral_sql = "SELECT COUNT(*) as referral_count FROM referrals WHERE referrer_id = ?";
+    $stmt = $conn->prepare($referral_sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $referral_data = $result->fetch_assoc();
+    $referral_count = $referral_data['referral_count'];
+    $stmt->close();
+    
+    // Get all missions with their completion status
+    $sql = "SELECT 
+                m.id, 
+                m.mission_text, 
+                m.points_value,
+                um.status,
+                CASE 
+                    WHEN m.id = 1 AND ? >= 1 THEN 'available'
+                    WHEN m.id = 2 AND ? >= 3 THEN 'available'
+                    WHEN m.id = 3 AND ? >= 5 THEN 'available'
+                    WHEN m.id = 4 AND ? >= 10 THEN 'available'
+                    WHEN m.id = 5 AND ? >= 15 THEN 'available'
+                    WHEN m.id = 6 AND ? >= 20 THEN 'available'
+                    WHEN m.id = 7 THEN 'available'
+                    WHEN m.id = 8 THEN 'pending'
+                    WHEN m.id = 9 AND ? >= 25 THEN 'available'
+                    WHEN m.id = 10 AND ? >= 50 THEN 'available'
+                    ELSE 'pending'
+                END as mission_status
             FROM missions m
             LEFT JOIN user_missions um ON m.id = um.mission_id AND um.user_id = ?
-            WHERE um.id IS NULL
+            WHERE um.id IS NULL OR um.status != 'collected'
             ORDER BY m.id";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("iiiiiiiii", 
+        $referral_count, $referral_count, $referral_count, 
+        $referral_count, $referral_count, $referral_count,
+        $referral_count, $referral_count, $user_id
+    );
     $stmt->execute();
     $result = $stmt->get_result();
     
     $missions = [];
     while ($row = $result->fetch_assoc()) {
-        $missions[] = $row;
+        $missions[] = [
+            'id' => $row['id'],
+            'mission_text' => $row['mission_text'],
+            'points_value' => $row['points_value'],
+            'status' => $row['mission_status'],
+            'current_referrals' => $referral_count
+        ];
     }
     
     echo json_encode([
         'success' => true,
-        'missions' => $missions
+        'missions' => $missions,
+        'total_referrals' => $referral_count
     ]);
     $stmt->close();
 }
@@ -89,11 +127,38 @@ function collectMission($conn, $user_id) {
         return;
     }
     
-    // Start transaction
     $conn->begin_transaction();
     
     try {
-        // Check if mission exists and get points value
+        // Get user's referral count
+        $sql = "SELECT COUNT(*) as referral_count FROM referrals WHERE referrer_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $referral_data = $result->fetch_assoc();
+        $referral_count = $referral_data['referral_count'];
+        $stmt->close();
+        
+        // Check if mission requirements are met
+        $requirements = [
+            1 => 1,   // 1 referral
+            2 => 3,   // 3 referrals
+            3 => 5,   // 5 referrals
+            4 => 10,  // 10 referrals
+            5 => 15,  // 15 referrals
+            6 => 20,  // 20 referrals
+            7 => 0,   // Social media (always available)
+            8 => 0,   // Weekly challenge (manual check)
+            9 => 25,  // 25 referrals
+            10 => 50  // 50 referrals
+        ];
+        
+        if (isset($requirements[$mission_id]) && $referral_count < $requirements[$mission_id]) {
+            throw new Exception('Mission requirements not met. You need ' . $requirements[$mission_id] . ' referrals.');
+        }
+        
+        // Get mission details
         $sql = "SELECT points_value, mission_text FROM missions WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $mission_id);
@@ -109,34 +174,36 @@ function collectMission($conn, $user_id) {
         $mission_text = $mission['mission_text'];
         $stmt->close();
         
-        // Check if user already completed this mission
-        $sql = "SELECT id FROM user_missions WHERE user_id = ? AND mission_id = ?";
+        // Check if already collected
+        $sql = "SELECT id FROM user_missions WHERE user_id = ? AND mission_id = ? AND status = 'collected'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $user_id, $mission_id);
         $stmt->execute();
         $result = $stmt->get_result();
         
         if ($result->num_rows > 0) {
-            throw new Exception('Mission already completed');
+            throw new Exception('Mission already collected');
         }
         $stmt->close();
         
-        // Add mission to user_missions
-        $sql = "INSERT INTO user_missions (user_id, mission_id, points_earned) VALUES (?, ?, ?)";
+        // Add or update mission record
+        $sql = "INSERT INTO user_missions (user_id, mission_id, points_earned, status) 
+                VALUES (?, ?, ?, 'collected')
+                ON DUPLICATE KEY UPDATE status = 'collected', completed_at = NOW()";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iid", $user_id, $mission_id, $points);
         $stmt->execute();
         $stmt->close();
         
         // Update user's total points
-        $sql = "UPDATE users SET total_points = total_points + ? WHERE id = ?";
+        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $points, $user_id);
         $stmt->execute();
         $stmt->close();
         
-        // Get updated total points
-        $sql = "SELECT total_points FROM users WHERE id = ?";
+        // Get updated total
+        $sql = "SELECT total_points FROM bank_users WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -149,7 +216,7 @@ function collectMission($conn, $user_id) {
         
         echo json_encode([
             'success' => true,
-            'message' => 'Mission completed!',
+            'message' => 'Mission completed! 🎉',
             'points_earned' => number_format($points, 2, '.', ''),
             'total_points' => number_format($total_points, 2, '.', ''),
             'mission_text' => $mission_text

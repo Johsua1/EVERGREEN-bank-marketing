@@ -4,14 +4,6 @@
        'cookie_secure' => isset($_SERVER['HTTPS']),
        'use_strict_mode' => true
     ]);
-    // Check if user is logged in
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
-        header("Location: viewing.php");
-    exit;
-    }
-
-    // Get user info from session
-        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debit Cards - Evergreen Bank</title>
+    <title>Prepaid Cards - Evergreen Bank</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+                /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -86,170 +78,44 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
             border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            color: #F1B24A;
-        }
-
-        .profile-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
-        }
-
-        /* profile dropdown */
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;              /* now a button */
-            padding: 0;
             cursor: pointer;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-            display:block;
-        }
-
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: calc(100% + 8px);
-            background: #D9D9D9;
-            color: #003631;
-            border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-            min-width: 160px;
-            z-index: 200;
-        }
-
-        .profile-dropdown a {
-            display: block;
-            padding: 0.65rem 1rem;
-            color: #003631;
+            font-size: 0.9rem;
+            transition: all 0.3s;
             text-decoration: none;
-            font-weight: 600;
+            display: inline-block;
         }
 
-        .profile-dropdown a:hover {
-            background: rgba(0,0,0,0.04);
-        }
-
-        .profile-dropdown.show {
-            display: block;
-        }
-
-        .profile-btn {
-            width: 40px;
-            height: 40px;
+        .btn-login {
             background: transparent;
-            border-radius: 50%;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #0d4d4d;
+            font-weight: bold;
             display: flex;
             align-items: center;
-            justify-content: center;
         }
 
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
+        .btn-primary:hover {
+            background: #e69610;
+            transform: translateY(-2px);
         }
-
-        /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
-.dropdown {
-    position: relative;
-}   
-
-.dropbtn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s;
-}
-
-.dropbtn:hover {
-    color: #F1B24A;
-}
-
-/* Dropdown menu box - UPDATED FOR FULL WIDTH */
-.dropdown-content {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 80px;
-    width: 100vw;
-    background-color: #D9D9D9;
-    padding: 1.5rem 5%;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 99;
-    text-align: center;
-}
-
-/* Links inside dropdown */
-.dropdown-content a {
-    color: #003631;
-    margin: 0 2rem;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.dropdown-content a:hover {
-    color: #F1B24A;
-    transform: translateY(-2px);
-}
 
         /* Hero Section */
         .hero {
@@ -276,6 +142,14 @@
             line-height: 1.7;
             margin-bottom: 2rem;
             max-width: 500px;
+        }
+
+        .hero-apply {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            
         }
 
         .btn-apply {
@@ -730,123 +604,123 @@
         }
 
         /* Responsive - UPDATED */
-        @media (max-width: 968px) {
-            .hero {
-            grid-template-columns: 1fr;
-            padding: 6rem 5% 3rem;
-        }
+@media (max-width: 968px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 5% 3rem;
+    }
 
-        .hero-content h1 {
-            font-size: 2.2rem;
-        }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
 
-        .credit-card-display {
-            width: 240px;
-            height: 150px;
-            margin-left: 25%;
-        }
+    .credit-card-display {
+        width: 240px;
+        height: 150px;
+        margin-left: 25%;
+    }
 
-        .nav-links {
-            gap: 1rem;
-        }
+    .nav-links {
+        gap: 1rem;
+    }
 
-        .nav-links a {
-            font-size: 0.95rem;
-            margin: 0 0.5rem;
-        }
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
 
-        .dropdown-content {
-            padding: 1.2rem 3%;
-        }
+    .dropdown-content {
+        padding: 1.2rem 3%;
+    }
 
-        .dropdown-content a {
-            margin: 0 1rem;
-            font-size: 0.95rem;
-        }
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
 
-        .footer-content {
-            grid-template-columns: 1fr 1fr;
-        }
-        }
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
-        @media (max-width: 640px) {
-            nav {
-            padding: 1rem 3%;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+@media (max-width: 640px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-        .hero-content {
-            margin-top: 50px;
-        }
+    .hero-content {
+        margin-top: 50px;
+    }
 
-        .logo {
-            font-size: 1rem;
-        }
+    .logo {
+        font-size: 1rem;
+    }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-        }
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
 
-        .nav-links {
-            order: 3;
-            width: 100%;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
 
-        .nav-links a {
-            font-size: 0.9rem;
-            margin: 0 0.3rem;
-        }
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
 
-        .dropdown-content {
-            top: 120px;
-            padding: 1rem 2%;
-        }
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
 
-        .dropdown-content a {
-            margin: 0.3rem 0.5rem;
-            font-size: 0.85rem;
-            padding: 0.4rem 0.8rem;
-        }
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
 
-        .hero-content h1 {
-            font-size: 1.8rem;
-        }
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
 
-        .benefits-grid,
-        .cards-grid,
-        .discover-grid {
-            grid-template-columns: 1fr;
-        }
+    .benefits-grid,
+    .cards-grid,
+    .discover-grid {
+        grid-template-columns: 1fr;
+    }
 
-        .card-buttons {
-            flex-direction: column;
-        }
+    .card-buttons {
+        flex-direction: column;
+    }
 
-        .footer-content {
-            grid-template-columns: 1fr;
-        }
-        }
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
 
-        @media (max-width: 480px) {
-            .dropdown-content a {
-            display: inline-block;
-            margin: 0.2rem 0.3rem;
-            font-size: 0.8rem;
-        }
+@media (max-width: 480px) {
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
 
-        .username-profile {
-            font-size: 0.85rem;
-            padding: 0.4rem 0.8rem;
-        }
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
 
-        .nav-buttons {
-            gap: 0.5rem;
-        }
+    .nav-buttons {
+        gap: 0.5rem;
+    }
 }
     </style>
 </head>
@@ -855,58 +729,31 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <a href="viewingpage.php">
+                <a href="../viewing.php">
                     <img src="../images/Logo.png.png">
                 </a>
             </div>
-            <span>
-                <a href="../viewingpage.php">EVERGREEN</a>
-            </span>
+                <span>
+                    <a href="../viewing.php">
+                    EVERGREEN
+                    </a>
+                </span>
         </div>
-
-        <div class="nav-links">
-            <a href="../viewingpage.php">Home</a>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
-                <div class="dropdown-content" id="cardsDropdown">
-                    <a href="../cards/credit.php">Credit Cards</a>
-                    <a href="../cards/debit.php">Debit Cards</a>
-                    <a href="../cards/prepaid.php">Prepaid Cards</a>
-                    <a href="../cards/rewards.php">Card Rewards</a>
-                </div>
-            </div>
-
-            <a href="#loans">Loans</a>
-            <a href="../about.php">About Us</a>
-        </div>
-
         <div class="nav-buttons">
-            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+            <a href="../login.php" class="btn btn-login">Login
 
-            <div class="profile-actions">
-                <div class="logo-icon" style="width:40px;height:40px;">
-                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
-                        <img src="../images/pfp.png" alt="Profile Icon">
-                    </button>
-                </div>
-
-                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
-                    <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="../refer.php" role="menuitem">Refer to a friend</a>
-                    <a href="../cards/points.php" role="menuitem">Missions</a>
-                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
-                </div>
-            </div>
+            </a>
+                
+            <a href="../login.php" class="btn btn-primary">Get Started</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Debit Cards</h1>
-            <p>Enjoy easy access to your funds anytime. With the EVERGREEN Debit Card, you can shop, withdraw, and pay bills securely and conveniently.</p>
-            <a href="../evergreen_form.php" class="btn-apply">Apply Now</a>
+            <h1>Prepaid Cards</h1>
+            <p>Load, spend, and control your money with ease. The EVERGREEN Prepaid Card gives you flexibility and security without the need for a bank account.</p>
+            <a href="../login.php" class="btn-apply">Apply Now</a>
         </div>
         <div class="hero-image">
             <div class="card-hand">
@@ -1024,7 +871,7 @@
                 <h3>Credit Cards</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <button class="btn-small btn-dark">
-                    <a href="../cards/credit.php">View</a>
+                    <a href="credit.php">View</a>
                 </button>
             </div>
 
@@ -1035,10 +882,10 @@
                         <div class="mini-logo">VISA</div>
                     </div>
                 </div>
-                <h3>Prepaid Cards</h3>
+                <h3>Debit Cards</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <button class="btn-small btn-dark">
-                    <a href="../cards/prepaid.php">View</a>
+                    <a href="debit.php">View</a>
                 </button>
             </div>
         </div>
@@ -1052,7 +899,7 @@
             <div class="footer-brand">
                 <div class="logo">
                     <div class="logo-icon">
-                        <img src="../images/icon.png" alt="Evergreen Logo">
+                        <img src="/images/icon.png" alt="Evergreen Logo">
                     </div>
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
@@ -1073,9 +920,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="credit.php">Credit Cards</a></li>
-                    <li><a href="debit.php">Debit Cards</a></li>
-                    <li><a href="prepaid.php">Prepaid Cards</a></li>
+                    <li><a href="../cards/creditno.php">Credit Cards</a></li>
+                    <li><a href="../cards/debitno.php">Debit Cards</a></li>
+                    <li><a href="../cards/prepaidno.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1258,7 +1105,6 @@ function showSignOutModal(event) {
                 }
             }
 
-            
             /* Image Icon */
             img {
             width: 55px;

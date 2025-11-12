@@ -22,8 +22,16 @@
       --accent: #F1B24A;
       --muted:#36524e;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#083530}
+    *{
+      box-sizing:border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      height:100%;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:#083530;
+    }
     body{
       background: linear-gradient(180deg, var(--bg-1) 0%, #0a8d79 45%, #26b59f 100%);
       -webkit-font-smoothing:antialiased;
@@ -31,7 +39,7 @@
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      height: 100vh;
+      min-height: 100vh;
       width: 100%;
     }
 
@@ -75,13 +83,13 @@
       width:100%;
       max-width:1150px;
       align-self: center;
+      margin-top: 80px;
     }
 
     .heading{
       text-align:center;
       color: #ffffff;
       margin-bottom:18px;
-      font-size: 50px;
     }
     
     .heading h1{
@@ -89,6 +97,7 @@
       font-weight:700;
       margin:0 0 8px;
       color:#f7fff8;
+      font-size: 50px;
     }
     .heading p{
       margin:0 auto;
@@ -96,10 +105,6 @@
       color: rgba(230,255,249,0.9);
       font-size:13px;
       line-height:1.6;
-    }
-
-    #policy-title {
-      font-size: 50px;
     }
 
     /* policy card */
@@ -163,6 +168,13 @@
 
     #gmail-link {
       color: #003631;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    #gmail-link:hover {
+      color: var(--accent);
     }
 
     /* social icons bottom-right inside card */
@@ -171,7 +183,9 @@
       justify-content:flex-end;
       align-items:center;
       gap:12px;
-      margin-top:8px;
+      margin-top:24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,54,49,0.06);
     }
     .social{
       display:flex;
@@ -180,7 +194,6 @@
     }
     .social a{
       display:inline-flex;
-      width:34px;height:34px;
       border-radius:8px;
       background:rgba(0,54,49,0.04);
       color:var(--bg-1);
@@ -189,28 +202,280 @@
       text-decoration:none;
       font-weight:600;
       font-size:14px;
+      padding: 8px;
+      transition: all 0.3s ease;
     }
 
-    /* responsive */
-    @media (max-width:920px){
-      .policy-columns{ grid-template-columns:1fr; }
-      .policy-columns::before{ display:none; }
-      .policy-card{ padding:24px; }
-      .heading h1{ font-size:22px; }
+    .social a:hover {
+      background: rgba(0,54,49,0.1);
+      transform: translateY(-2px);
+    }
+
+    .social img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      body {
+        padding: 20px;
+      }
+
+      .site-top {
+        left: 20px;
+        top: 15px;
+        gap: 10px;
+      }
+
+      .site-top img {
+        width: 44px;
+        height: 40px;
+      }
+
+      .site-top .brand a {
+        font-size: 18px;
+      }
+
+      .site-top .motto a {
+        font-size: 11px;
+      }
+
+      .page-wrap {
+        margin-top: 70px;
+      }
+
+      .heading h1 {
+        font-size: 38px;
+      }
+
+      .heading p {
+        font-size: 12px;
+        max-width: 90%;
+      }
+
+      .policy-card {
+        padding: 28px;
+      }
+
+      .policy-columns {
+        gap: 30px;
+      }
+
+      .col h3 {
+        font-size: 13px;
+      }
+
+      .col p,
+      .list-small {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .policy-columns {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .policy-columns::before {
+        display: none;
+      }
+
+      .card-footer {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 15px;
+      }
+
+      .site-top {
+        left: 15px;
+        top: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .site-top img {
+        width: 38px;
+        height: 35px;
+      }
+
+      .site-top .brand a {
+        font-size: 16px;
+      }
+
+      .site-top .motto {
+        display: none;
+      }
+
+      .page-wrap {
+        margin-top: 60px;
+      }
+
+      .heading h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .heading p {
+        font-size: 11px;
+        max-width: 100%;
+        padding: 0 10px;
+      }
+
+      .policy-card {
+        padding: 22px;
+        border-radius: 12px;
+        margin-top: 20px;
+      }
+
+      .policy-columns {
+        gap: 20px;
+      }
+
+      .col {
+        gap: 16px;
+      }
+
+      .col h3 {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      .col p,
+      .list-small {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      .list-small {
+        padding-left: 14px;
+      }
+
+      .list-small li {
+        margin: 6px 0;
+      }
+
+      .card-footer {
+        margin-top: 18px;
+        padding-top: 16px;
+      }
+
+      .social {
+        gap: 8px;
+      }
+
+      .social a {
+        padding: 6px;
+      }
+
+      .social img {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .site-top {
+        left: 12px;
+        top: 10px;
+      }
+
+      .site-top img {
+        width: 34px;
+        height: 32px;
+      }
+
+      .site-top .brand a {
+        font-size: 14px;
+      }
+
+      .page-wrap {
+        margin-top: 55px;
+      }
+
+      .heading h1 {
+        font-size: 24px;
+      }
+
+      .heading p {
+        font-size: 10px;
+      }
+
+      .policy-card {
+        padding: 18px;
+      }
+
+      .col h3 {
+        font-size: 11px;
+      }
+
+      .col p,
+      .list-small {
+        font-size: 10px;
+      }
+    }
+
+    /* Landscape Orientation */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .page-wrap {
+        margin-top: 70px;
+      }
+
+      .heading h1 {
+        font-size: 32px;
+        margin-bottom: 6px;
+      }
+
+      .heading p {
+        font-size: 11px;
+      }
+
+      .policy-card {
+        padding: 20px;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 360px) {
+      .heading h1 {
+        font-size: 20px;
+      }
+
+      .policy-card {
+        padding: 15px;
+      }
+
+      .col h3 {
+        font-size: 10px;
+      }
+
+      .col p,
+      .list-small {
+        font-size: 9px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="site-top" aria-hidden="false">
-    <a href="viewingpage.php">
+    <a href="viewing.php">
       <img src="images/icon.png" alt="Evergreen logo">
     </a>
     <div>
       <div class="brand">
-        <a href="viewingpage.php">EVERGREEN</a>
+        <a href="viewing.php">EVERGREEN</a>
       </div>
       <div class="motto">
-        <a href="viewingpage.php">Secure. Invest. Achieve</a></div>
+        <a href="viewing.php">Secure. Invest. Achieve</a></div>
     </div>
   </div>
 
@@ -251,10 +516,12 @@
 
       <div class="card-footer" aria-hidden="true">
         <div class="social" role="presentation">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Twitter">𝕏</a>
-          <a href="#" aria-label="Instagram">📷</a>
-          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="https://www.facebook.com/profile.php?id=61582812214198">
+            <img src="images/fbicon.png" alt="facebook">
+        </a>
+        <a href="https://www.instagram.com/evergreenbanking/">
+            <img src="images/igicon.png" alt="instagram">
+        </a>
         </div>
       </div>
     </article>

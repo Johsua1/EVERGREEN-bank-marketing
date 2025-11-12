@@ -134,27 +134,53 @@ class PointsSystem {
 
     // Render missions in container
     async renderMissions(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        
-        const missions = await this.loadMissions();
-        
-        if (missions.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">🎉</div>
-                    <div class="empty-state-text">All missions completed!</div>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = '';
-        missions.forEach(mission => {
-            const card = this.createMissionCard(mission);
-            container.appendChild(card);
-        });
+    const missions = await this.loadMissions();
+    const container = document.getElementById(containerId);
+    
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (missions.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">🎉</div>
+                <div class="empty-state-text">All missions collected!</div>
+            </div>
+        `;
+        return;
     }
+    
+    missions.forEach(mission => {
+        const card = document.createElement('div');
+        card.className = 'mission-card';
+        
+        const statusBadge = mission.status === 'pending' 
+            ? '<span style="color:#ff9800;font-size:12px;font-weight:600;">⏳ Pending</span>'
+            : '<span style="color:#4caf50;font-size:12px;font-weight:600;">✓ Available</span>';
+        
+        card.innerHTML = `
+            <div class="mission-timestamp">${statusBadge}</div>
+            <div class="mission-points">
+                <div class="mission-points-value">${parseFloat(mission.points_value).toFixed(2)}</div>
+                <div class="mission-points-label">points</div>
+            </div>
+            <div class="mission-divider"></div>
+            <div class="mission-details">
+                <div class="mission-description">${mission.mission_text}</div>
+                <div class="mission-actions">
+                    <button class="collect-btn" 
+                            onclick="pointsSystem.collectMission(${mission.id}, this)"
+                            ${mission.status === 'pending' ? 'disabled' : ''}>
+                        ${mission.status === 'pending' ? 'Locked' : 'Collect'}
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(card);
+    });
+}
 
     // Create mission card element
     createMissionCard(mission) {

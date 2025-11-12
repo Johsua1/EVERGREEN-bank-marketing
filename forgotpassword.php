@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($email) || empty($bank_id)) {
             $error = "Please fill in all fields.";
         } else {
-            $sql = "SELECT id, first_name FROM users WHERE email = ? AND bank_id = ?";
+            $sql = "SELECT id, first_name FROM bank_users WHERE email = ? AND bank_id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ss", $email, $bank_id);
             $stmt->execute();
@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                 $user_id = $_SESSION['reset_user_id'];
                 
-                $sql = "UPDATE users SET password = ? WHERE id = ?";
+                $sql = "UPDATE bank_users SET password = ? WHERE id = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("si", $hashed_password, $user_id);
                 
@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['reset_otp'] = $otp;
             $_SESSION['otp_time'] = time();
             
-            $sql = "SELECT first_name FROM users WHERE id = ?";
+            $sql = "SELECT first_name FROM bank_users WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $_SESSION['reset_user_id']);
             $stmt->execute();

@@ -5,14 +5,6 @@
        'use_strict_mode' => true
     ]);
 
-    // Check if user is logged in
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
-        header("Location: viewing.php");
-    exit;
-    }
-
-    // Get user info from session
-        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -20,10 +12,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Rewards</title>
-
+    <title>Credit Cards - Evergreen Bank</title>
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -89,167 +79,43 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            color: #F1B24A;
-        }
-
-        .profile-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
-        }
-
-        /* profile dropdown */
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;              /* now a button */
-            padding: 0;
-            cursor: pointer;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-            display:block;
-        }
-
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: calc(100% + 8px);
-            background: #D9D9D9;
-            color: #003631;
-            border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-            min-width: 160px;
-            z-index: 200;
-        }
-
-        .profile-dropdown a {
-            display: block;
-            padding: 0.65rem 1rem;
-            color: #003631;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .profile-dropdown a:hover {
-            background: rgba(0,0,0,0.04);
-        }
-
-        .profile-dropdown.show {
-            display: block;
-        }
-
-        .profile-btn {
-            width: 50%;
-            height: 50;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .profile-btn img {
-            width: 200%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
-
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
-
-        .dropbtn {
-            background: none;
+        .btn {
+            padding: 0.7rem 1.5rem;
             border: none;
-            color: white;
-            font-size: 1rem;
+            border-radius: 5px;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
-
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
-
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
         }
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #0d4d4d;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-primary:hover {
+            background: #e69610;
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -289,6 +155,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn-apply:hover {
@@ -362,172 +229,279 @@
             font-size: 0.8rem;
         }
 
-        /* Products Section */
-        .products-section {
-            background: #F5F5F0;
+        /* Why Choose Section */
+        .why-choose {
+            background: #f5f5f5;
             padding: 4rem 5%;
+            text-align: center;
         }
 
-        .products-container {
+        .why-choose h2 {
+            color: #003631;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .why-choose-subtitle {
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .products-intro {
-            background: linear-gradient(135deg, #003631 0%, #004d45 100%);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            height: 50vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .products-intro h2 {
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            max-width: 800px;
-        }
-
-        .products-intro p {
-            color: rgba(255,255,255,0.85);
-            font-size: 1rem;
-            line-height: 1.6;
-            max-width: 600px;
-        }
-
-        .products-cards-section {
-            background: linear-gradient(135deg, #00524a 0%, #006b5f 100%);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .products-cards-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .products-cards-header h2 {
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .products-cards-header p {
-            color: rgba(255,255,255,0.85);
-            font-size: 1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .product-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+        .benefit-card {
+            background: white;
+            padding: 2.5rem 2rem;
             border-radius: 15px;
-            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        .benefit-card:hover {
+            transform: scale(1.1);
+            transition: 0.2s ease-in;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        .product-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-icon {
-            width: 50px;
-            height: 50px;
-            background: #F1B24A;
-            border-radius: 10px;
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
         }
 
-        .product-card-title-section h3 {
-            color: white;
+        .benefit-card h3 {
+            color: #003631;
+            margin-bottom: 1rem;
             font-size: 1.2rem;
-            margin-bottom: 0.25rem;
         }
 
-        .product-badge {
-            display: inline-block;
-            background: rgba(241, 178, 74, 0.2);
-            color: #F1B24A;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .product-card p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
+        .benefit-card p {
+            color: #666;
             line-height: 1.6;
             margin-bottom: 1rem;
         }
 
-        .product-features {
-            list-style: none;
+        .learn-more-link {
+            color: #003631;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
-        .product-features li {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.85rem;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
+        .learn-more-link:hover {
+            color: #F1B24A;
+        }
+
+        /* Choose Your Card Section */
+        .choose-card {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .choose-card h2 {
+            color: #003631;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #F1B24A;
+            display: inline-block;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mini-card {
+            width: 120px;
+            height: 75px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 8px;
             position: relative;
         }
 
-        .product-features li:before {
-            content: '•';
-            color: #F1B24A;
-            font-weight: bold;
+        .mini-chip {
+            width: 25px;
+            height: 20px;
+            background: linear-gradient(135deg, #ffd700 0%, #F1B24A 100%);
+            border-radius: 3px;
             position: absolute;
-            left: 0;
+            left: 12px;
+            top: 25px;
         }
 
-        .cta-section {
-            background: rgba(241, 178, 74, 0.1);
-            border-radius: 15px;
-            padding: 2.5rem;
-            text-align: center;
-            height: 30vh;
+        .mini-logo {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+
+        .card-item h3 {
+            color: #003631;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card-item p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .card-buttons {
             display: flex;
-            flex-direction: column;
+            gap: 0.8rem;
             justify-content: center;
             align-items: center;
         }
 
-        .cta-section h3 {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .card-buttons a {
+            text-decoration: none;
         }
 
-        .cta-section p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.95rem;
+        .btn-small {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-yellow {
+            background: #F1B24A;
+            color: #003631;
+        }
+
+        .btn-yellow:hover {
+            background: #e0a03a;
+            transform: translateY(-2px);
+        }
+
+        .btn-dark {
+            background: #003631;
+            color: white;
+        }
+
+        .btn-dark:hover {
+            background: #002a26;
+            transform: translateY(-2px);
+        }
+
+        .btn-small a {
+            color: #e0a03a;
+            text-decoration: none;
+        }
+
+        /* Discover More Section */
+        .discover-more {
+            background: linear-gradient(135deg, #003631 0%, #002a26 100%);
+            padding: 4rem 5%;
+        }
+
+        .discover-more h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #F1B24A;
+            display: inline-block;
+        }
+
+        .discover-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+
+        .discover-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .discover-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .discover-card-image {
+            width: 140px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .discover-card h3 {
+            color: #003631;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .discover-card p {
+            color: #666;
             line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .discover-footer {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.05rem;
         }
 
         /* Footer */
@@ -626,37 +600,8 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design - UPDATED */
-
-        /* Tablet and smaller desktop */
+        /* Responsive - UPDATED */
         @media (max-width: 968px) {
-            nav {
-                padding: 1rem 3%;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .nav-links a {
-                font-size: 0.95rem;
-                margin: 0 0.5rem;
-            }
-
-            .dropdown-content {
-                position: fixed;
-                left: 0;
-                top: 80px;
-                width: 100vw;
-                padding: 1.2rem 3%;
-                transform: none;
-            }
-
-            .dropdown-content a {
-                margin: 0 1rem;
-                font-size: 0.95rem;
-            }
-
             .hero {
                 grid-template-columns: 1fr;
                 padding: 6rem 5% 3rem;
@@ -672,8 +617,22 @@
                 margin-left: 25%;
             }
 
-            .products-grid {
-                grid-template-columns: 1fr;
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+                margin: 0 0.5rem;
+            }
+
+            .dropdown-content {
+                padding: 1.2rem 3%;
+            }
+
+            .dropdown-content a {
+                margin: 0 1rem;
+                font-size: 0.95rem;
             }
 
             .footer-content {
@@ -681,31 +640,15 @@
             }
         }
 
-        /* Mobile landscape and smaller tablets */
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Mobile devices */
         @media (max-width: 640px) {
             nav {
                 padding: 1rem 3%;
                 flex-wrap: wrap;
                 gap: 1rem;
+            }
+
+            .hero-content {
+                margin-top: 50px;
             }
 
             .logo {
@@ -741,83 +684,26 @@
                 padding: 0.4rem 0.8rem;
             }
 
-            .hero {
-                padding: 3rem 5%;
-                margin-top: 15%;
-            }
-
             .hero-content h1 {
                 font-size: 1.8rem;
             }
 
-            .hero-content p {
-                font-size: 1rem;
-            }
-
-            .credit-card-display {
-                width: 200px;
-                height: 125px;
-            }
-
-            .products-section {
-                padding: 3rem 5%;
-            }
-
-            .products-intro {
-                padding: 2rem;
-                height: auto;
-                min-height: 30vh;
-            }
-
-            .products-intro h2 {
-                font-size: 1.5rem;
-            }
-
-            .products-cards-section {
-                padding: 2rem;
-            }
-
-            .products-cards-header h2 {
-                font-size: 1.5rem;
-            }
-
-            .products-grid {
+            .benefits-grid,
+            .cards-grid,
+            .discover-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
 
-            .cta-section {
-                padding: 2rem;
-                height: auto;
-                min-height: 20vh;
-            }
-
-            .cta-section h3 {
-                font-size: 1.2rem;
+            .card-buttons {
+                flex-direction: column;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
             }
         }
 
-        /* Extra small mobile devices */
         @media (max-width: 480px) {
-            nav {
-                padding: 0.8rem 3%;
-            }
-
             .dropdown-content a {
                 display: inline-block;
                 margin: 0.2rem 0.3rem;
@@ -832,171 +718,39 @@
             .nav-buttons {
                 gap: 0.5rem;
             }
-
-            .profile-btn {
-                width: 35px;
-                height: 35px;
-            }
-
-            .hero {
-                padding: 2rem 3%;
-                margin-top: 100px;
-            }
-
-            .hero-content h1 {
-                font-size: 1.5rem;
-            }
-
-            .hero-content p {
-                font-size: 0.95rem;
-            }
-
-            .credit-card-display {
-                width: 180px;
-                height: 112px;
-            }
-
-            .card-chip {
-                width: 30px;
-                height: 23px;
-                left: 15px;
-                top: 40px;
-            }
-
-            .card-logo {
-                right: 15px;
-                top: 15px;
-                font-size: 0.8rem;
-            }
-
-            .card-number {
-                bottom: 35px;
-                left: 15px;
-                font-size: 0.7rem;
-                letter-spacing: 2px;
-            }
-
-            .card-holder {
-                bottom: 15px;
-                left: 15px;
-                font-size: 0.6rem;
-            }
-
-            .products-intro {
-                padding: 1.5rem;
-            }
-
-            .products-intro h2 {
-                font-size: 1.3rem;
-            }
-
-            .products-intro p {
-                font-size: 0.9rem;
-            }
-
-            .products-cards-section {
-                padding: 1.5rem;
-            }
-
-            .products-cards-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .products-cards-header p {
-                font-size: 0.9rem;
-            }
-
-            .product-card {
-                padding: 1.5rem;
-            }
-
-            .product-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .product-card-title-section h3 {
-                font-size: 1rem;
-            }
-
-            .product-badge {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.6rem;
-            }
-
-            .cta-section {
-                padding: 1.5rem;
-            }
-
-            .cta-section h3 {
-                font-size: 1.1rem;
-            }
-
-            .cta-section p {
-                font-size: 0.85rem;
-            }
         }
     </style>
 </head>
 <body>
-
-        <!-- Navigation -->
+    <!-- Navigation -->
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <a href="viewingpage.php">
-                    <img src="images/Logo.png.png">
+                <a href="../viewing.php">
+                    <img src="../images/Logo.png.png">
                 </a>
             </div>
-            <span>
-                <a href="viewingpage.php">EVERGREEN</a>
-            </span>
+                <span>
+                    <a href="../viewing.php">
+                    EVERGREEN
+                    </a>
+                </span>
         </div>
-
-        <div class="nav-links">
-            <a href="viewingpage.php">Home</a>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
-                <div class="dropdown-content" id="cardsDropdown">
-                    <a href="cards/credit.php">Credit Cards</a>
-                    <a href="cards/debit.php">Debit Cards</a>
-                    <a href="cards/prepaid.php">Prepaid Cards</a>
-                    <a href="cards/rewards.php">Card Rewards</a>
-                </div>
-            </div>
-
-            <a href="#loans">Loans</a>
-            <a href="about.php">About Us</a>
-        </div>
-
         <div class="nav-buttons">
-            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+            <a href="../login.php" class="btn btn-login">Login
 
-            <div class="profile-actions">
-                <div class="logo-icon" style="width:40px;height:40px;">
-                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
-                        <img src="images/pfp.png" alt="Profile Icon">
-                    </button>
-                </div>
-
-                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
-                    <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="refer.php" role="menuitem">Refer to a friend</a>
-                    <a href="cards/points.php" role="menuitem">Missions</a>
-                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
-                </div>
-            </div>
+            </a>
+                
+            <a href="../login.php" class="btn btn-primary">Get Started</a>
         </div>
     </nav>
-     
-        <!-- Hero Section -->
+
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Reward Details</h1>
-            <p>Earn points, cashback, and exclusive perks every time you use your EVERGREEN Card — making every purchase more rewarding.</p>
-            <button class="btn-apply">Apply Now</button>
+            <h1>Credit Cards</h1>
+            <p>A credit card lets you borrow funds up to a certain limit to make purchases or pay bills. It offers convenience, security, and the flexibility to pay later, often with rewards or cashback benefits.</p>
+            <a href="../login.php" class="btn-apply">Apply Now</a>
         </div>
         <div class="hero-image">
             <div class="card-hand">
@@ -1010,102 +764,131 @@
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products-section">
-        <div class="products-container">
-            <!-- Intro Card -->
-            <div class="products-intro">
-                <h2>Financial Products That Reward You</h2>
-                <p>From loans to lifestyle perks, we offer comprehensive financial solutions designed to support your goals</p>
+    <!-- Why Choose Our Cards Section -->
+    <section class="why-choose">
+        <h2>Why Choose Our Cards?</h2>
+        <p class="why-choose-subtitle">Our cards give you the freedom to spend smart and earn more.</p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <h3>Savings & Deposits</h3>
+                <p>High-yield savings accounts and CDs to help your money grow faster.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">📈</div>
+                <h3>Investments</h3>
+                <p>Personalized investment strategies aligned with your financial goals.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🏠</div>
+                <h3>Home Loans</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Your Card Section -->
+    <section class="choose-card">
+        <h2>Choose your Card</h2>
+        
+        <div class="cards-grid">
+            <div class="card-item">
+                <div class="card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
+                    </div>
+                </div>
+                <h3>Home Loans</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <div class="card-buttons">
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
+                </div>
             </div>
 
-            <!-- Products Cards Section -->
-            <div class="products-cards-section">
-                <div class="products-cards-header">
-                    <h2>Financial Products That Reward You</h2>
-                    <p>From loans to lifestyle perks, we offer comprehensive financial solutions designed to support your goals</p>
-                </div>
-
-                <!-- Products Grid -->
-                <div class="products-grid">
-                    <!-- Card 1: Tap Your Card -->
-                    <div class="product-card">
-                        <div class="product-card-header">
-                            <div class="product-icon">💳</div>
-                            <div class="product-card-title-section">
-                                <h3>Tap Your Card for Points</h3>
-                                <span class="product-badge">Earn Daily | Max 5,000 pts</span>
-                            </div>
-                        </div>
-                        <p>Freeze your card via self-competitive rates and flexible terms, but pre-approved in minutes.</p>
-                        <ul class="product-features">
-                            <li>No application fee</li>
-                            <li>Same-day approval</li>
-                            <li>Up to 24 months</li>
-                        </ul>
-                    </div>
-
-                    <!-- Card 2: New Home -->
-                    <div class="product-card">
-                        <div class="product-card-header">
-                            <div class="product-icon">🏠</div>
-                            <div class="product-card-title-section">
-                                <h3>New Home with Cashback</h3>
-                                <span class="product-badge">Loan Points | Save ₱20k+ P/M</span>
-                            </div>
-                        </div>
-                        <p>Make homeownership a reality with our mortgage solutions. First-time buyer programs available.</p>
-                        <ul class="product-features">
-                            <li>Low down payment options</li>
-                            <li>Loan guidance</li>
-                            <li>Fast closing</li>
-                        </ul>
-                    </div>
-
-                    <!-- Card 3: Student Tuition -->
-                    <div class="product-card">
-                        <div class="product-card-header">
-                            <div class="product-icon">🎓</div>
-                            <div class="product-card-title-section">
-                                <h3>Student Tuition</h3>
-                                <span class="product-badge">School Points | Save from ₱400 P/M</span>
-                            </div>
-                        </div>
-                        <p>Invest in your education with flexible student loan options and competitive interest rates.</p>
-                        <ul class="product-features">
-                            <li>Deferred payments</li>
-                            <li>No origination fees</li>
-                            <li>Cosigner release</li>
-                        </ul>
-                    </div>
-
-                    <!-- Card 4: Lifestyle Perks -->
-                    <div class="product-card">
-                        <div class="product-card-header">
-                            <div class="product-icon">🍽️</div>
-                            <div class="product-card-title-section">
-                                <h3>Lifestyle Perks</h3>
-                                <span class="product-badge">Style ⚡ Save | Exclusive Lifestyle Benefits</span>
-                            </div>
-                        </div>
-                        <p>Enjoy dining discounts, travel rewards, and exclusive offers at premium partner locations.</p>
-                        <ul class="product-features">
-                            <li>Restaurant discounts</li>
-                            <li>Travel rewards</li>
-                            <li>Shopping benefits</li>
-                        </ul>
+            <div class="card-item">
+                <div class="card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
                     </div>
                 </div>
+                <h3>Personal Loans</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <div class="card-buttons">
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
+                </div>
+            </div>
 
-                <!-- CTA Section -->
-                <div class="cta-section">
-                    <h3>Ready to Get Started?</h3>
-                    <p>Apply for any of our financial products and start earning rewards today. Our team is here to help you every step of the way.</p>
+            <div class="card-item">
+                <div class="card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
+                    </div>
+                </div>
+                <h3>Auto Loans</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <div class="card-buttons">
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
+                </div>
+            </div>
+
+            <div class="card-item">
+                <div class="card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
+                    </div>
+                </div>
+                <h3>Multipurpose Loans</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <div class="card-buttons">
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Discover More Cards Section -->
+    <section class="discover-more">
+        <h2>Discover More Cards</h2>
+        
+        <div class="discover-grid">
+            <div class="discover-card">
+                <div class="discover-card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
+                    </div>
+                </div>
+                <h3>Debit Cards</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <button class="btn-small btn-dark">
+                    <a href="../cards/debitno.php">View</a>
+                </button>
+            </div>
+
+            <div class="discover-card">
+                <div class="discover-card-image">
+                    <div class="mini-card">
+                        <div class="mini-chip"></div>
+                        <div class="mini-logo">VISA</div>
+                    </div>
+                </div>
+                <h3>Prepaid Cards</h3>
+                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <button class="btn-small btn-dark">
+                    <a href="../cards/prepaidno.php">View</a>
+                </button>
+            </div>
+        </div>
+
+        <p class="discover-footer">Discover more options designed to give you flexibility and rewards.</p>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -1113,19 +896,19 @@
             <div class="footer-brand">
                 <div class="logo">
                     <div class="logo-icon">
-                        <img src="images/icon.png">
+                        <img src="../images/icon.png" alt="Evergreen Logo">
                     </div>
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
                     <div class="social-icon">
                         <a href="https://www.facebook.com/profile.php?id=61582812214198">
-                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                            <img src="../images/fb-trans.png" alt="facebook" class="contact-icon">
                         </a>
                     </div>
                     <div class="social-icon">
                         <a href="https://www.instagram.com/evergreenbanking/">
-                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                            <img src="../images/trans-ig.png" alt="instagram" class="contact-icon">
                         </a>
                     </div>
                 </div>
@@ -1134,9 +917,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Credit Cards</a></li>
-                    <li><a href="#">Debit Cards</a></li>
-                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="../cards/creditno.php">Credit Cards</a></li>
+                    <li><a href="../cards/debitno.php">Debit Cards</a></li>
+                    <li><a href="../cards/prepaidno.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1171,6 +954,7 @@
     </footer>
 
     <script>
+        // Dropdown functionality
         function toggleDropdown() {
             const dropdown = document.getElementById("cardsDropdown");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
@@ -1184,7 +968,69 @@
                     dropdown.style.display = "none";
                 }
             }
-        }); 
+        });
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Card hover animations
+        const cards = document.querySelectorAll('.benefit-card, .card-item, .discover-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            });
+        });
+
+        // Button click effects
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.card-item, .discover-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero card
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroCard = document.querySelector('.credit-card-display');
+            if (heroCard && scrolled < 600) {
+                heroCard.style.transform = `rotate(-5deg) translateY(${scrolled * 0.1}px)`;
+            }
+        });
 
         // Profile dropdown toggle
         function toggleProfileDropdown(e) {
@@ -1255,6 +1101,12 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+            width: 55px;
+            height: 50px;
+            }
         </style>
         <div style="
             background: white;
@@ -1267,16 +1119,17 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 auto 1.5rem;
+                flex-direction: start;
+                margin: 0 auto 2.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="../images/warning.png"></div>
             
             <h3 style="
                 color: #003631;
@@ -1363,7 +1216,7 @@ function showSignOutModal(event) {
     
     // Handle button clicks
     cancelBtn.onclick = () => document.body.removeChild(modal);
-    confirmBtn.onclick = () => window.location.href = 'logout.php';
+    confirmBtn.onclick = () => window.location.href = '../logout.php';
     
     // Close on outside click
     modal.onclick = (e) => {
@@ -1382,6 +1235,5 @@ function showSignOutModal(event) {
     document.addEventListener('keydown', handleEscape);
 }
     </script>
-
 </body>
 </html>

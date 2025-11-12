@@ -578,17 +578,21 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
-            background: #F1B24A;
+            background-color: #e0a03a;
         }
 
         .footer-section h4 {
@@ -641,6 +645,203 @@
             text-decoration: none;
             font-size: 0.9rem;
         }
+
+            @media (max-width: 968px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            padding: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            margin: 0 0.5rem;
+        }
+
+        .stats-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .features-grid-bottom {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        nav {
+            padding: 1rem 3%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            order: 3;
+            width: 100%;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            margin: 0 0.3rem;
+        }
+
+        .hero-section {
+            padding: 60px 5% 60px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .content-hero {
+            margin-top: 50px;
+        }
+
+        .hero-features {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dashboard-card {
+            padding: 2rem;
+        }
+
+        .balance-amount {
+            font-size: 2rem;
+        }
+
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .features-title {
+            font-size: 2rem;
+        }
+
+        .features-subtitle {
+            font-size: 1rem;
+        }
+
+        .engagement-container {
+            padding: 3rem 2rem;
+        }
+
+        .engagement-title {
+            font-size: 1.5rem;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-links {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .dropdown-content a {
+            display: inline-block;
+            margin: 0.2rem 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .nav-buttons {
+            gap: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+        }
+
+        .trust-badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+        }
+
+        .balance-amount {
+            font-size: 1.75rem;
+        }
+
+        .item-value {
+            font-size: 1.1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+        }
+
+        .features-title {
+            font-size: 1.75rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+        }
+
+        .feature-card-title {
+            font-size: 1.1rem;
+        }
+
+        .engagement-container {
+            padding: 2.5rem 1.5rem;
+        }
+
+        .engagement-title {
+            font-size: 1.3rem;
+        }
+
+        .feature-list-item {
+            padding: 1rem;
+        }
+
+        .feature-list-text {
+            font-size: 0.85rem;
+        }
+    }
 
     </style>
 </head>
@@ -871,19 +1072,23 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Credit Cards</a></li>
-                    <li><a href="#">Debit Cards</a></li>
-                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="./cards/creditno.php">Credit Cards</a></li>
+                    <li><a href="./cards/creditno.php">Debit Cards</a></li>
+                    <li><a href="./cards/creditno.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -901,7 +1106,7 @@
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <div class="contact-item">📞 1-800-EVERGREEN</div>
-                <div class="contact-item">✉️ hello@evergreenbank.com</div>
+                <div class="contact-item">✉️ evrgrn.64@gmail.com</div>
                 <div class="contact-item">📍 123 Financial District, Suite 500<br>&nbsp;&nbsp;&nbsp;&nbsp;New York, NY 10004</div>
             </div>
         </div>

@@ -515,6 +515,10 @@
             align-items: center;
         }
 
+        .card-buttons a {
+            text-decoration: none;
+        }
+
         .btn-small {
             padding: 0.6rem 1.2rem;
             border: none;
@@ -644,13 +648,16 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
@@ -834,7 +841,9 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="../images/Logo.png.png">
+                <a href="viewingpage.php">
+                    <img src="../images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="../viewingpage.php">EVERGREEN</a>
@@ -938,7 +947,7 @@
                 <h3>Home Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -952,7 +961,7 @@
                 <h3>Personal Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -966,7 +975,7 @@
                 <h3>Auto Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -980,7 +989,7 @@
                 <h3>Multipurpose Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
         </div>
@@ -1034,10 +1043,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="../images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="../images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -1228,6 +1243,12 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+            width: 55px;
+            height: 50px;
+            }
         </style>
         <div style="
             background: white;
@@ -1240,16 +1261,17 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 auto 1.5rem;
+                flex-direction: start;
+                margin: 0 auto 2.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="../images/warning.png"></div>
             
             <h3 style="
                 color: #003631;

@@ -205,52 +205,56 @@
             background-color: #003631;
         }
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+        /* DROPDOWN STYLES - Replace the existing dropdown styles */
+.dropdown {
+    position: relative;
+}   
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
+/* Dropdown menu box - FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
+
 
         /* Hero Section */
         .hero-section {
@@ -402,6 +406,10 @@
             color: #F1B24A;
         }
 
+        .social-links img {
+            width: 20px;
+        }
+
         /* Footer */
         footer {
             background: #003631;
@@ -431,17 +439,21 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
-            background: #F1B24A;
+            background-color: #F1B24A;
         }
 
         .footer-section h4 {
@@ -495,6 +507,58 @@
             font-size: 0.9rem;
         }
 
+        /* Tablet and smaller desktop - UPDATED */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+                margin: 0 0.5rem;
+            }
+
+            .dropdown-content {
+                padding: 1.2rem 3%;
+                top: 80px;
+            }
+
+            .dropdown-content a {
+                margin: 0 1rem;
+                font-size: 0.95rem;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-main-image {
+                height: 400px;
+            }
+
+            .hero-right {
+                margin-top: 2rem;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Mobile landscape and smaller tablets */
         @media (max-width: 768px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -504,16 +568,184 @@
                 font-size: 2.5rem;
             }
 
-            .hero-right {
-                margin-top: 0;
+            .hero-small-images {
+                grid-template-columns: 1fr;
             }
 
             .stats-container {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile devices */
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 3%;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+                margin: 0 0.3rem;
+            }
+
+            .dropdown-content {
+                top: 120px;
+                padding: 1rem 2%;
+            }
+
+            .dropdown-content a {
+                margin: 0.3rem 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .hero-section {
+                padding: 3rem 5%;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+                padding-left: 1rem;
+                border-left-width: 4px;
+            }
+
+            .hero-main-image {
+                height: 300px;
+            }
+
+            .hero-small-images {
+                gap: 1rem;
+            }
+
+            .hero-small-image {
+                max-height: 200px;
+            }
+
+            .hero-right p {
+                font-size: 1rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .badge-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .about-section {
+                padding: 3rem 5%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: row;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 3%;
+            }
+
+            .dropdown-content a {
+                display: inline-block;
+                margin: 0.2rem 0.3rem;
+                font-size: 0.8rem;
+            }
+
+            .username-profile {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .profile-btn {
+                width: 35px;
+                height: 35px;
+            }
+
+            .hero-section {
+                padding: 2rem 3%;
+                margin-top: 100px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-main-image {
+                height: 250px;
+            }
+
+            .hero-small-image {
+                max-height: 150px;
+            }
+
+            .hero-right p {
+                font-size: 0.95rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+                padding-right: 0;
+                justify-content: center;
+            }
+
+            .social-links a {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -523,7 +755,9 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/Logo.png.png" alt="Evergreen Logo">
+                <a href="viewingpage.php">
+                    <img src="images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="viewingpage.php">EVERGREEN</a>
@@ -603,10 +837,12 @@
 
                 <!-- Social Links in Right Column -->
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="Instagram">📷</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                        <img src="images/fbicon.png" alt="facebook" class>
+                    </a>
+                    <a href="https://www.instagram.com/evergreenbanking/">
+                        <img src="images/igicon.png" alt="instagram">
+                    </a>
                 </div>
             </div>
         </div>
@@ -623,10 +859,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">📷</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -754,6 +996,12 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+            width: 55px;
+            height: 50px;
+            }
         </style>
         <div style="
             background: white;
@@ -766,16 +1014,17 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 auto 1.5rem;
+                flex-direction: start;
+                margin: 0 auto 2.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="./images/warning.png"></div>
             
             <h3 style="
                 color: #003631;

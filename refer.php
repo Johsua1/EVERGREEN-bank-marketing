@@ -12,6 +12,195 @@
 
     // Get user info from session
         $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
+
+        $user_id = $_SESSION['user_id'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
+
+switch ($action) {
+    case 'get_referral_code':
+        getReferralCode($conn, $user_id);
+        break;
+    
+    case 'get_referral_stats':
+        getReferralStats($conn, $user_id);
+        break;
+    
+    case 'apply_referral':
+        applyReferral($conn, $user_id);
+        break;
+    
+    default:
+        echo json_encode(['success' => false, 'message' => 'Invalid action']);
+}
+
+function getReferralCode($conn, $user_id) {
+    $sql = "SELECT referral_code FROM bank_users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($row = $result->fetch_assoc()) {
+        echo json_encode([
+            'success' => true,
+            'referral_code' => $row['referral_code']
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'User not found']);
+    }
+    $stmt->close();
+}
+
+function getReferralStats($conn, $user_id) {
+    // Get total referrals count
+    $sql = "SELECT COUNT(*) as total FROM referrals WHERE referrer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $total_referrals = $row['total'];
+    $stmt->close();
+    
+    // Get total points from referrals
+    $sql = "SELECT SUM(points_earned) as total_points FROM referrals WHERE referrer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $referral_points = $row['total_points'] ?? 0;
+    $stmt->close();
+    
+    echo json_encode([
+        'success' => true,
+        'total_referrals' => $total_referrals,
+        'referral_points' => number_format($referral_points, 2, '.', '')
+    ]);
+}
+
+function applyReferral($conn, $user_id) {
+    $friend_code = strtoupper(trim($_POST['friend_code'] ?? ''));
+    
+    if (empty($friend_code)) {
+        echo json_encode(['success' => false, 'message' => 'Please enter a referral code']);
+        return;
+    }
+    
+    $conn->begin_transaction();
+    
+    try {
+        // Check if user is trying to use their own code
+        $sql = "SELECT referral_code FROM bank_users WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        $stmt->close();
+        
+        if ($user['referral_code'] === $friend_code) {
+            throw new Exception("You cannot use your own referral code");
+        }
+        
+        // Find the referrer
+        $sql = "SELECT id, first_name, last_name FROM bank_users WHERE referral_code = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $friend_code);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            throw new Exception('Invalid referral code');
+        }
+        
+        $referrer = $result->fetch_assoc();
+        $referrer_id = $referrer['id'];
+        $referrer_name = $referrer['first_name'] . ' ' . $referrer['last_name'];
+        $stmt->close();
+        
+        // Check if user already used a referral code
+        $sql = "SELECT id FROM referrals WHERE referred_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            throw new Exception('You have already used a referral code');
+        }
+        $stmt->close();
+        
+        // Points to award
+        $referrer_points = 50.00;
+        $referred_points = 25.00;
+        
+        // Create referral record
+        $sql = "INSERT INTO referrals (referrer_id, referred_id, points_earned) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iid", $referrer_id, $user_id, $referrer_points);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Award points to referrer
+        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $referrer_points, $referrer_id);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Award points to referred user
+        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $referred_points, $user_id);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Add to point history for referrer - FIXED VERSION
+        $sql = "INSERT IGNORE INTO user_missions (user_id, mission_id, points_earned, completed_at) 
+                SELECT ?, id, ?, NOW() FROM missions WHERE mission_text LIKE '%Refer a friend%' LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("id", $referrer_id, $referrer_points);
+        $stmt->execute();
+        $stmt->close();
+        
+        // Add to point history for referred user - FIXED VERSION
+        $sql = "INSERT IGNORE INTO user_missions (user_id, mission_id, points_earned, completed_at) 
+                SELECT ?, id, ?, NOW() FROM missions WHERE mission_text LIKE '%Use a referral code%' LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("id", $user_id, $referred_points);
+        $stmt->execute();
+        $stmt->close();
+        
+        $conn->commit();
+        
+        // Get updated total points for the user - THIS IS IMPORTANT
+        $sql = "SELECT total_points FROM bank_users WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user_data = $result->fetch_assoc();
+        $total_points = $user_data['total_points'];
+        $stmt->close();
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Referral applied successfully!',
+            'points_earned' => number_format($referred_points, 2, '.', ''),
+            'referrer_name' => $referrer_name,
+            'total_points' => number_format($total_points, 2, '.', '')  // THIS WAS MISSING IN YOUR ORIGINAL
+        ]);
+        
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +219,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
             background-image: url("images/referbg.png");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -67,7 +258,7 @@
         .logo-icon {
             width: 50px;
             height: 50px;
-            background: transparent; /* was #F1B24A */
+            background: transparent;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -79,7 +270,7 @@
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* change from cover -> contain */
+            object-fit: contain;
             object-position: center;
             display: block;
             border-radius: 50%;
@@ -128,15 +319,14 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
+            position: relative;
         }
 
-        /* profile dropdown */
         .profile-btn {
             width: 40px;
             height: 40px;
             background: transparent;
-            border: none;              /* now a button */
+            border: none;
             padding: 0;
             cursor: pointer;
             border-radius: 50%;
@@ -183,74 +373,56 @@
             display: block;
         }
 
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* DROPDOWN STYLES  */
+.dropdown {
+    position: relative;
+}   
 
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-        }
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
+}
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
+.dropbtn:hover {
+    color: #F1B24A;
+}
 
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
+/* Dropdown menu box - FULL WIDTH */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 100vw;
+    background-color: #D9D9D9;
+    padding: 1.5rem 5%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 99;
+    text-align: center;
+}
 
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
+/* Links inside dropdown */
+.dropdown-content a {
+    color: #003631;
+    margin: 0 2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-        /* Dropdown menu box */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
+.dropdown-content a:hover {
+    color: #F1B24A;
+    transform: translateY(-2px);
+}
 
-        /* Links inside dropdown */
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
-
-        /* Main Content */
         .main-content {
             min-height: 100vh;
             display: flex;
@@ -268,19 +440,19 @@
         .profile-avatar {
             width: 120px;
             height: 120px;
-            background: #003631;
+            background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
             border-radius: 50%;
             margin: 0 auto 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 30px rgba(0,54,49,0.3);
         }
 
         .profile-avatar img {
             width: 60px;
             height: 60px;
-            opacity: 0.7;
+            opacity: 0.9;
         }
 
         .refer-title {
@@ -288,33 +460,33 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .refer-card {
             background: white;
             border-radius: 20px;
             padding: 50px 40px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             position: relative;
             overflow: visible;
             width: 250%;
-            height: 500px;
             margin-left: -75%;
         }
 
         .gifts-decoration {
             position: absolute;
-            left: 60%; /* increase this value to move further right */
-            top: 33%;
+            right: 30%;
+            top: 40%;
             transform: translateY(-50%);
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             pointer-events: none;
         }
 
         .gifts-decoration img {
             width: 300%;
-            height: 200%;
+            height: 150%;
         }
 
         .form-group {
@@ -329,9 +501,8 @@
             display: block;
             color: #003631;
             font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 30.6px;
-            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 30px;
         }
 
         .input-wrapper {
@@ -339,6 +510,7 @@
             display: flex;
             align-items: left;
             flex-direction: column;
+            margin-bottom: 30px;
         }
 
         .form-input {
@@ -348,16 +520,23 @@
             border-radius: 10px;
             font-size: 1rem;
             background: #f8f8f8;
-            color: #666;
-            font-weight: 500;
+            color: #003631;
+            font-weight: 600;
             letter-spacing: 3px;
             height: 60px;
+            text-transform: uppercase;
         }
 
         .form-input:focus {
             outline: none;
             border-color: #F1B24A;
             background: white;
+        }
+
+        .form-input[readonly] {
+            color: #003631;
+            cursor: default;
+            background: #f8f8f8;
         }
 
         .eye-icon {
@@ -367,6 +546,12 @@
             cursor: pointer;
             color: #999;
             font-size: 1.2rem;
+            transition: color 0.3s;
+            user-select: none;
+        }
+
+        .eye-icon:hover {
+            color: #003631;
         }
 
         .friend-code-input {
@@ -400,7 +585,41 @@
             box-shadow: 0 5px 15px rgba(241, 178, 74, 0.3);
         }
 
-        /* Footer */
+        .confirm-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px 30px;
+            border-radius: 15px;
+            border: 2px solid #dee2e6;
+            min-width: 150px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #003631;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
         footer {
             background: #003631;
             color: white;
@@ -429,17 +648,21 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            gap: 15px;
+        }
+        
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
-            background: #F1B24A;
+            background-color: #F1B24A;
         }
 
         .footer-section h4 {
@@ -492,6 +715,327 @@
             text-decoration: none;
             font-size: 0.9rem;
         }
+
+        /* Tablet and smaller desktop */
+@media (max-width: 968px) {
+    nav {
+        padding: 1rem 3%;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.95rem;
+        margin: 0 0.5rem;
+    }
+
+    .dropdown-content {
+        padding: 1.2rem 3%;
+        top: 80px;
+    }
+
+    .dropdown-content a {
+        margin: 0 1rem;
+        font-size: 0.95rem;
+    }
+
+    .refer-title {
+        font-size: 1.8rem;
+    }
+
+    .refer-card {
+        width: 200%;
+        margin-left: -50%;
+        padding: 40px 30px;
+    }
+
+    .gifts-decoration {
+        width: 200px;
+        height: 200px;
+        right: 25%;
+    }
+
+    .form-input {
+        width: 60%;
+    }
+
+    .eye-icon {
+        right: 42%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mobile landscape and smaller tablets */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 100px 3% 40px;
+    }
+
+    .refer-title {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+    }
+
+    .refer-card {
+        width: 100%;
+        margin-left: 0;
+        padding: 35px 25px;
+    }
+
+    .gifts-decoration {
+        display: none;
+    }
+
+    .form-label {
+        font-size: 24px;
+    }
+
+    .form-input {
+        width: 100%;
+        height: 55px;
+        font-size: 0.95rem;
+    }
+
+    .eye-icon {
+        right: 15px;
+    }
+
+    .confirm-btn {
+        max-width: 180px;
+        margin-right: 0;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 640px) {
+    nav {
+        padding: 1rem 3%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+        margin: 0 0.3rem;
+    }
+
+    .dropdown-content {
+        top: 120px;
+        padding: 1rem 2%;
+    }
+
+    .dropdown-content a {
+        margin: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .main-content {
+        padding: 140px 5% 40px;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 25px;
+    }
+
+    .profile-avatar img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .refer-title {
+        font-size: 1.4rem;
+        margin-bottom: 25px;
+    }
+
+    .refer-card {
+        padding: 30px 20px;
+    }
+
+    .form-label {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .form-input {
+        height: 50px;
+        font-size: 0.9rem;
+        padding: 12px 15px;
+        letter-spacing: 2px;
+    }
+
+    .eye-icon {
+        right: 15px;
+        top: 12px;
+        font-size: 1.1rem;
+    }
+
+    .confirm-btn {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+
+    .stat-box {
+        min-width: 120px;
+        padding: 15px 20px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+    }
+
+    .stat-label {
+        font-size: 13px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    nav {
+        padding: 0.8rem 3%;
+    }
+
+    .dropdown-content a {
+        display: inline-block;
+        margin: 0.2rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .username-profile {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .profile-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .main-content {
+        padding: 150px 3% 30px;
+    }
+
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+
+    .profile-avatar img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .refer-title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .refer-card {
+        padding: 25px 15px;
+    }
+
+    .form-group {
+        padding-top: 2%;
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .input-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .form-input {
+        height: 45px;
+        font-size: 0.85rem;
+        padding: 10px 12px;
+        letter-spacing: 1.5px;
+    }
+
+    .eye-icon {
+        right: 12px;
+        top: 10px;
+        font-size: 1rem;
+    }
+
+    .confirm-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        margin-top: 15px;
+    }
+
+    .stats-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-box {
+        width: 100%;
+        min-width: auto;
+        padding: 12px 20px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+    }
+}
     </style>
 </head>
 <body>
@@ -544,7 +1088,6 @@
     </nav>
 
 
-    <!-- Main Content -->
     <div class="main-content">
         <div class="refer-container">
             <div class="profile-avatar">
@@ -554,27 +1097,27 @@
             <h1 class="refer-title">Refer Friends. Earn Points. Win Together.</h1>
 
             <div class="refer-card">
-                <div class="gifts-decoration">
-                </div>
-
                 <form id="referForm">
                     <div class="form-group">
                         <label class="form-label">Your code:</label>
                         <div class="input-wrapper">
-                            <input type="text" class="form-input" id="userCode" value="******" readonly>
-                            <span class="eye-icon" onclick="toggleCodeVisibility()">👁</span>
-
-                            <label class="form-label">Enter your friend's code:</label>
-                        <input type="text" class="form-input friend-code-input" id="friendCode" placeholder="AEQ1S" maxlength="6">
+                            <input type="text" class="form-input" id="userCode" maxlength="6" readonly>
+                            <span class="eye-icon" onclick="toggleCodeVisibility()" title="Show code">👁</span>
                         </div>
+
+                        <label class="form-label">Enter your friend's code:</label>
+                        <div class="input-wrapper">
+                            <input type="text" class="form-input friend-code-input" id="friendCode" maxlength="6" placeholder="Enter code">
+                        </div>
+
                     </div>
 
-                    <button type="submit" class="confirm-btn">Confirm</button>
+                    <button type="submit" class="confirm-btn" id="confirmBtn">Confirm</button>
+                </form>
 
-                    <div class="gifts-decoration">
+                <div class="gifts-decoration">
                     <img src="images/gift.png" alt="Gifts">
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -593,10 +1136,14 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -623,7 +1170,7 @@
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <div class="contact-item">📞 1-800-EVERGREEN</div>
-                <div class="contact-item">✉️ hello@evergreenbank.com</div>
+                <div class="contact-item">✉️ evrgrn.64@gmail.com</div>
                 <div class="contact-item">📍 123 Financial District, Suite 500<br>&nbsp;&nbsp;&nbsp;&nbsp;New York, NY 10004</div>
             </div>
         </div>
@@ -640,6 +1187,215 @@
     </footer>
 
     <script>
+
+        let codeVisible = false;
+        let userReferralCode = '';
+
+        // Load user's referral code and stats on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadReferralCode();
+            await loadReferralStats();
+        });
+
+        async function loadReferralCode() {
+            try {
+                const response = await fetch('referral_api.php?action=get_referral_code');
+                const data = await response.json();
+                
+                if (data.success) {
+                    userReferralCode = data.referral_code;
+                    // Display masked code initially
+                    document.getElementById('userCode').value = '••••••';
+                } else {
+                    console.error('Failed to load referral code');
+                    document.getElementById('userCode').value = 'ERROR';
+                }
+            } catch (error) {
+                console.error('Error loading referral code:', error);
+                document.getElementById('userCode').value = 'ERROR';
+            }
+        }
+
+        async function loadReferralStats() {
+            try {
+                const response = await fetch('referral_api.php?action=get_referral_stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('totalReferrals').textContent = data.total_referrals;
+                    document.getElementById('referralPoints').textContent = data.referral_points;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function toggleCodeVisibility() {
+            const codeInput = document.getElementById('userCode');
+            const eyeIcon = document.querySelector('.eye-icon');
+            
+            codeVisible = !codeVisible;
+            
+            if (codeVisible) {
+                codeInput.value = userReferralCode;
+                eyeIcon.textContent = '👁';
+                eyeIcon.title = 'Hide code';
+            } else {
+                codeInput.value = '••••••';
+                eyeIcon.textContent = '👁';
+                eyeIcon.title = 'Show code';
+            }
+        }
+
+        document.getElementById('referForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const friendCode = document.getElementById('friendCode').value.trim().toUpperCase();
+    const confirmBtn = document.getElementById('confirmBtn');
+    
+    if (!friendCode) {
+        showModal('Error', 'Please enter a referral code', 'error');
+        return;
+    }
+    
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Processing...';
+    
+    try {
+        const formData = new FormData();
+        formData.append('action', 'apply_referral');
+        formData.append('friend_code', friendCode);
+        
+        const response = await fetch('referral_api.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showModal(
+                'Success!',
+                `You earned ${data.points_earned} points! Your friend ${data.referrer_name} also earned points. Your total points: ${data.total_points}`,
+                'success',
+                true  // Add reload flag
+            );
+            document.getElementById('friendCode').value = '';
+        } else {
+            showModal('Error', data.message, 'error');
+        }
+    } catch (error) {
+        showModal('Error', 'An error occurred. Please try again.', 'error');
+    } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Confirm';
+    }
+});
+
+        function showModal(title, message, type, shouldReload = false) {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 54, 49, 0.8);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    const iconBg = type === 'success' ? '#28a745' : '#dc3545';
+    const icon = type === 'success' ? '✓' : '✕';
+    
+    modal.innerHTML = `
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+        <div style="
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.4s ease;
+        ">
+            <div style="
+                width: 80px;
+                height: 80px;
+                background: ${iconBg};
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+                font-size: 3rem;
+                color: white;
+            ">${icon}</div>
+            
+            <h3 style="
+                color: #003631;
+                margin-bottom: 0.75rem;
+                font-size: 1.75rem;
+                font-weight: 600;
+            ">${title}</h3>
+            
+            <p style="
+                color: #666;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                line-height: 1.6;
+            ">${message}</p>
+            
+            <button id="modalOkBtn" style="
+                background: #003631;
+                color: white;
+                border: none;
+                padding: 12px 32px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            " onmouseover="this.style.background='#F1B24A'; this.style.color='#003631'" onmouseout="this.style.background='#003631'; this.style.color='white'">
+                OK
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    const okBtn = modal.querySelector('#modalOkBtn');
+    okBtn.addEventListener('click', function() {
+        modal.remove();
+        if (shouldReload) {
+            location.reload(); // Reload the page to show updated stats
+        }
+    });
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+            if (shouldReload) {
+                location.reload();
+            }
+        }
+    });
+}
+
         // Smooth scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

@@ -513,6 +513,17 @@
             margin-top: 5%;
         }
 
+        .collect-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #ccc;
+        }
+
+        .collect-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
         .collect-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(13, 77, 61, 0.4);
@@ -606,13 +617,16 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
@@ -1431,7 +1445,9 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="../images/Logo.png.png" alt="Evergreen Logo">
+                <a href="viewingpage.php">
+                    <img src="../images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="../viewingpage.php">EVERGREEN</a>
@@ -1547,10 +1563,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="../images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="../images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             

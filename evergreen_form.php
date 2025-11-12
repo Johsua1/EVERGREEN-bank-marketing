@@ -342,7 +342,7 @@
         color: #D43F3A;
         font-size: 12px;
         display: none;
-        margin-top: 3px;
+        margin-top: -10px;
       }
 
       .input-error {
@@ -643,21 +643,21 @@
               <div>
                 <p style="margin:8px 0 6px 0; font-size:13px; color:#003631;">Additional Services (Optional)</p>
                 <div class="services-grid">
-                  <label><input type="checkbox" value="debit"> Debit Card</label>
-                  <label><input type="checkbox" value="online"> Online Banking</label>
-                  <label><input type="checkbox" value="mobile">Mobile Banking</label>
-                  <label><input type="checkbox" value="overdraft"> Overdraft Protection</label>
+                  <label><input type="checkbox" value="debit" style="accent-color: #003631"> Debit Card</label>
+                  <label><input type="checkbox" value="online" style="accent-color: #003631"> Online Banking</label>
+                  <label><input type="checkbox" value="mobile" style="accent-color: #003631">Mobile Banking</label>
+                  <label><input type="checkbox" value="overdraft" style="accent-color: #003631"> Overdraft Protection</label>
                 </div>
               </div>
 
               <div>
                 <h3 class="section-title">Terms and Agreements</h3>
                 <div class="terms-box">
-                  <label style="display:flex; gap:8px; align-items:flex-start;"><input type="checkbox" value="I agree" id="term-tnc"> I agree to the <strong>Terms and Conditions</strong> of Evergreen Bank.</label>
+                  <label style="display:flex; gap:8px; align-items:flex-start;"><input type="checkbox" value="I agree" id="term-tnc" style="accent-color: #003631"> I agree to the <strong>Terms and Conditions</strong> of Evergreen Bank.</label>
                   <p style="color: red;" id="error-tnc">agree to terms and condition</p>
-                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" id="term-privacy" value="I acknowledge"> I acknowledge that I have received and read the <strong>Privacy Policy</strong>.</label>
+                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" id="term-privacy" value="I acknowledge" style="accent-color: #003631"> I acknowledge that I have received and read the <strong>Privacy Policy</strong>.</label>
                   <p style="color: red;" id="error-privacy">agree to privacy</p>
-                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" value="consent"> I consent to receive marketing communications from Evergreen Bank about products and services that may interest me.</label>
+                  <label style="display:flex; gap:8px; align-items:flex-start; margin-top:8px;"><input type="checkbox" value="consent" style="accent-color: #003631"> I consent to receive marketing communications from Evergreen Bank about products and services that may interest me.</label>
                 </div>
               </div>
             </div>

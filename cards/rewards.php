@@ -185,54 +185,54 @@
         }
 
         /* DROPDOWN STYLES */
-.dropdown {
-    position: relative;
-}   
+        .dropdown {
+             position: relative;
+        }   
 
-.dropbtn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s;
-}
+        .dropbtn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
 
-.dropbtn:hover {
-    color: #F1B24A;
-}
+        .dropbtn:hover {
+            color: #F1B24A;
+        }
 
-/* Dropdown menu box - UPDATED FOR FULL WIDTH */
-.dropdown-content {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 80px;
-    width: 100vw;
-    background-color: #D9D9D9;
-    padding: 1.5rem 5%;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 99;
-    text-align: center;
-}
+        /* Dropdown menu box - UPDATED FOR FULL WIDTH */
+        .dropdown-content {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 100vw;
+            background-color: #D9D9D9;
+            padding: 1.5rem 5%;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            z-index: 99;
+            text-align: center;
+        }
 
-/* Links inside dropdown */
-.dropdown-content a {
-    color: #003631;
-    margin: 0 2rem;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
+        /* Links inside dropdown */
+        .dropdown-content a {
+            color: #003631;
+            margin: 0 2rem;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
 
-.dropdown-content a:hover {
-    color: #F1B24A;
-    transform: translateY(-2px);
-}
+        .dropdown-content a:hover {
+            color: #F1B24A;
+            transform: translateY(-2px);
+        }
 
         /* Hero Section */
         .hero {
@@ -436,68 +436,68 @@
         }
 
         /* Tab preview styles */
-.tab-preview {
-    display: none;
-}
+        .tab-preview {
+            display: none;
+        }
 
-.tab-preview.active {
-    display: block;
-}
+        .tab-preview.active {
+            display: block;
+        }
 
-/* Mission card without collect button */
-.mission-card-preview {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
+        /* Mission card without collect button */
+        .mission-card-preview {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
 
-.mission-card-preview .mission-points {
-    font-size: 28px;
-    font-weight: 700;
-    color: #003631;
-    min-width: 60px;
-}
+        .mission-card-preview .mission-points {
+            font-size: 28px;
+            font-weight: 700;
+            color: #003631;
+            min-width: 60px;
+        }
 
-.mission-card-preview .mission-points-label {
-    font-size: 11px;
-    color: #666;
-    font-weight: 500;
-}
+        .mission-card-preview .mission-points-label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
 
-.mission-card-preview .mission-details {
-    flex: 1;
-}
+        .mission-card-preview .mission-details {
+            flex: 1;
+        }
 
-.mission-card-preview .mission-text {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-}
+        .mission-card-preview .mission-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
 
-.history-card, .completed-card {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    position: relative;
-}
+        .history-card, .completed-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
 
-.history-timestamp, .completed-timestamp {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 11px;
-    color: #999;
-}
+        .history-timestamp, .completed-timestamp {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 11px;
+            color: #999;
+        }
 
         .view-all:hover {
             transform: translateY(-2px);
@@ -817,13 +817,16 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
@@ -882,105 +885,110 @@
         }
 
         /* Responsive - UPDATED */
-@media (max-width: 968px) {
-    .hero {
+        @media (max-width: 968px) {
+        .hero {
         grid-template-columns: 1fr;
         padding: 6rem 5% 3rem;
+        }
+
+        .hero-content h1 {
+            font-size: 2.2rem;
+        }
+
+        .credit-card-display {
+            width: 240px;
+            height: 150px;
+            margin-left: 25%;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            margin: 0 0.5rem;
+        }
+
+        .dropdown-content {
+            padding: 1.2rem 3%;
+        }
+
+        .dropdown-content a {
+            margin: 0 1rem;
+            font-size: 0.95rem;
+        }
+
+        .points-section {
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .carousel-button {
+            display: none;
+        }
+
+        .carousel {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+
+        .reward-card {
+            scroll-snap-align: start;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-10px);
+            transition: 0.2s ease-in;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr 1fr;
+        }
     }
 
-    .hero-content h1 {
-        font-size: 2.2rem;
-    }
+        @media (max-width: 640px) {
+            nav {
+            padding: 1rem 3%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .credit-card-display {
-        width: 240px;
-        height: 150px;
-        margin-left: 25%;
-    }
+        .hero-content {
+            margin-top: 50px;
+        }
 
-    .nav-links {
-        gap: 1rem;
-    }
+        .logo {
+            font-size: 1rem;
+        }
 
-    .nav-links a {
-        font-size: 0.95rem;
-        margin: 0 0.5rem;
-    }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
 
-    .dropdown-content {
-        padding: 1.2rem 3%;
-    }
+        .nav-links {
+            order: 3;
+            width: 100%;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
 
-    .dropdown-content a {
-        margin: 0 1rem;
-        font-size: 0.95rem;
-    }
+        .nav-links a {
+            font-size: 0.9rem;
+            margin: 0 0.3rem;
+        }
 
-    .points-section {
-        flex-direction: column;
-        padding: 30px;
-    }
+        .dropdown-content {
+            top: 120px;
+            padding: 1rem 2%;
+        }
 
-    .carousel-button {
-        display: none;
-    }
-
-    .carousel {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-    }
-
-    .reward-card {
-        scroll-snap-align: start;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 640px) {
-    nav {
-        padding: 1rem 3%;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .hero-content {
-        margin-top: 50px;
-    }
-
-    .logo {
-        font-size: 1rem;
-    }
-
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        gap: 0.8rem;
-        flex-wrap: wrap;
-    }
-
-    .nav-links a {
-        font-size: 0.9rem;
-        margin: 0 0.3rem;
-    }
-
-    .dropdown-content {
-        top: 120px;
-        padding: 1rem 2%;
-    }
-
-    .dropdown-content a {
-        margin: 0.3rem 0.5rem;
-        font-size: 0.85rem;
-        padding: 0.4rem 0.8rem;
+        .dropdown-content a {
+            margin: 0.3rem 0.5rem;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
     }
 
     .hero-content h1 {
@@ -1128,7 +1136,9 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="../images/Logo.png.png" alt="Evergreen Logo">
+                <a href="viewingpage.php">
+                    <img src="../images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="../viewingpage.php">EVERGREEN</a>
@@ -1288,10 +1298,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">📷</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="../images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="../images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -1370,7 +1386,20 @@
         align-items: center;
         gap: 10px;
         width: 30%;
+        animation: slideUp 0.3s ease-out forwards;
     }
+
+    /* Animation */
+    @keyframes slideUp {
+        from {
+            transform: translateY(10px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        }
 
     .check-symbol {
         font-size: 50px;
@@ -1714,6 +1743,12 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+            width: 55px;
+            height: 50px;
+            }
         </style>
         <div style="
             background: white;
@@ -1726,16 +1761,17 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0 auto 1.5rem;
+                flex-direction: start;
+                margin: 0 auto 2.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="../images/warning.png"></div>
             
             <h3 style="
                 color: #003631;

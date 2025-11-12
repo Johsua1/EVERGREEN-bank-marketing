@@ -203,7 +203,7 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
             background-color: #003631;
         }
 
-        /* DROPDOWN STYLES */
+        /* DROPDOWN STYLES - UPDATED TO MATCH CREDIT.PHP */
         .dropdown {
             position: relative;
         }   
@@ -222,33 +222,37 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
             color: #F1B24A;
         }
 
+        /* Dropdown menu box - UPDATED FOR FULL WIDTH */
         .dropdown-content {
             display: none;
-            position: absolute;
+            position: fixed;
             left: 0;
-            top: 150%;
-            width: 150vw;
+            top: 80px;
+            width: 100vw;
             background-color: #D9D9D9;
-            padding: 1.5rem 0;
+            padding: 1.5rem 5%;
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             z-index: 99;
             text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
         }
 
+        /* Links inside dropdown */
         .dropdown-content a {
             color: #003631;
-            margin: 0 3rem;
+            margin: 0 2rem;
             font-size: 1rem;
             text-decoration: none;
             display: inline-block;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .dropdown-content a:hover {
-            text-decoration: underline;
+            color: #F1B24A;
+            transform: translateY(-2px);
         }
+
 
         .btn-primary:hover {
             background: #e69610;
@@ -714,18 +718,23 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
-            background: #F1B24A;
+            background-color: #e0a03a;
         }
+
 
         .footer-section h4 {
             margin-bottom: 1rem;
@@ -778,6 +787,227 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
             font-size: 0.9rem;
         }
 
+            @media (max-width: 968px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            padding: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            margin: 0 0.5rem;
+        }
+
+        .dropdown-content {
+            padding: 1.2rem 3%;
+        }
+
+        .dropdown-content a {
+            margin: 0 1rem;
+            font-size: 0.95rem;
+        }
+
+        .stats-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .features-grid-bottom {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        nav {
+            padding: 1rem 3%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            order: 3;
+            width: 100%;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            margin: 0 0.3rem;
+        }
+
+        .dropdown-content {
+            top: 120px;
+            padding: 1rem 2%;
+        }
+
+        .dropdown-content a {
+            margin: 0.3rem 0.5rem;
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .hero-section {
+            padding: 60px 5% 60px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .content-hero {
+            margin-top: 50px;
+        }
+
+        .hero-features {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dashboard-card {
+            padding: 2rem;
+        }
+
+        .balance-amount {
+            font-size: 2rem;
+        }
+
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .features-title {
+            font-size: 2rem;
+        }
+
+        .features-subtitle {
+            font-size: 1rem;
+        }
+
+        .engagement-container {
+            padding: 3rem 2rem;
+        }
+
+        .engagement-title {
+            font-size: 1.5rem;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .footer-links {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .dropdown-content a {
+            display: inline-block;
+            margin: 0.2rem 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .username-profile {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .nav-buttons {
+            gap: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+        }
+
+        .trust-badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+        }
+
+        .balance-amount {
+            font-size: 1.75rem;
+        }
+
+        .item-value {
+            font-size: 1.1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+        }
+
+        .features-title {
+            font-size: 1.75rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+        }
+
+        .feature-card-title {
+            font-size: 1.1rem;
+        }
+
+        .engagement-container {
+            padding: 2.5rem 1.5rem;
+        }
+
+        .engagement-title {
+            font-size: 1.3rem;
+        }
+
+        .feature-list-item {
+            padding: 1rem;
+        }
+
+        .feature-list-text {
+            font-size: 0.85rem;
+        }
+    }
     </style>
 </head>
 <body>
@@ -785,7 +1015,9 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/Logo.png.png" alt="Evergreen Logo">
+                <a href="viewingpage.php">
+                    <img src="images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="viewingpage.php">EVERGREEN</a>
@@ -1032,10 +1264,16 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                        </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -1062,7 +1300,7 @@ $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <div class="contact-item">📞 1-800-EVERGREEN</div>
-                <div class="contact-item">✉️ hello@evergreenbank.com</div>
+                <div class="contact-item">✉️ evrgrn.64@gmail.com</div>
                 <div class="contact-item">📍 123 Financial District, Suite 500<br>&nbsp;&nbsp;&nbsp;&nbsp;New York, NY 10004</div>
             </div>
         </div>

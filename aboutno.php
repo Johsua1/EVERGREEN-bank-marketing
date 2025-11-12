@@ -269,6 +269,10 @@
             color: #F1B24A;
         }
 
+        .social-links img {
+            width: 20px;
+        }
+
         /* Footer */
         footer {
             background: #003631;
@@ -298,13 +302,16 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+        }
+        
+        .contact-icon {
+            width: 15px;
         }
 
         .social-icon:hover {
@@ -362,6 +369,48 @@
             font-size: 0.9rem;
         }
 
+        /* Tablet and smaller desktop - UPDATED */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+                margin: 0 0.5rem;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-main-image {
+                height: 400px;
+            }
+
+            .hero-right {
+                margin-top: 2rem;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Mobile landscape and smaller tablets */
         @media (max-width: 768px) {
             .hero-container {
                 grid-template-columns: 1fr;
@@ -371,16 +420,158 @@
                 font-size: 2.5rem;
             }
 
-            .hero-right {
-                margin-top: 0;
+            .hero-small-images {
+                grid-template-columns: 1fr;
             }
 
             .stats-container {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile devices */
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 3%;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+                margin: 0 0.3rem;
+            }
+
+            .hero-section {
+                padding: 3rem 5%;
+            }
+
+            .hero-text h1 {
+                font-size: 1.8rem;
+                padding-left: 1rem;
+                border-left-width: 4px;
+            }
+
+            .hero-main-image {
+                height: 300px;
+            }
+
+            .hero-small-images {
+                gap: 1rem;
+            }
+
+            .hero-small-image {
+                max-height: 200px;
+            }
+
+            .hero-right p {
+                font-size: 1rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .badge-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .about-section {
+                padding: 3rem 5%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 3%;
+            }
+
+
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .hero-section {
+                padding: 2rem 3%;
+                margin-top: 100px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-main-image {
+                height: 250px;
+            }
+
+            .hero-small-image {
+                max-height: 150px;
+            }
+
+            .hero-right p {
+                font-size: 0.95rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+                padding-right: 0;
+                justify-content: center;
+            }
+
+            .social-links a {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -445,10 +636,12 @@
 
                 <!-- Social Links in Right Column -->
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="#" aria-label="Instagram">📷</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                        <img src="images/fbicon.png" alt="facebook" class>
+                    </a>
+                    <a href="https://www.instagram.com/evergreenbanking/">
+                        <img src="images/igicon.png" alt="instagram">
+                    </a>
                 </div>
             </div>
         </div>
@@ -465,10 +658,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">📷</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             

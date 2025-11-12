@@ -243,6 +243,8 @@
         .solutions {
             padding: 5rem 5%;
             background: #f5f5f5;
+            height: 100vh;
+            align-content: center;
         }
 
         .solutions h2 {
@@ -342,6 +344,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 3rem;
+            height: 100vh;
         }
 
         /* Left Side Text */
@@ -396,21 +399,23 @@
             justify-content: flex-end;
             align-items: center;
             position: relative;
-            margin-right: -80px;
+            margin-right: -105px;
         }
 
         .rewards-image img {
-            width: 100%;
-            max-width: 680px;
-            height: 100%;
+            width: 105%;
+            max-width: 160%;
+            height: 120%;
             object-fit: contain;
             animation: float 3s ease-in-out infinite;
         }
 
         /* Loan Services Section */
         .loans {
-            background: linear-gradient(to right, #F1B24A 50%, #fef3e2 50%);
+            background: linear-gradient(to right, #fef3e2 50%, #fef3e2 50%);
             padding: 5rem 5%;
+            height: 80vh;
+            align-content: center;
         }
 
         .loans h2 {
@@ -435,7 +440,7 @@
 
         .loan-image {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -443,14 +448,14 @@
         }
 
         .loan-image img {
-            width: 30%;
+            width: 25%;
             height: auto;
             object-fit: contain;
         }
 
         .loan-image2{
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -459,13 +464,14 @@
 
         .loan-image2 img {
             width: 50%;
+            height: 180px;
             height: auto;
             object-fit: contain;
         }
 
         .loan-image3 {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -480,7 +486,7 @@
 
         .loan-image4 {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -540,20 +546,27 @@
 
         .social-icons {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            
+        }
+
+        .social-icons a {
+            color: white;
+            text-decoration: none;
         }
 
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 20px;
             cursor: pointer;
-            transition: background 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #F1B24A;
         }
 
         /* Career Section */
@@ -616,6 +629,12 @@
         .location {
             margin: 20px 0 25px 0;
             font-size: 0.95rem;
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;
         }
 
         .location strong {
@@ -624,6 +643,12 @@
 
         .requirements {
             margin-top: 25px;
+            background: rgba(241, 178, 74, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 4px solid #F1B24A;
+            font-size: 0.95rem;
         }
 
         .requirements h2 {
@@ -672,15 +697,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: -40%;
+            margin-right: -70%;
+            margin-top: 20%;
         }
 
         .image-wrapper {
             background-image: url("images/bg-image-1.jpg");
-            border-radius: 50%;
             position: relative;
             width: 100%;
             max-width: 700px;
+            border-radius: 50%;
         }
 
         .curved-image {
@@ -711,7 +737,7 @@
             height: 100%;
             height: auto;
             display: block;
-            z-index: 1;
+            z-index: 1;      
         }
 
         .decorative-curve img {
@@ -742,9 +768,6 @@
             border-radius: 50%;
         }
 
-        .social-icon:hover {
-            background: #F1B24A;
-        }
 
         .footer-section h4 {
             margin-bottom: 1rem;
@@ -797,128 +820,497 @@
             font-size: 0.9rem;
         }
 
-        /* DROPDOWN STYLES */
-        .dropdown {
-            position: relative;
-        }   
-
-        .dropbtn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
-        }
-
-        .dropbtn:hover {
-            color: #F1B24A;
-        }
-
-        /* Dropdown menu box */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 150%;
-            width: 150vw;
-            background-color: #D9D9D9;
-            padding: 1.5rem 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-            z-index: 99;
-            text-align: center;
-            transform: translateX(-50%);
-            left: 150%;
-            gap: 10rem;
-        }
-
-        /* Links inside dropdown */
-        .dropdown-content a {
-            color: #003631;
-            margin: 0 3rem;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .dropdown-content a:hover {
-            text-decoration: underline;
-        }
-
-        /* Make dropdown align properly inside nav */
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
 
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-        .hero {
-            grid-template-columns: 1fr;
-            text-align: center;
+
+        /* Tablet and smaller desktop */
+        @media (max-width: 968px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .nav-buttons {
+                gap: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .logo-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 5% 3rem;
+                text-align: center;
+                min-height: auto;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .hero-card {
+                margin-top: 2rem;
+            }
+
+            .solutions-grid,
+            .loans-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rewards-container {
+                flex-direction: column;
+                text-align: center;
+                height: auto;
+                padding: 4rem 0;
+            }
+
+            .rewards-text h1 {
+                font-size: 3rem;
+            }
+
+            .rewards-image {
+                justify-content: center;
+                margin-right: 0;
+            }
+
+            .rewards-image img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .content {
+                padding-right: 0;
+            }
+
+            .content h1 {
+                font-size: 2.5rem;
+            }
+
+            .image-container {
+                margin-right: 0;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
-        }
-  
-        .hero-card {
-            margin-top: 2rem;
+        /* Mobile devices */
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 3%;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-buttons {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .hero {
+                padding: 5rem 5% 3rem;
+                min-height: auto;
+            }
+
+            .hero-content {
+                margin-top: 50px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .hero-card {
+                padding: 1.5rem;
+            }
+
+            .hero-card::before {
+                top: -8%;
+                left: 85%;
+                width: 20%;
+                height: 20%;
+            }
+
+            .hero-card::after {
+                bottom: -8%;
+                right: 85%;
+                width: 18%;
+                height: 18%;
+            }
+
+            .hero-image {
+                height: 200px;
+            }
+
+            .solutions {
+                padding: 3rem 5%;
+                height: auto;
+            }
+
+            .solutions h2 {
+                font-size: 2rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .rewards-section {
+                padding: 3rem 0;
+            }
+
+            .rewards-container {
+                max-width: 95%;
+                height: auto;
+            }
+
+            .rewards-text h1 {
+                font-size: 2rem;
+            }
+
+            .rewards-text p {
+                font-size: 1rem;
+                margin-top: 2rem;
+            }
+
+            .loans {
+                padding: 3rem 5%;
+                height: auto;
+            }
+
+            .loans h2 {
+                font-size: 2rem;
+            }
+
+            .loans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .career-section {
+                padding: 40px 20px;
+                min-height: auto;
+            }
+
+            .content h1 {
+                font-size: 2rem;
+            }
+
+            .content .intro,
+            .content p {
+                font-size: 0.9rem;
+            }
+
+            .image-wrapper {
+                max-width: 400px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            /* Modal responsive */
+            .popup {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .join-text {
+                font-size: 20px;
+            }
+
+            .sub-txt {
+                font-size: 13px;
+            }
+
+            .btn-wrap {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .action {
+                width: 100%;
+                padding: 10px 20px;
+            }
         }
 
-        .rewards-container {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .rewards-image {
-            justify-content: center;
-        }
-     }
-
-
-        @media (max-width: 768px) {
-         nav {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .nav-buttons {
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        .solutions-grid,
-        .loans-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .footer-content {
-        grid-template-columns: 1fr 1fr;
-        }
-        }
-
+        /* Extra small mobile devices */
         @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 3%;
+            }
 
-        .hero-content h1 {
-            font-size: 2rem;
+            .btn {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .hero {
+                padding: 4rem 3% 2rem;
+                margin-top: 80px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+
+            .hero-card {
+                padding: 1.2rem;
+            }
+
+            .hero-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .hero-card p {
+                font-size: 0.85rem;
+            }
+
+            .hero-image {
+                height: 180px;
+            }
+
+            .solutions {
+                padding: 2rem 3%;
+            }
+
+            .solutions h2 {
+                font-size: 1.75rem;
+            }
+
+            .solution-card,
+            .loan-card {
+                padding: 1.5rem;
+            }
+
+            .solution-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .rewards-section {
+                padding: 2rem 0;
+            }
+
+            .rewards-text h1 {
+                font-size: 1.75rem;
+            }
+
+            .rewards-text p {
+                font-size: 0.9rem;
+                margin-top: 1.5rem;
+            }
+
+            .rewards-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .loans {
+                padding: 2rem 3%;
+            }
+
+            .loans h2 {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+            }
+
+            .loan-image,
+            .loan-image2,
+            .loan-image3,
+            .loan-image4 {
+                height: 120px;
+            }
+
+            .loan-content {
+                padding: 1rem;
+            }
+
+            .loan-content h3 {
+                font-size: 1rem;
+            }
+
+            .loan-content p {
+                font-size: 0.85rem;
+            }
+
+            .career-section {
+                padding: 30px 15px;
+            }
+
+            .content h1 {
+                font-size: 1.75rem;
+                margin-bottom: 20px;
+            }
+
+            .content .intro {
+                font-size: 0.85rem;
+                margin-bottom: 25px;
+            }
+
+            .content h2 {
+                font-size: 1rem;
+            }
+
+            .content p {
+                font-size: 0.85rem;
+            }
+
+            .requirements li {
+                font-size: 0.85rem;
+                padding-left: 20px;
+            }
+
+            .note {
+                padding: 15px;
+                font-size: 0.85rem;
+            }
+
+            .image-wrapper {
+                max-width: 300px;
+            }
+
+            .decorative-curve img {
+                display: none;
+            }
+
+            .decorative-dots {
+                display: none;
+            }
+
+            /* Modal adjustments */
+            .popup {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .logo-popup {
+                width: 35px;
+                height: 35px;
+            }
+
+            .join-text {
+                font-size: 18px;
+            }
+
+            .sub-txt {
+                font-size: 12px;
+            }
+
+            .action {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+            .btn-wrap {
+                margin-top: 15px;
+            }
         }
 
-        .solutions-grid,
-        .loans-grid {
-        grid-template-columns: 1fr;
-        }
+        /* Extra extra small devices */
+        @media (max-width: 360px) {
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
 
-        .footer-content {
-        grid-template-columns: 1fr;
-        }
+            .hero-content p {
+                font-size: 0.85rem;
+            }
 
-        .rewards-text h1 {
-        font-size: 2rem;
-        }
-        }
+            .solutions h2,
+            .loans h2 {
+                font-size: 1.5rem;
+            }
 
+            .rewards-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .content h1 {
+                font-size: 1.5rem;
+            }
+
+            .image-wrapper {
+                max-width: 250px;
+            }
+        }
     </style>
     <html>
 </head>
@@ -1005,7 +1397,7 @@
       <p>
         Open an account with us today and enjoy exclusive rewards, special offers, and member-only perks designed to make your banking more rewarding.
       </p>
-      <a href="#" class="rewards-btn">Learn More</a>
+      <a href="cardrewardsno.php" class="rewards-btn">Learn More</a>
     </div>
 
     <div class="rewards-image">
@@ -1134,19 +1526,25 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Credit Cards</a></li>
-                    <li><a href="#">Debit Cards</a></li>
-                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="./cards/creditno.php">Credit Cards</a></li>
+                    <li><a href="./cards/debitno.php">Debit Cards</a></li>
+                    <li><a href="./cards/prepaidno.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1164,7 +1562,7 @@
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <div class="contact-item">📞 1-800-EVERGREEN</div>
-                <div class="contact-item">✉️ hello@evergreenbank.com</div>
+                <div class="contact-item">✉️ evrgrn64@gmail.com</div>
                 <div class="contact-item">📍 123 Financial District, Suite 500<br>&nbsp;&nbsp;&nbsp;&nbsp;New York, NY 10004</div>
             </div>
         </div>
@@ -1172,15 +1570,160 @@
         <div class="footer-bottom">
             <p>© 2023 Evergreen Bank. All rights reserved.<br>Member FDIC. Equal Housing Lender. Evergreen Bank, N.A.</p>
             <div class="footer-links">
-                <a href="policy.php">Privacy Policy</a>
-                <a href="terms.php">Terms and Agreements</a>
-                <a href="faq.php">FAQS</a>
-                <a href="about.php">About Us</a>
+                <a href="policyno.php">Privacy Policy</a>
+                <a href="termsno.php">Terms and Agreements</a>
+                <a href="faqno.php">FAQS</a>
+                <a href="aboutno.php">About Us</a>
             </div>
         </div>
     </footer>
 
+    <div class="modal-container" style="display: none;">
+        <div class="popup">
+            <div class="head-popup">
+                <h2 class="exit-btn">X</h2>
+            </div>
+            <div class="head-logo">
+                <img src="images/Logo.png.png" alt="logo" class="logo-popup">
+                <div class="head-wrap">
+                  <h4 id="web-title">EVERGREEN</h4>
+                  <p id="web-catch">Secure Invest Achieve</p>  
+                </div>
+            </div>
+            <div class="join-us">
+                <h1 class="join-text">Hey there!</h1>
+                <h2 class="sub-txt">Please sign in to continue, or create an account if you don't have one yet</h2>
+                <div class="btn-wrap">
+                    <a  href="login.php" class="action">Log in</a>
+                    <a  href="signup.php" class="action">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Contact icon */
+        .contact-icon {
+            width: 15px;
+        }
+
+        /* Modal Popup */
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.4);
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup {
+            background-color: #003631;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .head-popup {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .exit-btn {
+            cursor: pointer;
+        }
+
+        .head-logo {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .head-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            color: #F1B24A;
+        }
+
+        .logo-popup {
+            width: 45px;
+            height: 45px;
+        }
+
+        .join-us {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .join-text, .sub-txt {
+            color: white;
+        }
+
+        .join-text {
+            font-weight: 500;
+            font-size: 25px;
+        }
+
+        .sub-txt {
+            font-weight: 200;
+            font-size: 15px;
+        }
+
+        .btn-wrap {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn-wrap a {
+            text-decoration: none;
+        }
+
+        .action {
+            font-size: larger;
+            font-weight: 500;
+            padding: 10px 40px;
+            background-color: #F1B24A;
+            color: #003631;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+
+        hr {
+            background-color: white;
+        }
+    </style>
+
     <script>
+        poppers();
+
+        // popup modal
+        function poppers() {
+            let modalCont = document.querySelector(".modal-container");
+
+            setTimeout(() => {
+                modalCont.style.display = "flex";
+                }, 5000);
+
+            document.querySelector(".exit-btn").addEventListener("click", () => {
+                modalCont.style.display = "none";
+            })
+
+        }
+
         // Smooth scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

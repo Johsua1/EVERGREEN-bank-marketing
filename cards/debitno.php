@@ -4,14 +4,6 @@
        'cookie_secure' => isset($_SERVER['HTTPS']),
        'use_strict_mode' => true
     ]);
-    // Check if user is logged in
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
-        header("Location: viewing.php");
-    exit;
-    }
-
-    // Get user info from session
-        $fullName = $_SESSION['full_name'] ?? ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+                /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -86,170 +78,44 @@
             background: transparent;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1.1rem;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #F1B24A;
-        }
-
         .nav-buttons {
             display: flex;
             gap: 1rem;
-            align-items: center;
         }
 
-        .username-profile {
-            background: transparent;
-            color: #FFFFFF;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
             border-radius: 5px;
-        }
-
-        .username-profile:hover {
-            color: #F1B24A;
-        }
-
-        .profile-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative; /* needed for dropdown positioning */
-        }
-
-        /* profile dropdown */
-        .profile-btn {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;              /* now a button */
-            padding: 0;
             cursor: pointer;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
-            display:block;
-        }
-
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: calc(100% + 8px);
-            background: #D9D9D9;
-            color: #003631;
-            border-radius: 8px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-            min-width: 160px;
-            z-index: 200;
-        }
-
-        .profile-dropdown a {
-            display: block;
-            padding: 0.65rem 1rem;
-            color: #003631;
+            font-size: 0.9rem;
+            transition: all 0.3s;
             text-decoration: none;
-            font-weight: 600;
+            display: inline-block;
         }
 
-        .profile-dropdown a:hover {
-            background: rgba(0,0,0,0.04);
-        }
-
-        .profile-dropdown.show {
-            display: block;
-        }
-
-        .profile-btn {
-            width: 40px;
-            height: 40px;
+        .btn-login {
             background: transparent;
-            border-radius: 50%;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: #f5a623;
+            color: #0d4d4d;
+            font-weight: bold;
             display: flex;
             align-items: center;
-            justify-content: center;
         }
 
-        .profile-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            background-color: #003631;
+        .btn-primary:hover {
+            background: #e69610;
+            transform: translateY(-2px);
         }
-
-        /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
-.dropdown {
-    position: relative;
-}   
-
-.dropbtn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s;
-}
-
-.dropbtn:hover {
-    color: #F1B24A;
-}
-
-/* Dropdown menu box - UPDATED FOR FULL WIDTH */
-.dropdown-content {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 80px;
-    width: 100vw;
-    background-color: #D9D9D9;
-    padding: 1.5rem 5%;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    z-index: 99;
-    text-align: center;
-}
-
-/* Links inside dropdown */
-.dropdown-content a {
-    color: #003631;
-    margin: 0 2rem;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.dropdown-content a:hover {
-    color: #F1B24A;
-    transform: translateY(-2px);
-}
 
         /* Hero Section */
         .hero {
@@ -851,53 +717,26 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+   <!-- Navigation -->
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <a href="viewingpage.php">
+                <a href="../viewing.php">
                     <img src="../images/Logo.png.png">
                 </a>
             </div>
-            <span>
-                <a href="../viewingpage.php">EVERGREEN</a>
-            </span>
+                <span>
+                    <a href="../viewing.php">
+                    EVERGREEN
+                    </a>
+                </span>
         </div>
-
-        <div class="nav-links">
-            <a href="../viewingpage.php">Home</a>
-
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Cards ⏷</button>
-                <div class="dropdown-content" id="cardsDropdown">
-                    <a href="../cards/credit.php">Credit Cards</a>
-                    <a href="../cards/debit.php">Debit Cards</a>
-                    <a href="../cards/prepaid.php">Prepaid Cards</a>
-                    <a href="../cards/rewards.php">Card Rewards</a>
-                </div>
-            </div>
-
-            <a href="#loans">Loans</a>
-            <a href="../about.php">About Us</a>
-        </div>
-
         <div class="nav-buttons">
-            <a href="#" class="username-profile"><?php echo htmlspecialchars($fullName); ?></a>
+            <a href="../login.php" class="btn btn-login">Login
 
-            <div class="profile-actions">
-                <div class="logo-icon" style="width:40px;height:40px;">
-                    <button id="profileBtn" class="profile-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleProfileDropdown(event)" title="Open profile menu">
-                        <img src="../images/pfp.png" alt="Profile Icon">
-                    </button>
-                </div>
-
-                <div id="profileDropdown" class="profile-dropdown" role="menu" aria-labelledby="profileBtn">
-                    <a href="cards/profile.php" role="menuitem">Profile</a>
-                    <a href="../refer.php" role="menuitem">Refer to a friend</a>
-                    <a href="../cards/points.php" role="menuitem">Missions</a>
-                    <a href="viewing.php" role="menuitem" onclick="showSignOutModal(event)">Sign Out</a>
-                </div>
-            </div>
+            </a>
+                
+            <a href="../login.php" class="btn btn-primary">Get Started</a>
         </div>
     </nav>
 
@@ -906,7 +745,7 @@
         <div class="hero-content">
             <h1>Debit Cards</h1>
             <p>Enjoy easy access to your funds anytime. With the EVERGREEN Debit Card, you can shop, withdraw, and pay bills securely and conveniently.</p>
-            <a href="../evergreen_form.php" class="btn-apply">Apply Now</a>
+            <a href="../login.php" class="btn-apply">Apply Now</a>
         </div>
         <div class="hero-image">
             <div class="card-hand">
@@ -961,7 +800,7 @@
                 <h3>Home Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -975,7 +814,7 @@
                 <h3>Personal Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -989,7 +828,7 @@
                 <h3>Auto Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
@@ -1003,7 +842,7 @@
                 <h3>Multipurpose Loans</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <div class="card-buttons">
-                    <button class="btn-small btn-yellow">Apply</button>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
         </div>
@@ -1024,7 +863,7 @@
                 <h3>Credit Cards</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <button class="btn-small btn-dark">
-                    <a href="../cards/credit.php">View</a>
+                    <a href="../cards/creditno.php">View</a>
                 </button>
             </div>
 
@@ -1038,7 +877,7 @@
                 <h3>Prepaid Cards</h3>
                 <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
                 <button class="btn-small btn-dark">
-                    <a href="../cards/prepaid.php">View</a>
+                    <a href="../cards/prepaidno.php">View</a>
                 </button>
             </div>
         </div>
@@ -1073,9 +912,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="credit.php">Credit Cards</a></li>
-                    <li><a href="debit.php">Debit Cards</a></li>
-                    <li><a href="prepaid.php">Prepaid Cards</a></li>
+                    <li><a href="../cards/creditno.php">Credit Cards</a></li>
+                    <li><a href="../cards/debitno.php">Debit Cards</a></li>
+                    <li><a href="../cards/prepaidno.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             

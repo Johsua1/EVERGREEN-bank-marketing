@@ -454,7 +454,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 3rem;
-            height: 90vh;
+            height: 100vh;
         }
 
         /* Left Side Text */
@@ -663,17 +663,17 @@
         .social-icon {
             width: 35px;
             height: 35px;
-            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: background 0.3s;
+            gap: 15px;
         }
 
         .social-icon:hover {
-            background: #F1B24A;
+            background-color: #F1B24A;
         }
 
         /* Career Section */
@@ -746,13 +746,14 @@
             color: #F1B24A;
         }
 
-        .requirements {
+        .requirements { 
             background: rgba(241, 178, 74, 0.1);
             padding: 18px;
             border-radius: 8px;
             margin-top: 25px;
             border-left: 4px solid #F1B24A;
-            font-size: 0.95rem;        }
+            font-size: 0.95rem;  
+        }
 
         .requirements h2 {
             margin-top: 15px;
@@ -800,8 +801,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: -20%;
-            margin-top: 70px;
+            margin-right: -70%;
+            margin-top: 35%;
         }
 
         .image-wrapper {
@@ -836,8 +837,8 @@
         }
 
         .curved-image img {
-            width: 110%;
-            height: 120%;
+            width: 100%;
+            height: 100%;
             height: auto;
             display: block;
             z-index: 1;      
@@ -923,6 +924,11 @@
             font-size: 0.9rem;
         }
 
+                /* Contact icon */
+        .contact-icon {
+            width: 15px;
+        }
+
         /* DROPDOWN STYLES - UPDATED FOR FULL WIDTH */
 .dropdown {
     position: relative;
@@ -979,6 +985,8 @@
     align-items: center;
     gap: 1.5rem;
 }
+
+
 
 
         /* Responsive - UPDATED */
@@ -1374,7 +1382,9 @@
     <nav>
         <div class="logo">
             <div class="logo-icon">
-                <img src="images/Logo.png.png">
+                <a href="viewingpage.php">
+                    <img src="images/Logo.png.png">
+                </a>
             </div>
             <span>
                 <a href="viewingpage.php">EVERGREEN</a>
@@ -1606,10 +1616,16 @@
                 </div>
                 <p>Secure. Invest. Achieve. Your trusted financial partner for a prosperous future.</p>
                 <div class="social-icons">
-                    <div class="social-icon">f</div>
-                    <div class="social-icon">𝕏</div>
-                    <div class="social-icon">in</div>
-                    <div class="social-icon">in</div>
+                    <div class="social-icon">
+                        <a href="https://www.facebook.com/profile.php?id=61582812214198">
+                            <img src="images/fb-trans.png" alt="facebook" class="contact-icon">
+                        </a>
+                    </div>
+                    <div class="social-icon">
+                        <a href="https://www.instagram.com/evergreenbanking/">
+                            <img src="images/trans-ig.png" alt="instagram" class="contact-icon">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -1636,7 +1652,7 @@
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <div class="contact-item">📞 1-800-EVERGREEN</div>
-                <div class="contact-item">✉️ hello@evergreenbank.com</div>
+                <div class="contact-item">✉️ evrgrn.64@gmail.com</div>
                 <div class="contact-item">📍 123 Financial District, Suite 500<br>&nbsp;&nbsp;&nbsp;&nbsp;New York, NY 10004</div>
             </div>
         </div>
