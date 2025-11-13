@@ -224,6 +224,7 @@ $stmt->execute();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evergreen - Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -1401,18 +1402,25 @@ $stmt->execute();
         });
       }
 
-      // Toggle password visibility
       function togglePassword(id) {
         const input = document.getElementById(id);
         const btn = input.nextElementSibling;
         if (input.type === 'password') {
           input.type = 'text';
-          btn.textContent = '👁️';
+          btn.innerHTML = '<i class="fa-solid fa-eye"></i>';
         } else {
           input.type = 'password';
-          btn.textContent = '👁️‍🗨️';
+          btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
         }
       }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', function() {
+        const eyeIcons = document.querySelectorAll('.eye-icon');
+        eyeIcons.forEach(icon => {
+          icon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; // Start with regular eye
+        });
+      });
 
       // Password strength checker with requirements
       const password = document.getElementById('password');
@@ -1472,30 +1480,37 @@ $stmt->execute();
             reqSpecial.classList.remove('met');
           }
           
-          // Update strength bar and text
-          strengthFill.className = 'strength-fill';
+          // Update strength bar and text - FIXED VERSION
+          // Remove all previous classes
+          strengthFill.classList.remove('weak', 'medium', 'strong');
+          
           if (passwordValue.length === 0) {
             strengthFill.style.width = '0%';
             strengthText.textContent = '';
-          } else if (strength <= 1) {
+          } else if (strength === 1) {
             strengthFill.classList.add('weak');
+            strengthFill.style.width = '25%'; // Force width
             strengthText.textContent = 'Weak password';
             strengthText.style.color = '#dc3545';
-          } else if (strength <= 2) {
-            strengthFill.classList.add('medium');
-            strengthText.textContent = 'Medium password';
-            strengthText.style.color = '#ffc107';
+          } else if (strength === 2) {
+            strengthFill.classList.add('weak');
+            strengthFill.style.width = '50%'; // Force width
+            strengthText.textContent = 'Fair password';
+            strengthText.style.color = '#ff6b6b';
           } else if (strength === 3) {
             strengthFill.classList.add('medium');
+            strengthFill.style.width = '75%'; // Force width
             strengthText.textContent = 'Good password';
-            strengthText.style.color = '#17a2b8';
-          } else {
+            strengthText.style.color = '#ffc107';
+          } else if (strength === 4) {
             strengthFill.classList.add('strong');
+            strengthFill.style.width = '100%'; // Force width
             strengthText.textContent = 'Strong password';
             strengthText.style.color = '#28a745';
           }
           
-          if (confirmPassword.value) {
+          // Check password match if confirm password has value
+          if (confirmPassword && confirmPassword.value) {
             checkPasswordMatch();
           }
         });

@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Evergreen - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -606,7 +607,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label class="input-label">Password</label>
         <div class="password-container">
           <input type="password" id="password" name="password" placeholder="Password" required>
-          <button type="button" class="eye-icon" onclick="togglePassword()"></button>
+          <button type="button" class="eye-icon" onclick="togglePassword()">👁</button>
         </div>
         <span class="error-message" id="password_error">This field is required</span>
       </div>
@@ -641,8 +642,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       const toggleBtn = document.querySelector('.eye-icon');
       const type = passwordInput.type === 'password' ? 'text' : 'password';
       passwordInput.type = type;
-      toggleBtn.textContent = type === 'password' ? '' : '';
+      
+      // Use Font Awesome icons
+      if (type === 'text') {
+        toggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+      } else {
+        toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+      }
     }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      const eyeIcon = document.querySelector('.eye-icon');
+      if (eyeIcon) {
+        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+      }
+    });
 
     // Show success modal if login successful
     <?php if ($success): ?>
@@ -889,6 +904,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       });
     });
+
   </script>
 </body>
 </html>

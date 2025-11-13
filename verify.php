@@ -235,6 +235,8 @@ if (isset($_SESSION['show_success_modal'])) {
       width: 100%;
       text-align: center;
       position: relative;
+      align-content: center;
+      margin-top: 5%;
     }
 
     .back-to-login {

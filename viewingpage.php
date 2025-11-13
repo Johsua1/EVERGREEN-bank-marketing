@@ -568,7 +568,7 @@
 
         .loan-image {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -576,14 +576,14 @@
         }
 
         .loan-image img {
-            width: 30%;
+            width: 25%;
             height: auto;
             object-fit: contain;
         }
 
         .loan-image2{
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -592,13 +592,14 @@
 
         .loan-image2 img {
             width: 50%;
+            height: 180px;
             height: auto;
             object-fit: contain;
         }
 
         .loan-image3 {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -613,7 +614,7 @@
 
         .loan-image4 {
             width: 100%;
-            height: 150px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
