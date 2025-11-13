@@ -525,6 +525,7 @@
             font-size: 11px;
             color: #666;
             font-weight: 500;
+            text-align: center;
         }
 
         .mission-details {
@@ -1748,6 +1749,7 @@ function showSignOutModal(event) {
             img {
             width: 55px;
             height: 50px;
+            margin-bottom:5px;
             }
         </style>
         <div style="
@@ -1875,6 +1877,93 @@ function showSignOutModal(event) {
         }
     };
     document.addEventListener('keydown', handleEscape);
+}
+
+// Add this to your rewards.php script section
+function redeemDisplay() {
+    const track = document.getElementById('carouselTrack');
+    const dotsContainer = document.getElementById('dots');
+    track.innerHTML = '';
+    dotsContainer.innerHTML = '';
+
+    // Rewards with point costs
+    let redeemRewards = [
+        {icon: "🏠", title: "Home-credit discount", desc: "Get 50% off through home-credit", points: 500},
+        {icon: "🎁", title: "Gift Voucher", desc: "Redeem ₱500 worth of gift vouchers", points: 300},
+        {icon: "🍔", title: "Food Treat", desc: "Free meal at Jollibee or McDonald's", points: 200},
+        {icon: "🚗", title: "Fuel Discount", desc: "Save ₱5 per liter at gas stations", points: 150},
+        {icon: "📱", title: "Mobile Load Bonus", desc: "₱100 free load for any network", points: 100},
+        {icon: "🎬", title: "Movie Pass", desc: "Two free cinema tickets", points: 250},
+        {icon: "🛍️", title: "Shopping Cashback", desc: "10% cashback on next purchase", points: 180},
+        {icon: "💳", title: "Card Upgrade", desc: "Premium membership upgrade", points: 400},
+        {icon: "🎡", title: "Theme Park Access", desc: "Free Enchanted Kingdom entry", points: 350},
+        {icon: "🧃", title: "Drink Reward", desc: "Free Starbucks or Coffee Bean drink", points: 120}
+    ];
+
+    // Create reward cards
+    for(let i = 0; i < redeemRewards.length; i++) {
+        let rewardCard = document.createElement("div");
+        rewardCard.className = "reward-card";
+
+        let rewardIcon = document.createElement("div");
+        rewardIcon.className = "reward-icon";
+        rewardIcon.textContent = redeemRewards[i].icon;
+
+        let rewardTitle = document.createElement("div");
+        rewardTitle.className = "reward-title";
+        rewardTitle.textContent = redeemRewards[i].title;
+
+        let rewardDesc = document.createElement("div");
+        rewardDesc.className = "reward-description";
+        rewardDesc.textContent = redeemRewards[i].desc;
+
+        // Add points cost display
+        let pointsCost = document.createElement("div");
+        pointsCost.style.cssText = "font-size: 18px; font-weight: 700; color: #003631; margin: 10px 0;";
+        pointsCost.textContent = `${redeemRewards[i].points} Points`;
+
+        let redeemBtn = document.createElement("button");
+        redeemBtn.className = "redeem-button";
+        redeemBtn.textContent = "Redeem";
+
+        // Add click handler with points system
+        redeemBtn.addEventListener("click", async function() {
+            const success = await pointsSystem.redeemReward(
+                redeemRewards[i].title,
+                redeemRewards[i].points
+            );
+            
+            if (success) {
+                // Remove the card after successful redemption
+                setTimeout(() => {
+                    rewardCard.style.transition = 'all 0.5s ease';
+                    rewardCard.style.opacity = '0';
+                    rewardCard.style.transform = 'scale(0.8)';
+                    setTimeout(() => rewardCard.remove(), 500);
+                }, 2000);
+            }
+        });
+
+        rewardCard.appendChild(rewardIcon);
+        rewardCard.appendChild(rewardTitle);
+        rewardCard.appendChild(rewardDesc);
+        rewardCard.appendChild(pointsCost);
+        rewardCard.appendChild(redeemBtn);
+
+        track.appendChild(rewardCard);
+    }
+
+    const cards = document.querySelectorAll('.reward-card');
+    totalSlides = cards.length - 1;
+
+    // Create dots
+    for (let i = 0; i <= totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+    }
 }
 </script>
 </body>

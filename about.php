@@ -999,8 +999,9 @@ function showSignOutModal(event) {
 
             /* Image Icon */
             img {
-            width: 55px;
-            height: 50px;
+                width: 55px;
+                height: 50px;
+                margin-bottom:5px;
             }
         </style>
         <div style="

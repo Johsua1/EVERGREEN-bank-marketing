@@ -454,7 +454,7 @@
         }
 
         .mission-points-value {
-            font-size: 48px;
+            font-size: 35px;
             font-weight: 700;
             color: #0d4d3d;
             line-height: 1;
@@ -1579,9 +1579,9 @@
             <div class="footer-section">
                 <h4>Products</h4>
                 <ul>
-                    <li><a href="#">Credit Cards</a></li>
-                    <li><a href="#">Debit Cards</a></li>
-                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="../cards/credit.php">Credit Cards</a></li>
+                    <li><a href="../cards/debit.php">Debit Cards</a></li>
+                    <li><a href="../cards/prepaid.php">Prepaid Cards</a></li>
                 </ul>
             </div>
             
@@ -1607,10 +1607,10 @@
         <div class="footer-bottom">
             <p>© 2023 Evergreen Bank. All rights reserved.<br>Member FDIC. Equal Housing Lender. Evergreen Bank, N.A.</p>
             <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms and Agreements</a>
-                <a href="#">FAQS</a>
-                <a href="#">About Us</a>
+                <a href="../policy.php">Privacy Policy</a>
+                <a href="../terms.php">Terms and Agreements</a>
+                <a href="../faq.php">FAQS</a>
+                <a href="../about.php">About Us</a>
             </div>
         </div>
     </footer>
@@ -1724,6 +1724,13 @@ function showSignOutModal(event) {
                     transform: translateY(0);
                 }
             }
+
+            /* Image Icon */
+            img {
+                width: 55px;
+                height: 50px;
+                margin-bottom:5px;
+            }
         </style>
         <div style="
             background: white;
@@ -1736,8 +1743,8 @@ function showSignOutModal(event) {
             animation: slideUp 0.3s ease;
         ">
             <div style="
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
                 background: linear-gradient(135deg, #003631 0%, #1a6b62 100%);
                 border-radius: 50%;
                 display: flex;
@@ -1745,7 +1752,7 @@ function showSignOutModal(event) {
                 justify-content: center;
                 margin: 0 auto 1.5rem;
                 font-size: 2rem;
-            ">⚠️</div>
+            "><img src="../images/warning.png"></div>
             
             <h3 style="
                 color: #003631;

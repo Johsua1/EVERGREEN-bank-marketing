@@ -1533,6 +1533,7 @@ function showSignOutModal(event) {
             img {
             width: 55px;
             height: 50px;
+            margin-bottom:5px;
             }
         </style>
         <div style="

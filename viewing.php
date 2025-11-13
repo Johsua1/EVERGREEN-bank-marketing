@@ -249,9 +249,9 @@
 
         .solutions h2 {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 70px;
             color: #0d4d4d;
-            margin-bottom: 1rem;
+            padding-bottom: 5%;
         }
 
         .solutions-intro {
@@ -259,7 +259,9 @@
             color: #666;
             max-width: 600px;
             margin: 0 auto 3rem;
+            margin-bottom: 5%;
             line-height: 1.6;
+            font-size: 19px;
         }
 
         .solutions-grid {
@@ -276,6 +278,8 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease-out, box-shadow 0.3s;
             cursor: pointer;
+            margin-top: 5%;
+            margin-bottom: 0 auto;
         }
 
         .solution-card:hover, .loan-card:hover {
@@ -285,26 +289,28 @@
         }
 
         .solution-icon {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             background: #f0f0f0;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            font-size: 50px;
         }
 
         .solution-card h3 {
             color: #0d4d4d;
             margin-bottom: 1rem;
+            font-size: 30px;
         }
 
         .solution-card p {
             color: #666;
             line-height: 1.6;
             margin-bottom: 1rem;
+            font-size: 15px;
         }
 
         .learn-more {
@@ -581,8 +587,8 @@
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 1700px;
+            margin-left: 5%;
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -697,7 +703,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: -70%;
+            margin-right: -40%;
             margin-top: 20%;
         }
 
@@ -1581,7 +1587,7 @@
     <div class="modal-container" style="display: none;">
         <div class="popup">
             <div class="head-popup">
-                <h2 class="exit-btn">X</h2>
+            <span class="exit-btn">&#10005;</span>
             </div>
             <div class="head-logo">
                 <img src="images/Logo.png.png" alt="logo" class="logo-popup">
@@ -1592,7 +1598,7 @@
             </div>
             <div class="join-us">
                 <h1 class="join-text">Hey there!</h1>
-                <h2 class="sub-txt">Please sign in to continue, or create an account if you don't have one yet</h2>
+                <h2 class="sub-txt">Please sign in to continue, or create an account<br> if you don't have one yet</h2>
                 <div class="btn-wrap">
                     <a  href="login.php" class="action">Log in</a>
                     <a  href="signup.php" class="action">Sign up</a>
@@ -1624,7 +1630,7 @@
         .popup {
             background-color: #003631;
             color: white;
-            padding: 25px;
+            padding: 50px;
             border-radius: 15px;
             width: 40%;
             display: flex;
@@ -1635,7 +1641,16 @@
         .head-popup {
             display: flex;
             justify-content: flex-end;
+            margin-top: -5%;
+            margin-right: -4%;
         }
+
+        .exit-btn {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
 
         .exit-btn {
             cursor: pointer;
@@ -1645,6 +1660,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
+            margin-top: -5%;
         }
 
         .head-wrap {
@@ -1673,16 +1689,20 @@
         .join-text {
             font-weight: 500;
             font-size: 25px;
+            margin-top: 3%;
+            margin-bottom: 3%;
         }
 
         .sub-txt {
             font-weight: 200;
             font-size: 15px;
+            margin-bottom: 3%;
+            line-height: 30px;
         }
 
         .btn-wrap {
             display: flex;
-            gap: 20px;
+            gap: 50px;
             justify-content: center;
             margin-top: 20px;
         }
@@ -1699,6 +1719,12 @@
             color: #003631;
             cursor: pointer;
             border-radius: 20px;
+            transition: 0.3 ease-in;
+        }
+
+        .action:hover {
+            background-color: #e69610;
+            transition: 0.3 ease-out;
         }
 
 

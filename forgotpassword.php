@@ -268,7 +268,10 @@ if (isset($_GET['clear_session'])) {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
       display: flex;
       min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8ebe9 100%);
+      background-image: url(images/bg-image.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
       padding: 20px;
     }
 

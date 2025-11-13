@@ -185,7 +185,10 @@ if (isset($_SESSION['show_success_modal'])) {
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-      background: #ebe8df;
+      background-image: url(images/bg-image.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
       min-height: 100vh;
       display: flex;
       flex-direction: column;

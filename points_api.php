@@ -34,6 +34,55 @@ switch ($action) {
         getCompletedMissions($conn, $user_id);
         break;
     
+    // Add this case in your switch statement
+    case 'redeem_reward':
+        if (!isset($_SESSION['user_id'])) {
+            echo json_encode(['success' => false, 'message' => 'Not logged in']);
+            exit;
+        }
+        
+        $reward_name = $_POST['reward_name'] ?? '';
+        $points_cost = floatval($_POST['points_cost'] ?? 0);
+        
+        if (empty($reward_name) || $points_cost <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Invalid reward data']);
+            exit;
+        }
+        
+        // Get user's current points
+        $user_id = $_SESSION['user_id'];
+        $stmt = $conn->prepare("SELECT total_points FROM bank_users WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        
+        if ($user['total_points'] < $points_cost) {
+            echo json_encode(['success' => false, 'message' => 'Insufficient points']);
+            exit;
+        }
+        
+        // Deduct points
+        $new_total = $user['total_points'] - $points_cost;
+        $stmt = $conn->prepare("UPDATE bank_users SET total_points = ? WHERE id = ?");
+        $stmt->bind_param("di", $new_total, $user_id);
+        $stmt->execute();
+        
+        // Log the redemption in history (negative points)
+        $description = "Redeemed: " . $reward_name;
+        $negative_points = -$points_cost;
+        $stmt = $conn->prepare("INSERT INTO points_history (user_id, points, description, transaction_type) VALUES (?, ?, ?, 'redemption')");
+        $stmt->bind_param("ids", $user_id, $negative_points, $description);
+        $stmt->execute();
+        
+        echo json_encode([
+            'success' => true,
+            'new_total' => $new_total,
+            'points_deducted' => $points_cost,
+            'message' => 'Reward redeemed successfully'
+        ]);
+    break;
+    
     default:
         echo json_encode(['success' => false, 'message' => 'Invalid action']);
 }
@@ -201,6 +250,14 @@ function collectMission($conn, $user_id) {
         $stmt->bind_param("di", $points, $user_id);
         $stmt->execute();
         $stmt->close();
+
+        // ✅ ADD THIS: Log the mission collection in points_history
+        $sql = "INSERT INTO points_history (user_id, points, description, transaction_type) 
+                VALUES (?, ?, ?, 'mission')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ids", $user_id, $points, $mission_text);
+        $stmt->execute();
+        $stmt->close();
         
         // Get updated total
         $sql = "SELECT total_points FROM bank_users WHERE id = ?";
@@ -232,11 +289,15 @@ function collectMission($conn, $user_id) {
 }
 
 function getPointHistory($conn, $user_id) {
-    $sql = "SELECT um.points_earned, m.mission_text, um.completed_at 
-            FROM user_missions um
-            JOIN missions m ON um.mission_id = m.id
-            WHERE um.user_id = ?
-            ORDER BY um.completed_at DESC";
+    // Query the points_history table to get ALL transactions (missions + redemptions)
+    $sql = "SELECT 
+                points, 
+                description, 
+                transaction_type,
+                created_at 
+            FROM points_history 
+            WHERE user_id = ?
+            ORDER BY created_at DESC";
     
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
@@ -246,9 +307,10 @@ function getPointHistory($conn, $user_id) {
     $history = [];
     while ($row = $result->fetch_assoc()) {
         $history[] = [
-            'points' => number_format($row['points_earned'], 2, '.', ''),
-            'description' => $row['mission_text'],
-            'timestamp' => date('F j, Y g:i A', strtotime($row['completed_at']))
+            'points' => number_format($row['points'], 2, '.', ''),
+            'description' => $row['description'],
+            'transaction_type' => $row['transaction_type'],
+            'timestamp' => date('F j, Y g:i A', strtotime($row['created_at']))
         ];
     }
     
@@ -286,4 +348,5 @@ function getCompletedMissions($conn, $user_id) {
     ]);
     $stmt->close();
 }
+
 ?>

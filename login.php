@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       display: flex;
       flex-direction: column;
       padding: 40px 60px;
-      padding-top: 120px;
+      padding-top: 230px;
       position: relative;
       box-shadow: 2px 0 30px rgba(0, 0, 0, 0.05);
       z-index: 2;

@@ -366,14 +366,13 @@
             background: #f5f5f5;
             height: 100vh;
             align-content: center;
-            justify-content: center;
         }
 
         .solutions h2 {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 70px;
             color: #0d4d4d;
-            margin-bottom: 1rem;
+            padding-bottom: 5%;
         }
 
         .solutions-intro {
@@ -381,7 +380,9 @@
             color: #666;
             max-width: 600px;
             margin: 0 auto 3rem;
+            margin-bottom: 5%;
             line-height: 1.6;
+            font-size: 19px;
         }
 
         .solutions-grid {
@@ -396,37 +397,41 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease-in, box-shadow 0.3s;
+            transition: transform 0.3s ease-out, box-shadow 0.3s;
             cursor: pointer;
+            margin-top: 5%;
+            margin-bottom: 0 auto;
         }
 
         .solution-card:hover, .loan-card:hover {
             transform: scale(1.1);
-            transition: 0.2s ease-in;
+            transition: 0.3s ease-in;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
         .solution-icon {
-            width: 50px;
-            height: 50px;
+            width: 70px;
+            height: 70px;
             background: #f0f0f0;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            font-size: 50px;
         }
 
         .solution-card h3 {
             color: #0d4d4d;
             margin-bottom: 1rem;
+            font-size: 30px;
         }
 
         .solution-card p {
             color: #666;
             line-height: 1.6;
             margin-bottom: 1rem;
+            font-size: 15px;
         }
 
         .learn-more {
@@ -434,6 +439,18 @@
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
+        }
+
+        .btn-explore-all {
+            background: #003631;
+            color: white;
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .btn-explore-all:hover {
+            background: #003631;
         }
 
         /* Rewards Section */
@@ -524,7 +541,7 @@
         .loans {
             background: linear-gradient(to right, #fef3e2 50%, #fef3e2 50%);
             padding: 5rem 5%;
-            height: 100vh;
+            height: 80vh;
             justify-content: center;
             align-content: center;
         }
@@ -688,8 +705,8 @@
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 1700px;
+            margin-left: 5%;
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -734,6 +751,8 @@
         }
 
         .location {
+            margin: 20px 0 25px 0;
+            font-size: 0.95rem;
             background: rgba(241, 178, 74, 0.1);
             padding: 18px;
             border-radius: 8px;
@@ -746,17 +765,18 @@
             color: #F1B24A;
         }
 
-        .requirements { 
+        .requirements {
+            margin-top: 25px;
             background: rgba(241, 178, 74, 0.1);
             padding: 18px;
             border-radius: 8px;
             margin-top: 25px;
             border-left: 4px solid #F1B24A;
-            font-size: 0.95rem;  
+            font-size: 0.95rem;
         }
 
         .requirements h2 {
-            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
         .requirements ul {
@@ -801,8 +821,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: -70%;
-            margin-top: 35%;
+            margin-right: -40%;
+            margin-top: 20%;
         }
 
         .image-wrapper {
@@ -1806,6 +1826,7 @@ function showSignOutModal(event) {
             img {
             width: 55px;
             height: 50px;
+            margin-bottom:5px;
             }
         </style>
         <div style="

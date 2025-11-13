@@ -129,6 +129,10 @@
         border-radius: 20px;
       }
 
+      label {
+        margin-top: 5px;;
+      }
+
       .form-part-label {
         font-size: 10px;
       }
@@ -198,6 +202,7 @@
         border-radius: 5px;
         padding: 5px 10px;
         font-size: 14px;
+        margin-top: -10px;
       }
 
       /* Verification section (Identity & Employment) */
@@ -467,6 +472,610 @@
         background-color: #003631;
       }
 
+      /* Responsive Design */
+      @media (max-width: 968px) {
+        body {
+          margin: 20px;
+        }
+
+        nav {
+          margin: 10px;
+          gap: 8px;
+        }
+
+        nav img {
+          width: 44px;
+          height: 44px;
+        }
+
+        .logo {
+          width: 40px;
+          height: 40px;
+        }
+
+        #title-page {
+          font-size: 18px;
+        }
+
+        .motto {
+          font-size: 11px;
+        }
+
+        .main-form-body {
+          width: 85%;
+          padding: 40px 30px;
+          gap: 20px;
+        }
+
+        .form-title {
+          font-size: 42px;
+        }
+
+        .form-sub-text {
+          font-size: 14px;
+        }
+
+        .upper-form {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .wrap {
+          gap: 12px;
+        }
+
+        .form-part {
+          width: 35px;
+          height: 35px;
+        }
+
+        .form-part-label {
+          font-size: 9px;
+        }
+
+        .form-line {
+          width: 60%;
+          margin: 0 10px;
+        }
+
+        .personal-info-panel {
+          gap: 12px;
+        }
+
+        .upper-input-wrap,
+        .lower-input-wrap,
+        .city-input-wrap {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .inp-credentials {
+          height: 32px;
+          font-size: 13px;
+        }
+
+        .verification-part,
+        .review-part {
+          gap: 15px;
+        }
+
+        .section-title {
+          font-size: 15px;
+        }
+
+        .two-col-row {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .account-type-cards {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .services-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .details-review {
+          width: 70%;
+        }
+
+        .details-contains {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .successful-modal {
+          width: 60%;
+          padding: 25px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          margin: 15px;
+        }
+
+        nav {
+          margin: 8px;
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+
+        nav img {
+          width: 38px;
+          height: 38px;
+        }
+
+        .logo {
+          width: 35px;
+          height: 35px;
+        }
+
+        #title-page {
+          font-size: 16px;
+        }
+
+        .motto {
+          display: none;
+        }
+
+        main {
+          padding: 10px 0;
+        }
+
+        .main-form-body {
+          width: 95%;
+          padding: 30px 20px;
+          gap: 18px;
+        }
+
+        .uppermost-form {
+          width: 100%;
+          gap: 8px;
+        }
+
+        .form-title {
+          font-size: 32px;
+          line-height: 1.1;
+        }
+
+        .form-sub-text {
+          font-size: 13px;
+        }
+
+        .upper-form {
+          gap: 10px;
+        }
+
+        .form-part {
+          width: 30px;
+          height: 30px;
+          font-size: 14px;
+        }
+
+        .form-part-label {
+          font-size: 8px;
+        }
+
+        .form-line {
+          width: 50%;
+          margin: 0 8px;
+        }
+
+        .personal-info-panel {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .upper-input-wrap,
+        .lower-input-wrap,
+        .city-input-wrap {
+          gap: 12px;
+        }
+
+        .input-wrap {
+          gap: 15px;
+        }
+
+        label {
+          font-size: 13px;
+          margin-top: 3px;
+        }
+
+        .inp-credentials {
+          height: 30px;
+          font-size: 12px;
+          padding: 4px 8px;
+        }
+
+        .verification-part,
+        .review-part {
+          gap: 12px;
+          padding-top: 15px;
+        }
+
+        .section-title {
+          font-size: 14px;
+        }
+
+        .helper-text {
+          font-size: 11px;
+        }
+
+        .ssn-wrap,
+        .emp-wrap {
+          gap: 12px;
+        }
+
+        .account-type-cards {
+          gap: 8px;
+        }
+
+        .acct-card {
+          padding: 12px;
+        }
+
+        .acct-card h4 {
+          font-size: 13px;
+        }
+
+        .acct-card p {
+          font-size: 11px;
+        }
+
+        .services-grid {
+          gap: 8px;
+        }
+
+        .services-grid label {
+          font-size: 12px;
+        }
+
+        .terms-box {
+          padding: 10px;
+        }
+
+        .terms-box label {
+          font-size: 12px;
+          gap: 6px;
+        }
+
+        .button-action {
+          padding: 8px 16px;
+          font-size: 14px;
+        }
+
+        .btn-container {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .back-link {
+          font-size: 18px;
+        }
+
+        .details-review {
+          width: 90%;
+          padding: 18px;
+        }
+
+        .confirm-title {
+          font-size: 18px;
+          margin-bottom: 15px;
+        }
+
+        .details-contains {
+          padding: 15px;
+          gap: 15px;
+        }
+
+        .content-wrap label {
+          font-size: 12px;
+        }
+
+        .content-wrap h4 {
+          font-size: 14px;
+        }
+
+        .content-group {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        #ok, #cancel {
+          width: 100%;
+          padding: 10px;
+        }
+
+        .successful-modal {
+          width: 85%;
+          padding: 20px;
+          gap: 12px;
+        }
+
+        .check {
+          width: 50px;
+          height: 50px;
+        }
+
+        .head-text {
+          font-size: 20px;
+        }
+
+        .sub-text {
+          font-size: 14px;
+          text-align: center;
+        }
+
+        .s-wrap {
+          gap: 4px;
+        }
+
+        .grey-text {
+          font-size: 12px;
+        }
+
+        #confirm-btn {
+          width: 100%;
+          padding: 10px 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          margin: 12px;
+        }
+
+        nav img {
+          width: 34px;
+          height: 34px;
+        }
+
+        .logo {
+          width: 32px;
+          height: 32px;
+        }
+
+        #title-page {
+          font-size: 14px;
+        }
+
+        .main-form-body {
+          width: 100%;
+          padding: 25px 15px;
+          gap: 15px;
+        }
+
+        .form-title {
+          font-size: 28px;
+          margin-bottom: 8px;
+        }
+
+        .form-sub-text {
+          font-size: 12px;
+        }
+
+        .form-part {
+          width: 28px;
+          height: 28px;
+          font-size: 13px;
+        }
+
+        .form-part-label {
+          font-size: 7px;
+        }
+
+        .form-line {
+          width: 40%;
+          margin: 0 5px;
+        }
+
+        .personal-info-panel {
+          gap: 8px;
+        }
+
+        .input-wrap {
+          gap: 12px;
+        }
+
+        label {
+          font-size: 12px;
+        }
+
+        .inp-credentials {
+          height: 28px;
+          font-size: 11px;
+        }
+
+        .section-title {
+          font-size: 13px;
+        }
+
+        .helper-text {
+          font-size: 10px;
+        }
+
+        .acct-card {
+          padding: 10px;
+        }
+
+        .acct-card h4 {
+          font-size: 12px;
+        }
+
+        .acct-card p {
+          font-size: 10px;
+        }
+
+        .services-grid label {
+          font-size: 11px;
+        }
+
+        .terms-box {
+          padding: 8px;
+        }
+
+        .terms-box label {
+          font-size: 11px;
+        }
+
+        .button-action {
+          padding: 7px 14px;
+          font-size: 13px;
+        }
+
+        .back-link {
+          font-size: 16px;
+        }
+
+        .details-review {
+          width: 95%;
+          padding: 15px;
+        }
+
+        .confirm-title {
+          font-size: 16px;
+        }
+
+        .details-contains {
+          padding: 12px;
+        }
+
+        .content-wrap label {
+          font-size: 11px;
+        }
+
+        .content-wrap h4 {
+          font-size: 13px;
+        }
+
+        .successful-modal {
+          width: 95%;
+          padding: 18px;
+        }
+
+        .head-text {
+          font-size: 18px;
+        }
+
+        .sub-text {
+          font-size: 13px;
+        }
+
+        .grey-text {
+          font-size: 11px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .form-title {
+          font-size: 24px;
+        }
+
+        .form-sub-text {
+          font-size: 11px;
+        }
+
+        .form-part {
+          width: 26px;
+          height: 26px;
+          font-size: 12px;
+        }
+
+        .inp-credentials {
+          height: 26px;
+          font-size: 10px;
+        }
+
+        .section-title {
+          font-size: 12px;
+        }
+
+        .acct-card h4 {
+          font-size: 11px;
+        }
+
+        .acct-card p {
+          font-size: 9px;
+        }
+
+        .button-action {
+          font-size: 12px;
+          padding: 6px 12px;
+        }
+
+        .head-text {
+          font-size: 16px;
+        }
+
+        .sub-text {
+          font-size: 12px;
+        }
+      }
+
+      /* Landscape Orientation */
+      @media (max-height: 600px) and (orientation: landscape) {
+        body {
+          margin: 15px 20px;
+        }
+
+        .main-form-body {
+          padding: 30px 25px;
+        }
+
+        .form-title {
+          font-size: 36px;
+          margin-bottom: 8px;
+        }
+
+        .form-sub-text {
+          font-size: 13px;
+        }
+
+        .upper-form {
+          margin: 15px 0;
+        }
+
+        .personal-info-panel {
+          gap: 10px;
+        }
+
+        .verification-part,
+        .review-part {
+          gap: 10px;
+        }
+      }
+
+      /* Very small landscape phones */
+      @media (max-width: 640px) and (orientation: landscape) {
+        .form-title {
+          font-size: 28px;
+        }
+
+        .upper-form {
+          margin: 10px 0;
+        }
+      }
+
+      /* Improve touch targets on mobile */
+      @media (hover: none) and (pointer: coarse) {
+        .button-action,
+        .acct-card,
+        input[type="checkbox"],
+        .back-link {
+          min-height: 44px;
+          min-width: 44px;
+        }
+
+        .faq-toggle {
+          min-height: 44px;
+          min-width: 44px;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -566,61 +1175,65 @@
             </div>
           </div>
           <!-- Verification Part -->
-           <div class="verification-part" style="display: none;">
-             <div class="ssn-wrap">
-               <h3 class="section-title">Identity Verification</h3>
-               <div>
-                 <label for="ssn">Social Security Number<span style="color: red;">*</span></label>
-                 <input type="text" id="ssn" class="inp-credentials full-width" placeholder="123-45-6789">
-               </div>
-               <div class="helper-text">Your SSN is securely encrypted and never shared with third parties.</div>
-             </div>
+<div class="verification-part" style="display: none;">
+  <!-- Identity Section -->
+  <h3 class="section-title">Identity Verification</h3>
+  
+  <div class="ssn-wrap">
+    <div class="input-wrap">
+      <label for="ssn">Social Security Number<span style="color: red;">*</span></label>
+      <input type="text" id="ssn" class="inp-credentials" placeholder="123-45-6789">
+    </div>
+    <div class="helper-text">Your SSN is securely encrypted and never shared with third parties.</div>
+  </div>
 
-             <div class="two-col-row">
-               <div>
-                 <label for="id-type">ID Type<span style="color: red;">*</span></label>
-                 <select id="id-type" class="inp-credentials">
-                   <option>Driver's License</option>
-                   <option>Passport</option>
-                   <option>State ID</option>
-                 </select>
-               </div>
-               <div>
-                 <label for="id-number">ID Number<span style="color: red;">*</span></label>
-                 <input type="text" id="id-number" class="inp-credentials">
-               </div>
-             </div>
+  <div class="two-col-row">
+    <div class="input-wrap">
+      <label for="id-type">ID Type<span style="color: red;">*</span></label>
+      <select id="id-type" class="inp-credentials">
+        <option>Driver's License</option>
+        <option>Passport</option>
+        <option>State ID</option>
+      </select>
+    </div>
+    <div class="input-wrap">
+      <label for="id-number">ID Number<span style="color: red;">*</span></label>
+      <input type="text" id="id-number" class="inp-credentials">
+    </div>
+  </div>
 
-             <div class="emp-wrap">
-               <h3 class="section-title">Employment Information</h3>
-               <div>
-                 <label for="employment-status">Employment Status<span style="color: red;">*</span></label>
-                 <select id="employment-status" class="inp-credentials full-width">
-                   <option>Employed</option>
-                   <option>Unemployed</option>
-                   <option>Self-Employed</option>
-                   <option>Student</option>
-                   <option>Retired</option>
-                 </select>
-               </div>
-             </div>
+  <!-- Employment Section -->
+  <h3 class="section-title">Employment Information</h3>
 
-             <div class="two-col-row">
-               <div>
-                 <label for="employer-name">Employer Name<span style="color: red;">*</span></label>
-                 <input type="text" id="employer-name" class="inp-credentials">
-               </div>
-               <div>
-                 <label for="job-title">Job Title<span style="color: red;">*</span></label>
-                 <input type="text" id="job-title" class="inp-credentials">
-               </div>
-             </div>
+  <div class="emp-wrap">
+    <div class="input-wrap">
+      <label for="employment-status">Employment Status<span style="color: red;">*</span></label>
+      <select id="employment-status" class="inp-credentials full-width">
+        <option>Employed</option>
+        <option>Unemployed</option>
+        <option>Self-Employed</option>
+        <option>Student</option>
+        <option>Retired</option>
+      </select>
+    </div>
+  </div>
 
-             <div>
-               <label for="annual-income">Annual Income (USD)<span style="color: red;">*</span></label>
-               <input type="text" id="annual-income" class="inp-credentials full-width" placeholder="50000">
-             </div>
-           </div>
+  <div class="two-col-row">
+    <div class="input-wrap">
+      <label for="employer-name">Employer Name<span style="color: red;">*</span></label>
+      <input type="text" id="employer-name" class="inp-credentials">
+    </div>
+    <div class="input-wrap">
+      <label for="job-title">Job Title<span style="color: red;">*</span></label>
+      <input type="text" id="job-title" class="inp-credentials">
+    </div>
+  </div>
+
+  <div class="input-wrap">
+    <label for="annual-income">Annual Income (USD)<span style="color: red;">*</span></label>
+    <input type="text" id="annual-income" class="inp-credentials full-width" placeholder="50000">
+  </div>
+</div>
            <!-- Review Part -->
             <div class="review-part" style="display: none;">
               <h3 class="section-title">Account Preferences</h3>

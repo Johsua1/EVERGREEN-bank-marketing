@@ -456,10 +456,46 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
-        .card-image {
+       .card-image {
             width: 100%;
             height: 180px;
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image1 {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #f7d774 0%, #b88900 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image2 {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #d9d9d9 0%, #9e9e9e 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image3 {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             border-radius: 12px;
             margin-bottom: 1.5rem;
             position: relative;
@@ -469,12 +505,37 @@
         }
 
         .mini-card {
-            width: 120px;
-            height: 75px;
+            width: 200px;
+            height: 110px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .mini-card1 {
+            width: 200px;
+            height: 110px;
+            background: linear-gradient(135deg, #b8860b 0%, #7a5c00 100%);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .mini-card2 {
+            width: 200px;
+            height: 110px;
+            background: linear-gradient(135deg, #e5e4e2 0%, #b8b8b8 100%);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .mini-card3 {
+            width: 200px;
+            height: 110px;
             background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             border-radius: 8px;
             position: relative;
         }
+
 
         .mini-chip {
             width: 25px;
@@ -492,7 +553,7 @@
             top: 12px;
             color: white;
             font-weight: bold;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
 
         .card-item h3 {
@@ -590,10 +651,10 @@
         }
 
         .discover-card-image {
-            width: 140px;
-            height: 90px;
+            width: 200px;
+            height: 100px;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             border-radius: 10px;
             position: relative;
             display: flex;
@@ -898,7 +959,7 @@
             <div class="card-hand">
                 <div class="credit-card-display">
                     <div class="card-chip"></div>
-                    <div class="card-logo">VISA</div>
+                    <div class="card-logo">CREDIT CARD</div>
                     <div class="card-number">•••• •••• •••• 4589</div>
                     <div class="card-holder">CARDHOLDER NAME</div>
                 </div>
@@ -932,7 +993,7 @@
         </div>
     </section>
 
-    <!-- Choose Your Card Section -->
+        <!-- Choose Your Card Section -->
     <section class="choose-card">
         <h2>Choose your Card</h2>
         
@@ -941,55 +1002,55 @@
                 <div class="card-image">
                     <div class="mini-card">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">CREDIT CARD</div>
                     </div>
                 </div>
-                <h3>Home Loans</h3>
-                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <h3>Blue Card</h3>
+                <p>The Blue Card helps you shop smarter with flexible installment plans. Pay for your groceries and essentials over time while enjoying exclusive perks and rewards.</p>
                 <div class="card-buttons">
-                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
             <div class="card-item">
-                <div class="card-image">
-                    <div class="mini-card">
+                <div class="card-image1">
+                    <div class="mini-card1">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">CREDIT CARD</div>
                     </div>
                 </div>
-                <h3>Personal Loans</h3>
-                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <h3>Gold Card</h3>
+                <p>The Gold Card gives you exclusive shopping privileges. Enjoy higher rewards, priority offers, and premium benefits on every purchase.</p><br>
                 <div class="card-buttons">
-                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
             <div class="card-item">
-                <div class="card-image">
-                    <div class="mini-card">
+                <div class="card-image2">
+                    <div class="mini-card2">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">CREDIT CARD</div>
                     </div>
                 </div>
-                <h3>Auto Loans</h3>
-                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <h3>Platinum Card</h3>
+                <p>The Platinum Card offers ultimate privileges for your shopping and lifestyle needs. Enjoy the highest rewards, priority access, and exclusive benefits reserved for our top-tier members.</p>
                 <div class="card-buttons">
-                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
 
             <div class="card-item">
-                <div class="card-image">
-                    <div class="mini-card">
+                <div class="card-image3">
+                    <div class="mini-card3">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">CREDIT CARD</div>
                     </div>
                 </div>
-                <h3>Multipurpose Loans</h3>
-                <p>Competitive mortgage rates and flexible repayment options for your dream home.</p>
+                <h3>Black Elite Card</h3>
+                <p>The Black Elite Card delivers unparalleled privileges for discerning members. Enjoy maximum rewards and personalized benefits designed for a truly elite shopping experience.</p>
                 <div class="card-buttons">
-                    <a href="../evergreen_form.php" class="btn-small btn-yellow">Apply</a>
+                    <a href="../login.php" class="btn-small btn-yellow">Apply</a>
                 </div>
             </div>
         </div>
@@ -1004,7 +1065,7 @@
                 <div class="discover-card-image">
                     <div class="mini-card">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">DEBIT CARD</div>
                     </div>
                 </div>
                 <h3>Debit Cards</h3>
@@ -1018,7 +1079,7 @@
                 <div class="discover-card-image">
                     <div class="mini-card">
                         <div class="mini-chip"></div>
-                        <div class="mini-logo">VISA</div>
+                        <div class="mini-logo">PREPAID</div>
                     </div>
                 </div>
                 <h3>Prepaid Cards</h3>
@@ -1248,6 +1309,7 @@ function showSignOutModal(event) {
             img {
             width: 55px;
             height: 50px;
+            margin-bottom:5px;
             }
         </style>
         <div style="
