@@ -34,7 +34,7 @@ switch ($action) {
 }
 
 function getReferralCode($conn, $user_id) {
-    $sql = "SELECT referral_code FROM bank_users WHERE id = ?";
+    $sql = "SELECT referral_code FROM bank_customers WHERE customer_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -91,7 +91,7 @@ function applyReferral($conn, $user_id) {
     
     try {
         // Check if user is trying to use their own code
-        $sql = "SELECT referral_code FROM bank_users WHERE id = ?";
+        $sql = "SELECT referral_code FROM bank_customers WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -104,7 +104,7 @@ function applyReferral($conn, $user_id) {
         }
         
         // Find the referrer
-        $sql = "SELECT id, first_name, last_name FROM bank_users WHERE referral_code = ?";
+        $sql = "SELECT customer_id, first_name, last_name FROM bank_customers WHERE referral_code = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $friend_code);
         $stmt->execute();
@@ -143,14 +143,14 @@ function applyReferral($conn, $user_id) {
         $stmt->close();
         
         // Award points to referrer
-        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
+        $sql = "UPDATE bank_customers SET total_points = total_points + ? WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $referrer_points, $referrer_id);
         $stmt->execute();
         $stmt->close();
         
         // Award points to referred user
-        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
+        $sql = "UPDATE bank_customers SET total_points = total_points + ? WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $referred_points, $user_id);
         $stmt->execute();
@@ -158,24 +158,24 @@ function applyReferral($conn, $user_id) {
         
         // Add to point history for referrer - FIXED VERSION
         $sql = "INSERT IGNORE INTO user_missions (user_id, mission_id, points_earned, completed_at) 
-                SELECT ?, id, ?, NOW() FROM missions WHERE mission_text LIKE '%Refer a friend%' LIMIT 1";
+                SELECT ?, customer_id, ?, NOW() FROM missions WHERE mission_text LIKE '%Refer a friend%' LIMIT 1";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("id", $referrer_id, $referrer_points);
+        $stmt->bind_param("customer_id", $referrer_id, $referrer_points);
         $stmt->execute();
         $stmt->close();
         
         // Add to point history for referred user - FIXED VERSION
         $sql = "INSERT IGNORE INTO user_missions (user_id, mission_id, points_earned, completed_at) 
-                SELECT ?, id, ?, NOW() FROM missions WHERE mission_text LIKE '%Use a referral code%' LIMIT 1";
+                SELECT ?, customer_id, ?, NOW() FROM missions WHERE mission_text LIKE '%Use a referral code%' LIMIT 1";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("id", $user_id, $referred_points);
+        $stmt->bind_param("customer_id", $user_id, $referred_points);
         $stmt->execute();
         $stmt->close();
         
         $conn->commit();
         
         // Get updated total points for the user - THIS IS IMPORTANT
-        $sql = "SELECT total_points FROM bank_users WHERE id = ?";
+        $sql = "SELECT total_points FROM bank_customers WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();

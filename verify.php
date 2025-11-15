@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               $error = "System error: Referral code not generated. Please try again.";
           } else 
             // NOW insert the user into the database
-                $sql = "INSERT INTO bank_users (first_name, middle_name, last_name, address, city_province, email, contact_number, birthday, password, verification_code, bank_id, referral_code, total_points, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0.00, 1)";
+                $sql = "INSERT INTO bank_customers (first_name, middle_name, last_name, address, city_province, email, contact_number, birthday, password, verification_code, bank_id, referral_code, total_points, is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0.00, 1)";
 
                 $stmt = $conn->prepare($sql);
         if ($stmt) {

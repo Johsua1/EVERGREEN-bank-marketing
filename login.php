@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($bank_id) || empty($email) || empty($password)) {
         $error = "Please fill in all fields.";
     } else {
-        $sql = "SELECT * FROM bank_users WHERE email = ? AND bank_id = ?";
+        $sql = "SELECT * FROM bank_customers WHERE email = ? AND bank_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $email, $bank_id);
         $stmt->execute();

@@ -51,7 +51,7 @@ switch ($action) {
         
         // Get user's current points
         $user_id = $_SESSION['user_id'];
-        $stmt = $conn->prepare("SELECT total_points FROM bank_users WHERE id = ?");
+        $stmt = $conn->prepare("SELECT total_points FROM bank_customers WHERE customer_id = ?");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -64,7 +64,7 @@ switch ($action) {
         
         // Deduct points
         $new_total = $user['total_points'] - $points_cost;
-        $stmt = $conn->prepare("UPDATE bank_users SET total_points = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE bank_customers SET total_points = ? WHERE customer_id = ?");
         $stmt->bind_param("di", $new_total, $user_id);
         $stmt->execute();
         
@@ -88,7 +88,7 @@ switch ($action) {
 }
 
 function getUserPoints($conn, $user_id) {
-    $sql = "SELECT total_points FROM bank_users WHERE id = ?";
+    $sql = "SELECT total_points FROM bank_customers WHERE customer_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -245,7 +245,7 @@ function collectMission($conn, $user_id) {
         $stmt->close();
         
         // Update user's total points
-        $sql = "UPDATE bank_users SET total_points = total_points + ? WHERE id = ?";
+        $sql = "UPDATE bank_customers SET total_points = total_points + ? WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("di", $points, $user_id);
         $stmt->execute();
@@ -260,7 +260,7 @@ function collectMission($conn, $user_id) {
         $stmt->close();
         
         // Get updated total
-        $sql = "SELECT total_points FROM bank_users WHERE id = ?";
+        $sql = "SELECT total_points FROM bank_customers WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
         $stmt->execute();

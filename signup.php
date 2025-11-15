@@ -34,7 +34,7 @@ function generateUniqueReferralCode($conn) {
         }
         
         // Check if code already exists
-        $sql = "SELECT id FROM bank_users WHERE referral_code = ?";
+        $sql = "SELECT customer_id FROM bank_customers WHERE referral_code = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $code);
         $stmt->execute();
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match!";
     } else {
-        $check_sql = "SELECT id FROM bank_users WHERE email = ?";
+        $check_sql = "SELECT customer_id FROM bank_customers WHERE email = ?";
         $check_stmt = $conn->prepare($check_sql);
         $check_stmt->bind_param("s", $email);
         $check_stmt->execute();
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check_result->num_rows > 0) {
     $error = "Email already registered.";
 } else 
-    $check_sql = "SELECT id FROM bank_users WHERE email = ?";
+    $check_sql = "SELECT customer_id FROM bank_customers WHERE email = ?";
     $check_stmt = $conn->prepare($check_sql);
     $check_stmt->bind_param("s", $email);
     $check_stmt->execute();
